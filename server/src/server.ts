@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { ApolloServer } from 'apollo-server'
-import { createConnection } from 'typeorm'
+// import { createConnection } from 'typeorm'
 
 /* SCHEMAS & DATASOURCES */
 import {
@@ -36,13 +36,14 @@ export const dataSources = {
 }
 
 export const run = async () => {
-	await createConnection()
+	// await createConnection()
 
 	const server = new ApolloServer({
 		typeDefs,
 		resolvers,
 		context,
 		dataSources: () => dataSources,
+		introspection: true,
 	})
 
 	const { url } = await server.listen()
