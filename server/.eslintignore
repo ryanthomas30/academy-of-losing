@@ -1,0 +1,4 @@
+jest.config.js
+ormconfig.js
+apollo.config.js
+/dist/
