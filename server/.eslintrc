@@ -12,6 +12,20 @@
 		"sourceType": "module",
 		"impliedStrict": true
 	},
+	"overrides": [
+		{
+			"files": [
+				"*.graphql"
+			],
+			"extends": "plugin:@graphql-eslint/schema-recommended",
+			"rules": {
+				"@graphql-eslint/no-unreachable-types": "off"
+			},
+			"parserOptions": {
+				"schema": "./src/graphql/**/*.graphql"
+			}
+		}
+	],
 	"rules": {
 		"array-bracket-newline": [
 			"error",

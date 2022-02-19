@@ -21,3 +21,6 @@ tsconfig.tsbuildinfo
 
 # Firebase
 serviceAccountKey.json
+
+# VSCode
+.vscode/

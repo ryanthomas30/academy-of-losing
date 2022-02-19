@@ -1,17 +1,9 @@
 /* eslint-disable no-console */
 import { ApolloServer } from 'apollo-server'
+
 // import { createConnection } from 'typeorm'
 
-/* SCHEMAS & DATASOURCES */
-import {
-	/* Root */
-	Root,
-	rootResolvers,
-} from '@/schemas'
-
-/* DIRECTIVES */
-
-/* SCALARS */
+import { makeSchema } from '@/graphql'
 
 /* CONTEXT */
 import { context } from '@/context'
@@ -23,24 +15,16 @@ export interface DataSources {
 
 }
 
-export const typeDefs = [
-	Root,
-]
-
-export const resolvers = [
-	rootResolvers,
-]
-
 export const dataSources = {
 
 }
 
 export const run = async () => {
 	// await createConnection()
+	const schema = await makeSchema()
 
 	const server = new ApolloServer({
-		typeDefs,
-		resolvers,
+		schema,
 		context,
 		dataSources: () => dataSources,
 		introspection: true,

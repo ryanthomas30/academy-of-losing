@@ -1,0 +1,11 @@
+	""" Root Query """
+	type Query {
+		"""Test query for health checks."""
+		test: String
+	}
+
+	""" Root Mutation """
+	type Mutation {
+		"""Test mutation for health checks."""
+		test: String
+	}

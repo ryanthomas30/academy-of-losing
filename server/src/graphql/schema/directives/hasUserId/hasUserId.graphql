@@ -1,0 +1,5 @@
+"""
+Schema directive that checks if the user's ID from the context (JWT)
+matches the `userId` provided in the query argument
+"""
+directive @hasUserId on FIELD_DEFINITION
