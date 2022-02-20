@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { ApolloServer } from 'apollo-server'
 
-// import { createConnection } from 'typeorm'
+import { createConnection } from 'typeorm'
 
 import { makeSchema } from '@/graphql'
 
@@ -20,7 +20,7 @@ export const dataSources = {
 }
 
 export const run = async () => {
-	// await createConnection()
+	await createConnection()
 	const schema = await makeSchema()
 
 	const server = new ApolloServer({
