@@ -1,14 +1,23 @@
 # Academy of Losing Server
-
 Backend for Academy of Losing.
-
-## Installation
-
-``` bash
-# Install dependencies
+## Setup & Installation
+#### Install Dependencies
+```bash
 yarn install
-
-# Run Apollo Server in development mode
+```
+#### Set Local Environment Variables
+Create a new file in the root directory called `.env.development.local` and populate it with these keys and the values for your local `postgres` instance.
+```sh
+TYPEORM_CONNECTION=postgres
+TYPEORM_HOST=<database_hostname> # e.g. localhost
+TYPEORM_USERNAME=<database_username> 
+TYPEORM_PASSWORD=<database_password>
+TYPEORM_DATABASE=<database_name>
+TYPEORM_PORT=<database_port> # e.g. 5432
+TYPEORM_SYNCHRONIZE=<true/false> # true is recommended in development mode
+```
+#### Run In Development Mode
+```bash
 yarn run dev
 ```
 
