@@ -3,12 +3,7 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { DirectiveTransformer } from '@/types'
 
-import {
-	/* Resolvers */
-	rootResolvers,
-	/* Transformers */
-	hasUserIdTransformer,
-} from './schema'
+import { rootResolvers, hasUserIdTransformer } from './schema'
 
 import { applyTransformers } from './util'
 

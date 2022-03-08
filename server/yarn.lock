@@ -4172,6 +4172,11 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
+eslint-plugin-import-newlines@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import-newlines/-/eslint-plugin-import-newlines-1.2.1.tgz#f19e7ac4e6b605f9bb7bf284d5e39140eb1b1adf"
+  integrity sha512-wm9mpfn6Cf1o+HEYomxNpK3/TM4cShoJpG8gre6+ZlmN/BEzswjhI1/CnfQr5RvqnzXHHuLoULfpI8KPjDMCkw==
+
 eslint-scope@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-5.1.1.tgz#e786e59a66cb92b3f6c1fb0d508aab174848f48c"

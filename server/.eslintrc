@@ -5,7 +5,8 @@
 	},
 	"parser": "@typescript-eslint/parser",
 	"plugins": [
-		"@typescript-eslint"
+		"@typescript-eslint",
+		"import-newlines"
 	],
 	"parserOptions": {
 		"ecmaVersion": 9,
@@ -84,13 +85,16 @@
 			"error",
 			"never"
 		],
-		"indent": [
+		"import-newlines/enforce": [
 			"error",
-			"tab",
 			{
-				"SwitchCase": 1
+				"items": 4,
+				"max-len": 150,
+				"semi": false,
+				"forceSingleLine": true
 			}
 		],
+		"indent": "off",
 		"jsx-quotes": [
 			"error",
 			"prefer-single"
@@ -204,7 +208,14 @@
 		"@typescript-eslint/no-unused-vars": "error",
 		"@typescript-eslint/indent": [
 			"error",
-			"tab"
+			"tab",
+			{
+				"ignoredNodes": [
+					"FunctionExpression > .params[decorators.length > 0]",
+					"FunctionExpression > .params > :matches(Decorator, :not(:first-child))",
+					"ClassBody.body > PropertyDefinition[decorators.length > 0] > .key"
+				]
+			}
 		],
 		"@typescript-eslint/member-delimiter-style": [
 			"error",
