@@ -2,9 +2,9 @@ import { Resolvers } from '@/types'
 
 export const userResolver: Resolvers = {
 	Query: {
-		user: (_, { userId }, { dataSources }) => dataSources.userDataSource.getOne(userId),
+		user: (_, { userId }, { dataSources }) => dataSources.userService.getOne(userId),
 	},
 	Mutation: {
-		createUser: (_, { newUser }, { dataSources }) => dataSources.userDataSource.create(newUser),
+		createUser: (_, { newUser }, { dataSources }) => dataSources.userService.create(newUser),
 	},
 }

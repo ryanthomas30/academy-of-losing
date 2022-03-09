@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server'
 import { createConnection } from 'typeorm'
 import { makeSchema } from '@/graphql'
 import { context } from '@/context'
-import { dataSources } from '@/dataSources'
+import { dataSources } from '@/service'
 
 export const run = async () => {
 	await createConnection()

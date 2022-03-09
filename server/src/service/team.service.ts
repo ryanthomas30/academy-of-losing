@@ -6,7 +6,7 @@ import { DbError, PgErrorCode } from '@/util'
 import { NewTeam, Team } from '@/types'
 import { getManager } from 'typeorm'
 
-export class TeamDataSource extends DataSource<ProducedContext> {
+export class TeamService extends DataSource<ProducedContext> {
 
 	async getOne(teamId: string): Promise<Team> {
 		try {

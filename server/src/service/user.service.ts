@@ -5,7 +5,7 @@ import { User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { NewUser, User as UserType } from '@/types'
 
-export class UserDataSource extends DataSource<ProducedContext> {
+export class UserService extends DataSource<ProducedContext> {
 
 	getOne(userId: string): Promise<UserType> {
 		try {

@@ -5,7 +5,7 @@ import { Request, Response } from 'express'
 import { ExecutionParams } from 'subscriptions-transport-ws'
 // import { auth } from 'firebase-admin'
 
-import { DataSources } from '@/dataSources'
+import { DataSources } from '@/service'
 
 /**
  * Express context from apollo-server-core.

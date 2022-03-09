@@ -1,9 +1,9 @@
-import { UserDataSource } from './user'
-import { TeamDataSource } from './team'
+import { UserService } from './user.service'
+import { TeamService } from './team.service'
 
 export const dataSources = {
-	userDataSource: new UserDataSource(),
-	teamDataSource: new TeamDataSource(),
+	userService: new UserService(),
+	teamService: new TeamService(),
 }
 
 /**
