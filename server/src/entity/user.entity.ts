@@ -29,7 +29,7 @@ export class User extends BaseEntity {
 	isAdmin!: boolean
 
 	@ManyToMany(() => Team, team => team.users)
-	teams!: User[]
+	teams?: Team[]
 
 	@CreateDateColumn()
 	createdAt!: Date

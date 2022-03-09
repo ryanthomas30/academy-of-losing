@@ -1,0 +1,26 @@
+extend type Query {
+	""" Get a user by id. """
+	user(userId: ID!): User! @hasUserId
+}
+
+extend type Mutation {
+	""" Create a new user. """
+	createUser(newUser: NewUser!): User!
+}
+
+""" User """
+type User {
+	id: ID!
+	fullName: String!
+	email: String!
+	isAdmin: Boolean!
+}
+
+""" New user object """
+input NewUser {
+	id: ID!
+	""" The user's full name. """
+	fullName: String!
+	""" The user's email address. """
+	email: String!
+}

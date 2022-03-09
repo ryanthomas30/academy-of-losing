@@ -1,0 +1,5 @@
+export * from './game.entity'
+export * from './question.entity'
+export * from './team.entity'
+export * from './teamAnswer.entity'
+export * from './user.entity'

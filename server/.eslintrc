@@ -18,7 +18,11 @@
 			"files": [
 				"*.graphql"
 			],
+			"parser": "@graphql-eslint/eslint-plugin",
 			"extends": "plugin:@graphql-eslint/schema-recommended",
+			"plugins": [
+				"@graphql-eslint"
+			],
 			"rules": {
 				"@graphql-eslint/no-unreachable-types": "off"
 			},
@@ -172,7 +176,7 @@
 		"no-trailing-spaces": 2,
 		"no-unmodified-loop-condition": 2,
 		"no-unused-expressions": 2,
-		"no-unused-vars": 2,
+		"no-unused-vars": 0,
 		"no-use-before-define": 0,
 		"no-useless-call": 2,
 		"no-useless-return": 2,
@@ -214,7 +218,8 @@
 					"FunctionExpression > .params[decorators.length > 0]",
 					"FunctionExpression > .params > :matches(Decorator, :not(:first-child))",
 					"ClassBody.body > PropertyDefinition[decorators.length > 0] > .key"
-				]
+				],
+				"SwitchCase": 1
 			}
 		],
 		"@typescript-eslint/member-delimiter-style": [

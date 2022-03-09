@@ -5,6 +5,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -17,15 +18,80 @@ export type Scalars = {
 /**  Root Mutation  */
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Test mutation for health checks. */
+  /**  Create a new user.  */
+  createTeam: Team;
+  /**  Create a new user.  */
+  createUser: User;
+  /**  Test mutation for health checks.  */
   test?: Maybe<Scalars['String']>;
+};
+
+
+/**  Root Mutation  */
+export type MutationCreateTeamArgs = {
+  gameId: Scalars['ID'];
+  newTeam: NewTeam;
+};
+
+
+/**  Root Mutation  */
+export type MutationCreateUserArgs = {
+  newUser: NewUser;
+};
+
+/**  New user object  */
+export type NewTeam = {
+  /**  The name of the team.  */
+  name: Scalars['String'];
+};
+
+/**  New user object  */
+export type NewUser = {
+  /**  The user's email address.  */
+  email: Scalars['String'];
+  /**  The user's full name.  */
+  fullName: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 /**  Root Query  */
 export type Query = {
   __typename?: 'Query';
-  /** Test query for health checks. */
+  /**  Get a user by id.  */
+  team: Team;
+  /**  Test query for health checks.  */
   test?: Maybe<Scalars['String']>;
+  /**  Get a user by id.  */
+  user: User;
+};
+
+
+/**  Root Query  */
+export type QueryTeamArgs = {
+  teamId: Scalars['ID'];
+};
+
+
+/**  Root Query  */
+export type QueryUserArgs = {
+  userId: Scalars['ID'];
+};
+
+/**  User  */
+export type Team = {
+  __typename?: 'Team';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  users: Array<User>;
+};
+
+/**  User  */
+export type User = {
+  __typename?: 'User';
+  email: Scalars['String'];
+  fullName: Scalars['String'];
+  id: Scalars['ID'];
+  isAdmin: Scalars['Boolean'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -99,17 +165,27 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
+  NewTeam: NewTeam;
+  NewUser: NewUser;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Team: ResolverTypeWrapper<Team>;
+  User: ResolverTypeWrapper<User>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
+  ID: Scalars['ID'];
   Mutation: {};
+  NewTeam: NewTeam;
+  NewUser: NewUser;
   Query: {};
   String: Scalars['String'];
+  Team: Team;
+  User: User;
 }>;
 
 export type HasUserIdDirectiveArgs = { };
@@ -117,16 +193,37 @@ export type HasUserIdDirectiveArgs = { };
 export type HasUserIdDirectiveResolver<Result, Parent, ContextType = any, Args = HasUserIdDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  createTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationCreateTeamArgs, 'gameId' | 'newTeam'>>;
+  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'newUser'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  team?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<QueryTeamArgs, 'teamId'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'userId'>>;
+}>;
+
+export type TeamResolvers<ContextType = any, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  fullName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isAdmin?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Team?: TeamResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
 }>;
 
 export type DirectiveResolvers<ContextType = any> = ResolversObject<{

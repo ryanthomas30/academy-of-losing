@@ -1,23 +1,9 @@
 /* eslint-disable no-console */
 import { ApolloServer } from 'apollo-server'
-
 import { createConnection } from 'typeorm'
-
 import { makeSchema } from '@/graphql'
-
-/* CONTEXT */
 import { context } from '@/context'
-
-/**
- * Object containing all data sources injected into the `Context` by Apollo Server
- */
-export interface DataSources {
-
-}
-
-export const dataSources = {
-
-}
+import { dataSources } from '@/dataSources'
 
 export const run = async () => {
 	await createConnection()
