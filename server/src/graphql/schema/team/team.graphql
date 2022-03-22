@@ -6,6 +6,8 @@ extend type Query {
 extend type Mutation {
 	""" Create a new user. """
 	createTeam(newTeam: NewTeam!, gameId: ID!): Team!
+	""" Add a user to a team. """
+	addUserToTeam(teamId: ID!, userId: ID!): Team!
 }
 
 """ User """

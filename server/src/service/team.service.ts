@@ -1,36 +1,23 @@
-import { DataSource } from 'apollo-datasource'
+
 import { ApolloError } from 'apollo-server'
-import { ProducedContext } from '@/context'
-import { Team as TeamEntity, Game as GameEntity } from '@/entity'
+import { LiteDataSource } from '@/dataSource'
+import { Team as TeamEntity, Game as GameEntity, User as UserEntity } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { NewTeam, Team } from '@/types'
 import { getManager } from 'typeorm'
 
-export class TeamService extends DataSource<ProducedContext> {
-
-	async getOne(teamId: string): Promise<Team> {
-		try {
-			const teamResponse = await TeamEntity.findOneOrFail({
-				where: { id: teamId },
-				relations: ['users'],
-			})
-			return {
-				...teamResponse,
-			}
-		} catch (err) {
-			throw new ApolloError('Could not find the requested team')
-		}
+export class TeamService extends LiteDataSource {
+	async getTeamWithUsers(teamId: string): Promise<Team> {
+		return TeamEntity.getOne(teamId, {
+			relations: ['users'],
+		})
 	}
 
-	async create(newTeam: NewTeam, gameId: string): Promise<Team> {
+	async createTeam(newTeam: NewTeam, gameId: string): Promise<Team> {
 		try {
 			return getManager().transaction(async entityManager => {
 				/* Get Game */
-				const game = await GameEntity.findOneOrFail({
-					where: {
-						id: gameId,
-					},
-				})
+				const game = await GameEntity.getOne(gameId)
 
 				/* Create new Team with Game */
 				const team = TeamEntity.create({
@@ -54,6 +41,34 @@ export class TeamService extends DataSource<ProducedContext> {
 					throw new ApolloError('An error occurred when creating this team')
 			}
 		}
-
 	}
+
+	async addUserToTeam(teamId: string, userId: string): Promise<Team> {
+		try {
+			return getManager().transaction(async entityManager => {
+				/* Get Team with Users */
+				const teamWithUsers = await TeamEntity.getOne(teamId, {
+					relations: ['users'],
+				})
+
+				/* Get User */
+				const user = await UserEntity.getOne(userId)
+
+				/* Add new User to Team */
+				teamWithUsers.users = [...teamWithUsers.users, user]
+
+				/* Save Team */
+				return entityManager.save(teamWithUsers)
+			})
+		} catch (e) {
+			const error = new DbError(e)
+			switch (error.code) {
+				case PgErrorCode.UniqueViolation:
+					throw new ApolloError('This user already exists on this team')
+				default:
+					throw new ApolloError('An error occurred when creating this team')
+			}
+		}
+	}
+
 }

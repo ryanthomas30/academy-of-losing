@@ -1,3 +1,4 @@
+import { ApolloError } from 'apollo-server'
 import {
 	Entity,
 	BaseEntity,
@@ -5,6 +6,7 @@ import {
 	Column,
 	CreateDateColumn,
 	ManyToMany,
+	FindOneOptions,
 } from 'typeorm'
 
 import { Team } from './team.entity'
@@ -34,4 +36,11 @@ export class User extends BaseEntity {
 	@CreateDateColumn()
 	createdAt!: Date
 
+	static async getOne(userId: string, options?: FindOneOptions<User>) {
+		try {
+			return User.findOneOrFail(userId, options)
+		} catch (err) {
+			throw new ApolloError(`An error occurred when trying to fetch user ${userId}.`)
+		}
+	}
 }

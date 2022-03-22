@@ -33,6 +33,5 @@ export class UserService extends DataSource<ProducedContext> {
 					throw new ApolloError('An error occurred when creating this user')
 			}
 		}
-
 	}
 }
