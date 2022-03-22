@@ -3,7 +3,13 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { DirectiveTransformer } from '@/types'
 
-import { rootResolver, userResolver, teamResolver, hasUserIdTransformer } from './schema'
+import {
+	rootResolver,
+	userResolver,
+	teamResolver,
+	questionResolver,
+	hasUserIdTransformer,
+} from './schema'
 
 import { applyTransformers } from './util'
 
@@ -14,6 +20,7 @@ export const resolvers = [
 	rootResolver,
 	userResolver,
 	teamResolver,
+	questionResolver,
 ]
 
 /**

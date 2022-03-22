@@ -18,7 +18,10 @@ export class Question extends BaseEntity {
 	id!: string
 
 	@Column()
-	question!: string
+	title!: string
+
+	@Column()
+	description!: string
 
 	@Column()
 	answer!: string
