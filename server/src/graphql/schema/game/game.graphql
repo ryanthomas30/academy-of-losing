@@ -1,0 +1,16 @@
+extend type Query {
+	""" Get a game by id. """
+	game(gameId: ID!): Game!
+}
+
+extend type Mutation {
+	""" Create a new game. """
+	createGame: Game!
+}
+
+""" Game """
+type Game {
+	id: ID!
+	teams: [Team!]!
+	# questions: [Question!]!
+}
