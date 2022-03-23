@@ -1,27 +1,22 @@
-import { DataSource } from 'apollo-datasource'
 import { ApolloError } from 'apollo-server'
-import { ProducedContext } from '@/context'
 import { User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { NewUser, User as UserType } from '@/types'
+import { LiteDataSource } from '@/dataSource'
 
-export class UserService extends DataSource<ProducedContext> {
+export class UserService extends LiteDataSource {
 
-	getOne(userId: string): Promise<UserType> {
-		try {
-			return User.findOneOrFail({
-				where: { id: userId },
-			})
-		} catch (err) {
-			throw new ApolloError('Could not find the requested user')
-		}
+	getUser(userId: string): Promise<UserType> {
+		return User.getOne(userId)
 	}
 
-	async create(newUser: NewUser): Promise<UserType> {
+	async createUser(newUser: NewUser): Promise<UserType> {
+		/* Create User */
 		const user = User.create({
 			...newUser,
 		})
 		try {
+			/* Save User */
 			const userResponse = await user.save()
 			return userResponse
 		} catch (e) {
