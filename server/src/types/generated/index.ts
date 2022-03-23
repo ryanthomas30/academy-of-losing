@@ -226,7 +226,7 @@ export type ResolversParentTypes = ResolversObject<{
   User: User;
 }>;
 
-export type HasUserIdDirectiveArgs = { };
+export type HasUserIdDirectiveArgs = {};
 
 export type HasUserIdDirectiveResolver<Result, Parent, ContextType = any, Args = HasUserIdDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
