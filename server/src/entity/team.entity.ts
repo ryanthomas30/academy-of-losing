@@ -27,6 +27,9 @@ export class Team extends BaseEntity {
 	@Column()
 	name!: string
 
+	@Column()
+	gameId!: string
+
 	@ManyToOne(() => Game, game => game.teams)
 	game!: Game
 

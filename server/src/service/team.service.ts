@@ -1,22 +1,22 @@
 
 import { ApolloError } from 'apollo-server'
 import { LiteDataSource } from '@/dataSource'
-import { Team as TeamEntity, Game as GameEntity, User as UserEntity } from '@/entity'
+import { Team, Game as GameEntity, User as UserEntity } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
-import { NewTeam, Team } from '@/types'
+import { NewTeam } from '@/types'
 
 export class TeamService extends LiteDataSource {
 
-	getTeam(teamId: string): Promise<Team> {
-		return TeamEntity.getOne(teamId)
+	getTeam(teamId: string) {
+		return Team.getOne(teamId)
 	}
 
-	async createTeam(newTeam: NewTeam, gameId: string): Promise<Team> {
+	async createTeam(newTeam: NewTeam, gameId: string) {
 		/* Get Game */
 		const game = await GameEntity.getOne(gameId)
 
 		/* Create new Team with Game */
-		const team = TeamEntity.create({
+		const team = Team.create({
 			...newTeam,
 			game,
 		})
@@ -35,9 +35,9 @@ export class TeamService extends LiteDataSource {
 		}
 	}
 
-	async addUserToTeam(teamId: string, userId: string): Promise<Team> {
+	async addUserToTeam(teamId: string, userId: string) {
 		/* Get Team */
-		const team = await TeamEntity.getOne(teamId)
+		const team = await Team.getOne(teamId)
 
 		/* Get User */
 		const user = await UserEntity.getOne(userId)

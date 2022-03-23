@@ -1,5 +1,9 @@
 /* eslint-disable */
 import { GraphQLResolveInfo } from 'graphql';
+import { User as UserEntity } from '../../entity/user.entity';
+import { Team as TeamEntity } from '../../entity/team.entity';
+import { Game as GameEntity } from '../../entity/game.entity';
+import { Question as QuestionEntity } from '../../entity/question.entity';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -124,6 +128,7 @@ export type User = {
   __typename?: 'User';
   email: Scalars['String'];
   fullName: Scalars['String'];
+  games: Array<Game>;
   id: Scalars['ID'];
   isAdmin: Scalars['Boolean'];
 };
@@ -199,34 +204,34 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Game: ResolverTypeWrapper<Game>;
+  Game: ResolverTypeWrapper<GameEntity>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
   NewTeam: NewTeam;
   NewUser: NewUser;
   Query: ResolverTypeWrapper<{}>;
-  Question: ResolverTypeWrapper<Question>;
+  Question: ResolverTypeWrapper<QuestionEntity>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Team: ResolverTypeWrapper<Team>;
-  User: ResolverTypeWrapper<User>;
+  Team: ResolverTypeWrapper<TeamEntity>;
+  User: ResolverTypeWrapper<UserEntity>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
-  Game: Game;
+  Game: GameEntity;
   ID: Scalars['ID'];
   Mutation: {};
   NewTeam: NewTeam;
   NewUser: NewUser;
   Query: {};
-  Question: Question;
+  Question: QuestionEntity;
   String: Scalars['String'];
-  Team: Team;
-  User: User;
+  Team: TeamEntity;
+  User: UserEntity;
 }>;
 
-export type HasUserIdDirectiveArgs = {};
+export type HasUserIdDirectiveArgs = { };
 
 export type HasUserIdDirectiveResolver<Result, Parent, ContextType = any, Args = HasUserIdDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
@@ -268,6 +273,7 @@ export type TeamResolvers<ContextType = any, ParentType extends ResolversParentT
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   fullName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isAdmin?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

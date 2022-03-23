@@ -1,20 +1,27 @@
 import { ApolloError } from 'apollo-server'
-import { Game as GameEntity } from '@/entity'
+import { Game, User } from '@/entity'
 import { DbError } from '@/util'
-import { Game } from '@/types'
 import { LiteDataSource } from '@/dataSource'
 
 export class GameService extends LiteDataSource {
 
-	getGame(gameId: string): Promise<Game> {
-		return GameEntity.getOne(gameId, {
+	getGame(gameId: string) {
+		return Game.getOne(gameId, {
 			relations: ['teams', 'questions'],
 		})
 	}
 
-	async createGame(): Promise<Game> {
+	async getGamesByUserId(userId: string) {
+		const user = await User.getOne(userId, {
+			relations: ['teams'],
+		})
+		const gameIds = user.teams?.map(({ gameId }) => gameId) ?? []
+		return Game.findByIds(gameIds)
+	}
+
+	async createGame() {
 		/* Create Game */
-		const game = GameEntity.create()
+		const game = Game.create()
 		try {
 			/* Save Game */
 			const gameResponse = await game.save()

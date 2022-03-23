@@ -1,16 +1,16 @@
 import { ApolloError } from 'apollo-server'
 import { User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
-import { NewUser, User as UserType } from '@/types'
+import { NewUser } from '@/types'
 import { LiteDataSource } from '@/dataSource'
 
 export class UserService extends LiteDataSource {
 
-	getUser(userId: string): Promise<UserType> {
+	getUser(userId: string) {
 		return User.getOne(userId)
 	}
 
-	async createUser(newUser: NewUser): Promise<UserType> {
+	async createUser(newUser: NewUser) {
 		/* Create User */
 		const user = User.create({
 			...newUser,

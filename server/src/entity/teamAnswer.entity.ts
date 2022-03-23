@@ -19,6 +19,12 @@ export class TeamAnswer extends BaseEntity {
 	@Column({ default: false })
 	isCorrect!: boolean
 
+	@Column()
+	questionId!: string
+
+	@Column()
+	teamId!: string
+
 	@ManyToOne(() => Question, question => question.teamAnswer)
 	question!: Question
 

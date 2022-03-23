@@ -8,3 +8,10 @@ generates:
           content: "/* eslint-disable */"
       - typescript
       - typescript-resolvers
+    config:
+      mappers:
+        User: ../../entity/user.entity#User
+        Team: ../../entity/team.entity#Team
+        Game: ../../entity/game.entity#Game
+        Question: ../../entity/question.entity#Question
+      mapperTypeSuffix: Entity

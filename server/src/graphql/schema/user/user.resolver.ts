@@ -7,4 +7,7 @@ export const userResolver: Resolvers = {
 	Mutation: {
 		createUser: (_, { newUser }, { dataSources }) => dataSources.userService.createUser(newUser),
 	},
+	User: {
+		games: ({ id }, _, { dataSources }) => dataSources.gameService.getGamesByUserId(id),
+	},
 }
