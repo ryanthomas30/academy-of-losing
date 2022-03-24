@@ -25,7 +25,6 @@ export class GameService extends LiteDataSource {
 		try {
 			/* Save Game */
 			const gameResponse = await game.save()
-
 			return gameResponse
 		} catch (e) {
 			const error = new DbError(e)

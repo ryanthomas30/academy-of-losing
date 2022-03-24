@@ -23,6 +23,7 @@ export type Scalars = {
 export type Game = {
   __typename?: 'Game';
   id: Scalars['ID'];
+  questions: Array<Question>;
   teams: Array<Team>;
 };
 
@@ -81,6 +82,8 @@ export type Query = {
   __typename?: 'Query';
   /**  Get a game by id.  */
   game: Game;
+  /**  Get a question by id.  */
+  question: Question;
   /**  Get a user by id.  */
   team: Team;
   /**  Test query for health checks.  */
@@ -93,6 +96,12 @@ export type Query = {
 /**  Root Query  */
 export type QueryGameArgs = {
   gameId: Scalars['ID'];
+};
+
+
+/**  Root Query  */
+export type QueryQuestionArgs = {
+  questionId: Scalars['ID'];
 };
 
 
@@ -237,6 +246,7 @@ export type HasUserIdDirectiveResolver<Result, Parent, ContextType = any, Args =
 
 export type GameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  questions?: Resolver<Array<ResolversTypes['Question']>, ParentType, ContextType>;
   teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -251,6 +261,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   game?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<QueryGameArgs, 'gameId'>>;
+  question?: Resolver<ResolversTypes['Question'], ParentType, ContextType, RequireFields<QueryQuestionArgs, 'questionId'>>;
   team?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<QueryTeamArgs, 'teamId'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'userId'>>;

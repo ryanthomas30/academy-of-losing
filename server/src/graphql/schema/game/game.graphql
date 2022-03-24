@@ -12,5 +12,5 @@ extend type Mutation {
 type Game {
 	id: ID!
 	teams: [Team!]!
-	# questions: [Question!]!
+	questions: [Question!]!
 }

@@ -1,11 +1,6 @@
 extend type Query {
-	""" Get a user by id. """
-	user(userId: ID!): User! @hasUserId
-}
-
-extend type Mutation {
-	""" Create a new user. """
-	createUser(newUser: NewUser!): User!
+	""" Get a question by id. """
+	question(questionId: ID!): Question!
 }
 
 """ Question """

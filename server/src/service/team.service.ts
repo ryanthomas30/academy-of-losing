@@ -1,7 +1,7 @@
 
 import { ApolloError } from 'apollo-server'
 import { LiteDataSource } from '@/dataSource'
-import { Team, Game as GameEntity, User as UserEntity } from '@/entity'
+import { Team, Game, User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { NewTeam } from '@/types'
 
@@ -11,9 +11,35 @@ export class TeamService extends LiteDataSource {
 		return Team.getOne(teamId)
 	}
 
+	async getTeamByUserGame(userId: string, gameId: string) {
+		try {
+			const team = await Team
+				.createQueryBuilder('team')
+				.leftJoinAndSelect(
+					'team.users',
+					'user',
+					'user.id = :userId',
+					{ userId },
+				)
+				.where(
+					'team.gameId = :gameId',
+					{ gameId },
+				)
+				.getOneOrFail()
+			return team
+		} catch (err) {
+			throw new ApolloError(`An error occurred when trying to fetch team for user: "${userId}" and game: "${gameId}".`)
+		}
+	}
+
+	async getTeamIdByUserGame(userId: string, gameId: string) {
+		const team = await this.getTeamByUserGame(userId, gameId)
+		return team.id
+	}
+
 	async createTeam(newTeam: NewTeam, gameId: string) {
 		/* Get Game */
-		const game = await GameEntity.getOne(gameId)
+		const game = await Game.getOne(gameId)
 
 		/* Create new Team with Game */
 		const team = Team.create({
@@ -40,7 +66,7 @@ export class TeamService extends LiteDataSource {
 		const team = await Team.getOne(teamId)
 
 		/* Get User */
-		const user = await UserEntity.getOne(userId)
+		const user = await User.getOne(userId)
 
 		/* Add new User to Team */
 		team.users = [...team.users, user]
