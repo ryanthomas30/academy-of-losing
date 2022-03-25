@@ -6,5 +6,6 @@ export const gameResolver: Resolvers = {
 	},
 	Mutation: {
 		createGame: (_, __, { dataSources }) => dataSources.gameService.createGame(),
+		addQuestionToGame: (_, { gameId, questionId }, { dataSources }) => dataSources.gameService.addQuestionToGame(gameId, questionId),
 	},
 }

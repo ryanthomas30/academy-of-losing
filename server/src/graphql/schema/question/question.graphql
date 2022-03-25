@@ -3,6 +3,11 @@ extend type Query {
 	question(questionId: ID!): Question!
 }
 
+extend type Mutation {
+	""" Create a new question. """
+	createQuestion(newQuestion: NewQuestion!): Question!
+}
+
 """ Question """
 type Question {
 	id: ID!
@@ -15,4 +20,12 @@ type Question {
 type Image {
 	id: ID!
 	url: String!
+}
+
+""" New Question """
+input NewQuestion {
+	title: String!
+	description: String!
+	answer: String!
+	imageUrl: String
 }

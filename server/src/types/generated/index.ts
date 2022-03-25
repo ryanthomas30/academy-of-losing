@@ -37,11 +37,15 @@ export type Image = {
 /**  Root Mutation  */
 export type Mutation = {
   __typename?: 'Mutation';
+  /**  Add a question to a game.  */
+  addQuestionToGame?: Maybe<Game>;
   /**  Add a user to a team.  */
   addUserToTeam: Team;
   /**  Create a new game.  */
   createGame: Game;
-  /**  Create a new user.  */
+  /**  Create a new question.  */
+  createQuestion: Question;
+  /**  Create a new team.  */
   createTeam: Team;
   /**  Create a new user.  */
   createUser: User;
@@ -51,9 +55,22 @@ export type Mutation = {
 
 
 /**  Root Mutation  */
+export type MutationAddQuestionToGameArgs = {
+  gameId: Scalars['ID'];
+  questionId: Scalars['ID'];
+};
+
+
+/**  Root Mutation  */
 export type MutationAddUserToTeamArgs = {
   teamId: Scalars['ID'];
   userId: Scalars['ID'];
+};
+
+
+/**  Root Mutation  */
+export type MutationCreateQuestionArgs = {
+  newQuestion: NewQuestion;
 };
 
 
@@ -69,7 +86,15 @@ export type MutationCreateUserArgs = {
   newUser: NewUser;
 };
 
-/**  New user object  */
+/**  New Question  */
+export type NewQuestion = {
+  answer: Scalars['String'];
+  description: Scalars['String'];
+  imageUrl?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+};
+
+/**  New team object  */
 export type NewTeam = {
   /**  The name of the team.  */
   name: Scalars['String'];
@@ -91,7 +116,7 @@ export type Query = {
   game: Game;
   /**  Get a question by id.  */
   question: Question;
-  /**  Get a user by id.  */
+  /**  Get a team by id.  */
   team: Team;
   /**  Test query for health checks.  */
   test?: Maybe<Scalars['String']>;
@@ -132,7 +157,7 @@ export type Question = {
   title: Scalars['String'];
 };
 
-/**  User  */
+/**  Team  */
 export type Team = {
   __typename?: 'Team';
   id: Scalars['ID'];
@@ -225,6 +250,7 @@ export type ResolversTypes = ResolversObject<{
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Image: ResolverTypeWrapper<Image>;
   Mutation: ResolverTypeWrapper<{}>;
+  NewQuestion: NewQuestion;
   NewTeam: NewTeam;
   NewUser: NewUser;
   Query: ResolverTypeWrapper<{}>;
@@ -241,6 +267,7 @@ export type ResolversParentTypes = ResolversObject<{
   ID: Scalars['ID'];
   Image: Image;
   Mutation: {};
+  NewQuestion: NewQuestion;
   NewTeam: NewTeam;
   NewUser: NewUser;
   Query: {};
@@ -268,8 +295,10 @@ export type ImageResolvers<ContextType = any, ParentType extends ResolversParent
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addQuestionToGame?: Resolver<Maybe<ResolversTypes['Game']>, ParentType, ContextType, RequireFields<MutationAddQuestionToGameArgs, 'gameId' | 'questionId'>>;
   addUserToTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationAddUserToTeamArgs, 'teamId' | 'userId'>>;
   createGame?: Resolver<ResolversTypes['Game'], ParentType, ContextType>;
+  createQuestion?: Resolver<ResolversTypes['Question'], ParentType, ContextType, RequireFields<MutationCreateQuestionArgs, 'newQuestion'>>;
   createTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationCreateTeamArgs, 'gameId' | 'newTeam'>>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'newUser'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

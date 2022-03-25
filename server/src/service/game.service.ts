@@ -1,6 +1,6 @@
 import { ApolloError } from 'apollo-server'
-import { Game, User } from '@/entity'
-import { DbError } from '@/util'
+import { Game, Question, User } from '@/entity'
+import { DbError, PgErrorCode } from '@/util'
 import { LiteDataSource } from '@/dataSource'
 
 export class GameService extends LiteDataSource {
@@ -31,6 +31,29 @@ export class GameService extends LiteDataSource {
 			switch (error.code) {
 				default:
 					throw new ApolloError('An error occurred when creating this game')
+			}
+		}
+	}
+
+	async addQuestionToGame(gameId: string, questionId: string) {
+		/* Get Game */
+		const game = await Game.getOne(gameId)
+
+		/* Get Question */
+		const question = await Question.getOne(questionId)
+
+		/* Add Question to Game */
+		game.questions = [...game.questions, question]
+		try {
+			/* Save Question */
+			return game.save()
+		} catch (e) {
+			const error = new DbError(e)
+			switch (error.code) {
+				case PgErrorCode.UniqueViolation:
+					throw new ApolloError('This question already exists on this game')
+				default:
+					throw new ApolloError(`An error occurred when adding question: "${questionId}" to game: "${gameId}"`)
 			}
 		}
 	}

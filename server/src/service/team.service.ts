@@ -68,7 +68,7 @@ export class TeamService extends LiteDataSource {
 		/* Get User */
 		const user = await User.getOne(userId)
 
-		/* Add new User to Team */
+		/* Add User to Team */
 		team.users = [...team.users, user]
 		try {
 			/* Save Team */
@@ -79,7 +79,7 @@ export class TeamService extends LiteDataSource {
 				case PgErrorCode.UniqueViolation:
 					throw new ApolloError('This user already exists on this team')
 				default:
-					throw new ApolloError('An error occurred when creating this team')
+					throw new ApolloError(`An error occurred when adding user: "${userId}" to team: "${teamId}"`)
 			}
 		}
 	}

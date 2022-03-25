@@ -1,23 +1,23 @@
 extend type Query {
-	""" Get a user by id. """
+	""" Get a team by id. """
 	team(teamId: ID!): Team!
 }
 
 extend type Mutation {
-	""" Create a new user. """
+	""" Create a new team. """
 	createTeam(newTeam: NewTeam!, gameId: ID!): Team!
 	""" Add a user to a team. """
 	addUserToTeam(teamId: ID!, userId: ID!): Team!
 }
 
-""" User """
+""" Team """
 type Team {
 	id: ID!
 	name: String!
 	users: [User!]!
 }
 
-""" New user object """
+""" New team object """
 input NewTeam {
 	""" The name of the team. """
 	name: String!
