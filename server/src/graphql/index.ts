@@ -9,6 +9,7 @@ import {
 	teamResolver,
 	questionResolver,
 	hasUserIdTransformer,
+	gameResolver,
 } from './schema'
 
 import { applyTransformers } from './util'
@@ -21,6 +22,7 @@ export const resolvers = [
 	userResolver,
 	teamResolver,
 	questionResolver,
+	gameResolver,
 ]
 
 /**
