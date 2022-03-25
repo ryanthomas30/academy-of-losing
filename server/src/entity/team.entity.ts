@@ -31,7 +31,7 @@ export class Team extends BaseEntity {
 	gameId!: string
 
 	@ManyToOne(() => Game, game => game.teams)
-	game!: Game
+	game?: Game
 
 	@ManyToMany(() => User, user => user.teams, {
 		eager: true,
@@ -39,10 +39,10 @@ export class Team extends BaseEntity {
 	@JoinTable({
 		name: 'team_user',
 	})
-	users!: User[]
+	users?: User[]
 
 	@OneToMany(() => TeamAnswer, teamAnswer => teamAnswer.team)
-	teamAnswer!: TeamAnswer
+	teamAnswer?: TeamAnswer
 
 	@CreateDateColumn()
 	createdAt!: Date

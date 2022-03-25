@@ -23,7 +23,7 @@ export class Game extends BaseEntity {
 	@JoinTable({
 		name: 'game_question',
 	})
-	questions!: Question[]
+	questions?: Question[]
 
 	@OneToMany(() => Team, team => team.game)
 	teams?: Team[]

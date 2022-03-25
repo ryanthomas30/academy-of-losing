@@ -26,10 +26,10 @@ export class TeamAnswer extends BaseEntity {
 	teamId!: string
 
 	@ManyToOne(() => Question, question => question.teamAnswer)
-	question!: Question
+	question?: Question
 
 	@ManyToOne(() => Team, team => team.teamAnswer)
-	team!: Question
+	team?: Question
 
 	@CreateDateColumn()
 	createdAt!: Date

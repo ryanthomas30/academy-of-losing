@@ -32,10 +32,10 @@ export class Question extends BaseEntity {
 	answer!: string
 
 	@OneToMany(() => TeamAnswer, teamAnswer => teamAnswer.question)
-	teamAnswer!: TeamAnswer
+	teamAnswer?: TeamAnswer
 
 	@ManyToMany(() => Game, game => game.questions)
-	games!: Game[]
+	games?: Game[]
 
 	@CreateDateColumn()
 	createdAt!: Date
