@@ -8,4 +8,11 @@ type Question {
 	id: ID!
 	title: String!
 	description: String!
+	image: Image
+}
+
+""" Image Object """
+type Image {
+	id: ID!
+	url: String!
 }

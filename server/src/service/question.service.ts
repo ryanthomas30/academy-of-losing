@@ -2,6 +2,8 @@
 import { LiteDataSource } from '@/dataSource'
 import { Question, Game } from '@/entity'
 
+import { Image } from '@/types'
+
 export class QuestionService extends LiteDataSource {
 
 	getQuestion(questionId: string) {
@@ -14,6 +16,14 @@ export class QuestionService extends LiteDataSource {
 			relations: ['questions'],
 		})
 		return game.questions ?? []
+	}
+
+	shapeImageResponse(imageUrl?: string): Image | null {
+		if (!imageUrl) return null
+		return {
+			id: imageUrl,
+			url: imageUrl,
+		}
 	}
 
 }

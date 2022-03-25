@@ -25,6 +25,9 @@ export class Question extends BaseEntity {
 	@Column()
 	description!: string
 
+	@Column({ nullable: true })
+	imageUrl?: string
+
 	@Column()
 	answer!: string
 

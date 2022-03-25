@@ -27,6 +27,13 @@ export type Game = {
   teams: Array<Team>;
 };
 
+/**  Image Object  */
+export type Image = {
+  __typename?: 'Image';
+  id: Scalars['ID'];
+  url: Scalars['String'];
+};
+
 /**  Root Mutation  */
 export type Mutation = {
   __typename?: 'Mutation';
@@ -121,6 +128,7 @@ export type Question = {
   __typename?: 'Question';
   description: Scalars['String'];
   id: Scalars['ID'];
+  image?: Maybe<Image>;
   title: Scalars['String'];
 };
 
@@ -215,6 +223,7 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Game: ResolverTypeWrapper<GameEntity>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Image: ResolverTypeWrapper<Image>;
   Mutation: ResolverTypeWrapper<{}>;
   NewTeam: NewTeam;
   NewUser: NewUser;
@@ -230,6 +239,7 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   Game: GameEntity;
   ID: Scalars['ID'];
+  Image: Image;
   Mutation: {};
   NewTeam: NewTeam;
   NewUser: NewUser;
@@ -248,6 +258,12 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   questions?: Resolver<Array<ResolversTypes['Question']>, ParentType, ContextType>;
   teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ImageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Image'] = ResolversParentTypes['Image']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -270,6 +286,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type QuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Question'] = ResolversParentTypes['Question']> = ResolversObject<{
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -292,6 +309,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   Game?: GameResolvers<ContextType>;
+  Image?: ImageResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Question?: QuestionResolvers<ContextType>;
