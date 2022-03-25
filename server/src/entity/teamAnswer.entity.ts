@@ -20,6 +20,9 @@ export class TeamAnswer extends BaseEntity {
 	isCorrect!: boolean
 
 	@Column()
+	answer!: string
+
+	@Column()
 	questionId!: string
 
 	@Column()

@@ -1,34 +1,33 @@
-
 import { ApolloError } from 'apollo-server'
 import { LiteDataSource } from '@/dataSource'
-import { Team, Game, User } from '@/entity'
+import {
+	Team,
+	Game,
+	User,
+	Question,
+	TeamAnswer,
+} from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { NewTeam } from '@/types'
 
 export class TeamService extends LiteDataSource {
-
 	getTeam(teamId: string) {
 		return Team.getOne(teamId)
 	}
 
 	async getTeamByUserGame(userId: string, gameId: string) {
 		try {
-			const team = await Team
-				.createQueryBuilder('team')
-				.leftJoinAndSelect(
-					'team.users',
-					'user',
-					'user.id = :userId',
-					{ userId },
-				)
-				.where(
-					'team.gameId = :gameId',
-					{ gameId },
-				)
+			const team = await Team.createQueryBuilder('team')
+				.leftJoinAndSelect('team.users', 'user', 'user.id = :userId', {
+					userId,
+				})
+				.where('team.gameId = :gameId', { gameId })
 				.getOneOrFail()
 			return team
 		} catch (err) {
-			throw new ApolloError(`An error occurred when trying to fetch team for user: "${userId}" and game: "${gameId}".`)
+			throw new ApolloError(
+				`An error occurred when trying to fetch team for user: "${userId}" and game: "${gameId}".`,
+			)
 		}
 	}
 
@@ -79,8 +78,38 @@ export class TeamService extends LiteDataSource {
 				case PgErrorCode.UniqueViolation:
 					throw new ApolloError('This user already exists on this team')
 				default:
-					throw new ApolloError(`An error occurred when adding user: "${userId}" to team: "${teamId}"`)
+					throw new ApolloError(
+						`An error occurred when adding user: "${userId}" to team: "${teamId}"`,
+					)
 			}
+		}
+	}
+
+	async answerQuestion(teamId: string, answer: string, questionId: string) {
+		/* Get Team */
+		const team = await Team.getOne(teamId)
+
+		/* Get Question */
+		const question = await Question.getOne(questionId)
+
+		const isCorrect = question.answer === answer
+
+		/* Create new TeamAnswer with Team, Question, Answer, IsCorrect */
+		const teamAnswer = TeamAnswer.create({
+			team,
+			question,
+			isCorrect,
+			answer,
+		})
+
+		try {
+		/* Save Answer */
+			teamAnswer.save()
+			return isCorrect
+		} catch (e) {
+			throw new ApolloError(
+				'An error occurred when trying to create a new teamAnswer',
+			)
 		}
 	}
 }

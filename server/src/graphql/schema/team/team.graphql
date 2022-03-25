@@ -8,6 +8,8 @@ extend type Mutation {
 	createTeam(newTeam: NewTeam!, gameId: ID!): Team!
 	""" Add a user to a team. """
 	addUserToTeam(teamId: ID!, userId: ID!): Team!
+	""" Submit a Team's Answer """
+	answerQuestion(teamId: ID!, answer: String!, questionId: ID!): Boolean!
 }
 
 """ Team """
