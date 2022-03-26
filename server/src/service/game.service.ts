@@ -6,9 +6,7 @@ import { LiteDataSource } from '@/dataSource'
 export class GameService extends LiteDataSource {
 
 	getGame(gameId: string) {
-		return Game.getOne(gameId, {
-			relations: ['teams', 'questions'],
-		})
+		return Game.getOne(gameId)
 	}
 
 	async getGamesByUserId(userId: string) {
@@ -43,7 +41,7 @@ export class GameService extends LiteDataSource {
 		const question = await Question.getOne(questionId)
 
 		/* Add Question to Game */
-		game.questions = [...game.questions, question]
+		game.questions = [...(game.questions ?? []), question]
 		try {
 			/* Save Question */
 			return game.save()

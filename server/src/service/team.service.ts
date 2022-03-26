@@ -69,7 +69,7 @@ export class TeamService extends LiteDataSource {
 		const user = await User.getOne(userId)
 
 		/* Add User to Team */
-		team.users = [...team.users, user]
+		team.users = [...(team.users ?? []), user]
 		try {
 			/* Save Team */
 			return team.save()

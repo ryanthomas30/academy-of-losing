@@ -8,4 +8,8 @@ export const gameResolver: Resolvers = {
 		createGame: (_, __, { dataSources }) => dataSources.gameService.createGame(),
 		addQuestionToGame: (_, { gameId, questionId }, { dataSources }) => dataSources.gameService.addQuestionToGame(gameId, questionId),
 	},
+	Game: {
+		teams: ({ teams }, _, { dataSources }) => dataSources.utilService.resolveNilToArray(teams),
+		questions: ({ questions }, _, { dataSources }) => dataSources.utilService.resolveNilToArray(questions),
+	},
 }

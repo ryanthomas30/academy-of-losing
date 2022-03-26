@@ -19,13 +19,17 @@ export class Game extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: string
 
-	@ManyToMany(() => Question, question => question.games)
+	@ManyToMany(() => Question, question => question.games, {
+		eager: true,
+	})
 	@JoinTable({
 		name: 'game_question',
 	})
 	questions?: Question[]
 
-	@OneToMany(() => Team, team => team.game)
+	@OneToMany(() => Team, team => team.game, {
+		eager: true,
+	})
 	teams?: Team[]
 
 	@CreateDateColumn()
