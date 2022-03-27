@@ -12,6 +12,10 @@ import { ApolloProvider } from '@apollo/client'
 /* Firebase */
 import Firebase, { FirebaseProvider } from './firebase'
 
+/* Theme Provider */
+import { ThemeProvider } from 'styled-components'
+import { theme } from './constants'
+
 /* Stylesheet */
 import './styles/index.scss'
 
@@ -25,9 +29,11 @@ ReactDOM.render(
 	<React.StrictMode>
 		<ApolloProvider client={apolloClient}>
 			<FirebaseProvider value={new Firebase()}>
-				<BrowserRouter>
-					<App />
-				</BrowserRouter>
+				<ThemeProvider theme={theme}>
+					<BrowserRouter>
+						<App />
+					</BrowserRouter>
+				</ThemeProvider>
 			</FirebaseProvider>
 		</ApolloProvider>
 	</React.StrictMode>,
