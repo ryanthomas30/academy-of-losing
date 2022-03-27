@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { User } from 'firebase/auth'
 
-import { storeAuthUser, getAuthUser, removeAuthUser, setToken, removeToken } from '../localStorage'
+import { storeAuthUser, getAuthUser, removeAuthUser, setToken, removeToken } from '@/localStorage'
 
 import Firebase from '.'
 

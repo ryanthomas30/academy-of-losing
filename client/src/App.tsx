@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-import { Flexbox } from './components'
-import { AuthProvider, useFirebaseAuthListener } from './firebase'
-import { Routes } from './routing/Routes'
+import { Flexbox } from '@/components'
+import { AuthProvider, useFirebaseAuthListener } from '@/firebase'
+import { Routes } from '@/routing'
 
 const App = () => {
 	const firebaseUser = useFirebaseAuthListener()

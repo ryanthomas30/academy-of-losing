@@ -6,21 +6,21 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 
 /* Apollo */
-import { apolloClient } from './apollo'
+import { apolloClient } from '@/apollo'
 import { ApolloProvider } from '@apollo/client'
 
 /* Firebase */
-import Firebase, { FirebaseProvider } from './firebase'
+import Firebase, { FirebaseProvider } from '@/firebase'
 
 /* Theme Provider */
 import { ThemeProvider } from 'styled-components'
-import { theme } from './constants'
+import { theme } from '@/constants'
 
 /* Stylesheet */
-import './styles/index.scss'
+import '@/styles/index.scss'
 
 /* Root Component */
-import App from './App'
+import App from '@/App'
 
 /* Web Vitals */
 import reportWebVitals from './reportWebVitals'

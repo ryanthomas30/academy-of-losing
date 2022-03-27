@@ -1,7 +1,7 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 
-import { getToken } from '../localStorage'
+import { getToken } from '@/localStorage'
 
 const httpLink = createHttpLink({
 	uri: process.env.REACT_APP_OVERWATCHMEN_API_URL,
