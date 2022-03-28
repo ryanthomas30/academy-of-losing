@@ -19,7 +19,6 @@ export const useFirebaseAuthListener = () => {
 		const unsubscribe = firebase.auth.onAuthStateChanged(
 			(authUser) => {
 				setFirebaseUser(authUser)
-				/* eslint-disable no-unused-expressions */
 				firebase.getToken()?.then((token) => {
 					if (authUser && token) {
 						storeAuthUser(authUser)
@@ -29,7 +28,6 @@ export const useFirebaseAuthListener = () => {
 						removeToken()
 					}
 				})
-				/* eslint-enable no-unused-expressions */
 			},
 		)
 		return () => {
