@@ -11,7 +11,9 @@ import {
 
 import { Team } from './team.entity'
 
-@Entity()
+@Entity({
+	name: 'aol_user',
+})
 export class User extends BaseEntity {
 
 	@PrimaryColumn()

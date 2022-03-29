@@ -3,9 +3,10 @@ import { AuthenticationError } from 'apollo-server'
 import { ContextFunction } from 'apollo-server-core'
 import { Request, Response } from 'express'
 import { ExecutionParams } from 'subscriptions-transport-ws'
-// import { auth } from 'firebase-admin'
+import { auth } from 'firebase-admin'
 
 import { DataSources } from '@/service'
+import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier'
 
 /**
  * Express context from apollo-server-core.
@@ -25,7 +26,8 @@ export interface ProducedContext {
 
 export interface ContextUser {
 	userId: string
-	roles: string[]
+	admin: boolean
+	email: string
 }
 
 /**
@@ -44,18 +46,21 @@ export interface Context extends ProducedContext {
  */
 export const context: ContextFunction<ExpressContext, ProducedContext> = async ({ req, connection }) => {
 	if (connection) return connection.context
-	// const authHeader = `${req.headers.authorization}` || ''
+	const authHeader = `${req.headers.authorization}` || ''
 	try {
-		// if (authHeader.startsWith('Bearer ')) {
-		// const token = authHeader.split(' ')[1]
-		// const decodedToken = await auth().verifyIdToken(token)
-		return {
-			user: {
-				userId: '', // decodedToken.uid,
-				roles: [],
-			},
+		if (authHeader.startsWith('Bearer ')) {
+			const token = authHeader.split(' ')[1]
+			const decodedToken: DecodedIdToken = await auth().verifyIdToken(token)
+			console.log('decodedToken:', decodedToken)
+
+			return {
+				user: {
+					userId: decodedToken.uid,
+					email: decodedToken.email ?? '',
+					admin: !!decodedToken.admin,
+				},
+			}
 		}
-		// }
 		throw Error
 	} catch (err) {
 		throw new AuthenticationError('You do not have access to these records')
