@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth'
 
 const AUTH_USER = 'authUser'
-const TOKEN = 'token'
+const TOKEN = 'academy_of_losing_token'
 const LOGIN_REDIRECT = 'login_redirect'
 
 /* Auth User */

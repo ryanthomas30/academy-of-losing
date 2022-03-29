@@ -4,7 +4,7 @@ import { setContext } from '@apollo/client/link/context'
 import { getToken } from '@/localStorage'
 
 const httpLink = createHttpLink({
-	uri: process.env.REACT_APP_OVERWATCHMEN_API_URL,
+	uri: process.env.REACT_APP_API_URL,
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -22,4 +22,4 @@ export const apolloClient = new ApolloClient({
 	link: authLink.concat(httpLink),
 })
 
-export * from './queries'
+export * from './generated'

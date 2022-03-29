@@ -30,7 +30,7 @@ const BaseButton: React.FC<ButtonProps> = (props) => {
 			className={className}
 			justify='center'
 			align='center'
-			marginBetween='small'
+			marginBetween='medium'
 			direction='row'
 			wrap={false}
 			full={full && 'horizontal'}
@@ -62,7 +62,7 @@ export const Button = styled(BaseButton)`
 	border-style: none;
 	cursor: pointer;
 	padding: 0px 20px;
-	border-radius: 6px;
+	border-radius: ${theme.borderRadius};
 	min-width: 74px;
 	height: 44px;
 	background-color: ${({ primary }) => primary ? theme.color.blue : theme.color.gray3};
@@ -78,5 +78,6 @@ export const Button = styled(BaseButton)`
 	/* Button Text */
 	color: ${() => theme.color.white};
 	font-size: 14px;
+	font-family: 'Source Code Pro';
 	white-space: nowrap;
 `

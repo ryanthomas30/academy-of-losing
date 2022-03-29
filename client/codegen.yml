@@ -1,0 +1,12 @@
+schema: http://localhost:4000/graphql
+documents: "./src/apollo/**/*.graphql"
+generates:
+  src/apollo/generated/index.ts:
+    plugins:
+      - add:
+          content: "/* eslint-disable */"
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true

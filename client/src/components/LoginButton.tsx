@@ -22,5 +22,4 @@ const BaseLoginButton: React.FC<Props> = ({ className, label = 'Sign in with Goo
 )
 
 export const LoginButton = styled(BaseLoginButton)`
-	font-family: 'Roboto';
 `

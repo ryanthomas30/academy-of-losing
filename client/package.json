@@ -22,6 +22,8 @@
 		"test": "craco test",
 		"eject": "craco eject",
 		"lint": "eslint src/**/*.ts",
+		"generate": "graphql-codegen",
+		"generate:watch": "graphql-codegen --watch",
 		"barrel:components": "barrelsby -d src/components -D true -e .spec.ts .tests.ts -q -S -l all",
 		"deploy": "yarn build && firebase deploy"
 	},
@@ -44,6 +46,11 @@
 		]
 	},
 	"devDependencies": {
+		"@graphql-codegen/add": "^3.1.1",
+		"@graphql-codegen/cli": "^2.6.2",
+		"@graphql-codegen/typescript": "^2.4.8",
+		"@graphql-codegen/typescript-operations": "^2.3.5",
+		"@graphql-codegen/typescript-react-apollo": "^3.2.11",
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/react": "^12.0.0",
 		"@testing-library/user-event": "^13.2.1",

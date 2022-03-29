@@ -12,6 +12,8 @@ const DarkBlue = '#569CD6'
 const DarkOrange = '#CE9178'
 const Purple = '#C586C0'
 const DarkGreen = '#6A9955'
+const Teal = '#4EC9B0'
+const Yellow = '#DCDCAA'
 
 const color = {
 	background: Gray1,
@@ -25,7 +27,7 @@ const color = {
 	blue: Blue,
 	blueAlternate: BlueAlternate,
 	lightBlue: LightBlue,
-	pageBlue: PaleBlue,
+	paleBlue: PaleBlue,
 	darkBlue: DarkBlue,
 	darkOrange: DarkOrange,
 	stringText: DarkOrange,
@@ -33,10 +35,12 @@ const color = {
 	keywordText: Purple,
 	darkGreen: DarkGreen,
 	commentText: DarkGreen,
+	teal: Teal,
+	yellow: Yellow,
 }
 
 export const theme = {
 	color,
-	borderRadius: '4px',
+	borderRadius: '2px',
 	transition: 'all ease-in-out 150ms',
 }

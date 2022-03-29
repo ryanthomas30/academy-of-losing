@@ -11,6 +11,8 @@ import {
 	updatePassword,
 	signOut,
 	getIdToken,
+	getAdditionalUserInfo,
+	UserCredential,
 } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -47,6 +49,10 @@ class Firebase {
 
 	googleSignIn() {
 		return signInWithPopup(this.auth, this.googleProvider)
+	}
+
+	getAdditionalUserInfo(userCredential: UserCredential) {
+		return getAdditionalUserInfo(userCredential)
 	}
 
 	signOut() {

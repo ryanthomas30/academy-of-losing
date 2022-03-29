@@ -3,7 +3,9 @@
  */
 
 export * from './Button'
+export * from './CommentText'
 export * from './Flexbox'
 export * from './Link'
 export * from './Page'
 export * from './Row'
+export * from './Text'

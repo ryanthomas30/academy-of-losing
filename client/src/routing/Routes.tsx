@@ -5,19 +5,21 @@ import { RequireAuth } from './AuthRoute'
 import { routeNames } from './routeNames'
 
 /* Pages */
-import { Home } from '../pages/Home'
-import { Login } from '../pages/Login'
-import { NotFound } from '../pages/NotFound'
+import { MainLayout } from '@/pages/MainLayout'
+import { Home } from '@/pages/Home'
+import { Login } from '@/pages/Login'
+import { NotFound } from '@/pages/NotFound'
 
 export const Routes = () => {
 	const firebaseUser = useFirebaseAuthListener()
 	return (
 		<AuthProvider value={firebaseUser}>
 			<RouteGroup>
-				<Route
-					path={routeNames.home}
-					element={<RequireAuth element={<Home />} />}
-				>
+				<Route element={<RequireAuth element={<MainLayout />} />}>
+					<Route
+						index
+						element={<Home />}
+					/>
 				</Route>
 				<Route
 					path={routeNames.login}
