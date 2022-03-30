@@ -1,8 +1,9 @@
-import { Button, Page } from '@/components'
-import { useTestLazyQuery } from '@/apollo'
+import { Button, Page, LoadingBoundary } from '@/components'
+import { useMeQuery, useTestLazyQuery } from '@/apollo'
 
 export const Home: React.FC = () => {
 	const [testQuery] = useTestLazyQuery()
+	const { data, loading } = useMeQuery()
 
 	const handleButtonClick = async () => {
 		await testQuery()
@@ -16,6 +17,11 @@ export const Home: React.FC = () => {
 			>
 				Run Test Query
 			</Button>
+			<LoadingBoundary
+				loading={loading}
+			>
+				{JSON.stringify(data?.me)}
+			</LoadingBoundary>
 		</Page>
 	)
 }

@@ -1,0 +1,12 @@
+query User($userId: ID!) {
+	user(userId: $userId) {
+		id
+		isAdmin
+		email
+		fullName
+		photoUrl
+		games {
+			id
+		}
+	}
+}

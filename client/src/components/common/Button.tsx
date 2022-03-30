@@ -30,7 +30,7 @@ const BaseButton: React.FC<ButtonProps> = (props) => {
 			className={className}
 			justify='center'
 			align='center'
-			marginBetween='medium'
+			marginBetween='small'
 			direction='row'
 			wrap={false}
 			full={full && 'horizontal'}

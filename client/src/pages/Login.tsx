@@ -1,10 +1,10 @@
 import React from 'react'
 import { useAuth, useFirebase } from '@/firebase'
-import { Flexbox, LoginButton, CommentText } from '@/components'
+import { Flexbox, LoginButton, CommentText, StringText } from '@/components'
 import { useCreateUserMutation } from '@/apollo'
 import { useNavigate } from 'react-router-dom'
 import { routeNames, useLocation } from '@/routing'
-// import { theme } from '@/constants'
+import { getRandomZoomiesPhrase } from '@/util'
 
 export const Login = () => {
 	const firebase = useFirebase()
@@ -62,9 +62,15 @@ export const Login = () => {
 			marginBetween='large'
 			full
 		>
-			<h1>
-				The Alan & Ivan Academy of Losing
-			</h1>
+			<Flexbox
+				marginBetween='small'
+				center
+			>
+				<h1 style={{ textAlign: 'center' }}>
+					The Alan & Ivan Academy of Losing
+				</h1>
+				<StringText>{getRandomZoomiesPhrase()}</StringText>
+			</Flexbox>
 			<Flexbox
 				marginBetween='medium'
 				center
@@ -78,7 +84,6 @@ export const Login = () => {
 					</Flexbox>
 				)}
 			</Flexbox>
-
 		</Flexbox>
 	)
 }

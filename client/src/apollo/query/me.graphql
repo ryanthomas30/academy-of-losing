@@ -1,0 +1,12 @@
+query Me {
+	me {
+		id
+		isAdmin
+		email
+		fullName
+		photoUrl
+		games {
+			id
+		}
+	}
+}
