@@ -7,17 +7,14 @@ export interface AvatarProps {
 
 const DefaultSize = 36
 
-export const Avatar: React.FC<AvatarProps> = ({ src, size = DefaultSize }) => {
-	console.log('avatar')
-	return (
-		<AvatarImage
-			src={src}
-			size={size}
-			referrerPolicy='no-referrer'
-		/>
+export const Avatar: React.FC<AvatarProps> = ({ src, size = DefaultSize }) => (
+	<AvatarImage
+		src={src}
+		size={size}
+		referrerPolicy='no-referrer'
+	/>
 
-	)
-}
+)
 
 const AvatarImage = styled.img<{ size: number }>`
 	object-fit: cover;

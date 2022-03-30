@@ -1,5 +1,5 @@
 import { Route, RouteProps, Navigate, useLocation } from 'react-router-dom'
-import { useAuth } from '../firebase'
+import { useAuth } from '@/firebase'
 import { routeNames } from './routeNames'
 
 interface Props {
@@ -7,10 +7,10 @@ interface Props {
 }
 
 export const RequireAuth: React.FC<Props> = ({ element }) => {
-	const authUser = useAuth()
+	const isLoggedIn = !!useAuth()
 	const location = useLocation()
 
-	if (!authUser) {
+	if (!isLoggedIn) {
 		return (
 			<Navigate
 				to={routeNames.login}

@@ -1,3 +1,5 @@
+import { StandardPropertiesHyphen } from 'csstype'
+
 const Gray1 = '#1E1E1E'
 const Gray2 = '#252526'
 const Gray3 = '#333'
@@ -14,6 +16,22 @@ const Purple = '#C586C0'
 const DarkGreen = '#6A9955'
 const Teal = '#4EC9B0'
 const Yellow = '#DCDCAA'
+
+const DefaultTransitionSpeed = 160
+const FastTransitionSpeed = 80
+
+type CssPropertyName = keyof StandardPropertiesHyphen
+
+function transition(
+	property: CssPropertyName = 'all',
+	speed: number = DefaultTransitionSpeed,
+): string {
+	return `${property} ${speed}ms ease-in-out`
+}
+
+function transitionFast(property: CssPropertyName = 'all'): string {
+	return transition(property, FastTransitionSpeed)
+}
 
 const color = {
 	background: Gray1,
@@ -42,5 +60,6 @@ const color = {
 export const theme = {
 	color,
 	borderRadius: '2px',
-	transition: 'all ease-in-out 150ms',
+	transition,
+	transitionFast,
 }

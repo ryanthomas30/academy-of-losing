@@ -8,7 +8,7 @@ import { Link } from './Link'
 export interface ButtonProps {
 	children?: ReactNode
 	label?: ReactNode
-	path?: string
+	to?: string
 	onClick?: React.MouseEventHandler<Element>
 	icon?: ReactNode
 	color?: string
@@ -22,7 +22,7 @@ export interface ButtonProps {
 }
 
 const BaseButton: React.FC<ButtonProps> = (props) => {
-	const { children, label, path, onClick, full, disabled, icon, type = 'button', style, className } = props
+	const { children, label, to, onClick, full, disabled, icon, type = 'button', style, className } = props
 	const labelNode = (!!children || !!label) && <Flexbox>{children || label}</Flexbox>
 
 	const buttonInner = (
@@ -44,10 +44,10 @@ const BaseButton: React.FC<ButtonProps> = (props) => {
 		</Flexbox>
 	)
 
-	if (path && !disabled) {
+	if (to && !disabled) {
 		return (
 			<Link
-				to={path}
+				to={to}
 				style={{ width: full ? '100%' : '' }}
 			>
 				{buttonInner}
@@ -66,7 +66,7 @@ export const Button = styled(BaseButton)`
 	min-width: 74px;
 	height: 44px;
 	background-color: ${({ primary }) => primary ? theme.color.blue : theme.color.gray3};
-	transition: ${theme.transition};
+	transition: ${theme.transition('background-color')};
 	opacity: ${({ disabled }) => disabled ? 0.6 : 'inherit'};
 	&:focus {
 		outline: none;

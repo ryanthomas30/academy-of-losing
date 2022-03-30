@@ -1,5 +1,7 @@
-import { zoomiesPhrases } from '@/constants'
+import { allPhrases, zoomiesPhrases } from '@/constants'
 
-export const getRandomPhrase = (phrases: string[]): string => phrases[Math.floor(Math.random() * phrases.length)]
+import { getRandomFromArray } from './getRandomFromArray'
 
-export const getRandomZoomiesPhrase = () => getRandomPhrase(zoomiesPhrases)
+export const getRandomPhrase = () => getRandomFromArray(allPhrases)
+
+export const getRandomZoomiesPhrase = () => getRandomFromArray(zoomiesPhrases)

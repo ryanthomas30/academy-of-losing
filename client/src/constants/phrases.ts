@@ -10,4 +10,25 @@ export const zoomiesPhrases = [
 	'Can you afford $11 zoomies?',
 ]
 
-export const allPhrases = [...zoomiesPhrases]
+export const wormPhrases = [
+	'worm',
+	'Worm',
+	'I\'m just a worm and life is a nightwyrm',
+	'I\'m just a worm, and I\'m sitting here on capitol worm',
+]
+
+export const otherPhrases = [
+	'I\'ve been talking this whole time!',
+	'wAcKy AnD wIlD',
+	'WaCkY aNd WiLd',
+	'The next evolution in trivia.',
+	'cumink',
+	'innateOne',
+	'*sad ivan noises*',
+]
+
+export const allPhrases = [
+	...zoomiesPhrases,
+	...wormPhrases,
+	...otherPhrases,
+]

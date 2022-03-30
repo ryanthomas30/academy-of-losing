@@ -15,7 +15,7 @@ export const Login = () => {
 	const location = useLocation()
 
 	const from = location.state?.from?.pathname || routeNames.home
-	const authUser = useAuth()
+	const isLoggedIn = !!useAuth()
 
 	const createUser = (uid: string, email: string, displayName: string) => createUserMutation({
 		variables: {
@@ -50,10 +50,10 @@ export const Login = () => {
 	}
 
 	React.useEffect(() => {
-		if (authUser && !loading) {
+		if (isLoggedIn && !loading) {
 			navigate(routeNames.home, { replace: true })
 		}
-	}, [authUser, loading])
+	}, [isLoggedIn, loading])
 
 	return (
 		<Flexbox
