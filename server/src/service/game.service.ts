@@ -14,7 +14,11 @@ export class GameService extends LiteDataSource {
 			relations: ['teams'],
 		})
 		const gameIds = user.teams?.map(({ gameId }) => gameId) ?? []
-		return Game.findByIds(gameIds)
+		return Game.findByIds(gameIds, {
+			order: {
+				createdAt: 'DESC',
+			},
+		})
 	}
 
 	async createGame() {
