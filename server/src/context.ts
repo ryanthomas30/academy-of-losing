@@ -7,6 +7,7 @@ import { auth } from 'firebase-admin'
 
 import { DataSources } from '@/service'
 import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier'
+import { isDevelopment } from './util'
 
 /**
  * Express context from apollo-server-core.
@@ -61,7 +62,15 @@ export const context: ContextFunction<ExpressContext, ProducedContext> = async (
 				},
 			}
 		}
-		throw Error
+		/* Allows introspection in development */
+		if (!isDevelopment()) throw Error
+		return {
+			user: {
+				userId: '',
+				email: '',
+				admin: false,
+			},
+		}
 	} catch (err) {
 		throw new AuthenticationError('You do not have access to these records')
 	}

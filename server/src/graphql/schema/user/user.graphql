@@ -1,4 +1,6 @@
 extend type Query {
+	""" Get logged in user. """
+	me: User!
 	""" Get a user by id. """
 	user(userId: ID!): User! @hasUserId
 }
@@ -15,6 +17,7 @@ type User {
 	email: String!
 	isAdmin: Boolean!
 	games: [Game!]!
+	photoUrl: String
 }
 
 """ New user object """

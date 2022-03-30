@@ -1,7 +1,8 @@
+import { ProducedContext } from '@/context'
 import { DirectiveTransformer } from '@/types'
 import { getDirective, MapperKind, mapSchema } from '@graphql-tools/utils'
 import { AuthenticationError } from 'apollo-server'
-import { defaultFieldResolver } from 'graphql'
+import { defaultFieldResolver, GraphQLFieldConfig } from 'graphql'
 
 const DirectiveName = 'hasUserId'
 
@@ -32,14 +33,15 @@ const DirectiveName = 'hasUserId'
  * ```
  */
 export const hasUserIdTransformer: DirectiveTransformer = (schema) => mapSchema(schema, {
-	[MapperKind.OBJECT_FIELD]: (fieldConfig) => {
+	[MapperKind.OBJECT_FIELD]: (fieldConfig: GraphQLFieldConfig<any, ProducedContext>) => {
 		const directive = getDirective(schema, fieldConfig, DirectiveName)
 		if (directive) {
 			const { resolve = defaultFieldResolver } = fieldConfig
 			fieldConfig.resolve = async (...args) => {
-				const [, { userId }, { user }] = args
-				if (user) {
-					if (userId === user.userId) return resolve(...args)
+				const [, { userId }, { user: contextUser }] = args
+				if (contextUser) {
+					if (contextUser.admin) return resolve(...args)
+					if (userId === contextUser.userId) return resolve(...args)
 					throw new AuthenticationError('You are not authorized to view this resource.')
 				} else {
 					throw new AuthenticationError('You must be signed in to view this resource.')

@@ -114,6 +114,8 @@ export type Query = {
   __typename?: 'Query';
   /**  Get a game by id.  */
   game: Game;
+  /**  Get logged in user.  */
+  me: User;
   /**  Get a question by id.  */
   question: Question;
   /**  Get a team by id.  */
@@ -173,6 +175,7 @@ export type User = {
   games: Array<Game>;
   id: Scalars['ID'];
   isAdmin: Scalars['Boolean'];
+  photoUrl?: Maybe<Scalars['String']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -306,6 +309,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   game?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<QueryGameArgs, 'gameId'>>;
+  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   question?: Resolver<ResolversTypes['Question'], ParentType, ContextType, RequireFields<QueryQuestionArgs, 'questionId'>>;
   team?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<QueryTeamArgs, 'teamId'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -333,6 +337,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isAdmin?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  photoUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

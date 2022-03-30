@@ -1,5 +1,4 @@
 import { ApolloError } from 'apollo-server'
-import { auth } from 'firebase-admin'
 import { User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { NewUser } from '@/types'
@@ -13,7 +12,8 @@ export class UserService extends LiteDataSource {
 	}
 
 	async createUser(newUser: NewUser) {
-		const isAdmin = adminWhiteList.includes(this.context.user.email)
+		const { user: contextUser, dataSources: { firebaseService } } = this.context
+		const isAdmin = adminWhiteList.includes(contextUser.email)
 		/* Create User */
 		const user = User.create({
 			...newUser,
@@ -22,13 +22,13 @@ export class UserService extends LiteDataSource {
 		try {
 			/* Save User */
 			const userResponse = await user.save()
-			auth().setCustomUserClaims(this.context.user.userId, {
+			firebaseService.setCustomUserClaims(contextUser.userId, {
 				admin: isAdmin,
 			})
 			return userResponse
 		} catch (e) {
 			const error = new DbError(e)
-			await auth().deleteUser(this.context.user.userId)
+			await firebaseService.deleteUser(contextUser.userId)
 			switch (error.code) {
 				case PgErrorCode.UniqueViolation:
 					throw new ApolloError('A user with this email already exists')

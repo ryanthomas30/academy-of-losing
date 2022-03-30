@@ -3,6 +3,7 @@ import { TeamService } from './team.service'
 import { GameService } from './game.service'
 import { QuestionService } from './question.service'
 import { UtilService } from './util.service'
+import { FirebaseService } from './firebase.service'
 
 export const dataSources = {
 	userService: new UserService(),
@@ -10,6 +11,7 @@ export const dataSources = {
 	gameService: new GameService(),
 	questionService: new QuestionService(),
 	utilService: new UtilService(),
+	firebaseService: new FirebaseService(),
 }
 
 /**

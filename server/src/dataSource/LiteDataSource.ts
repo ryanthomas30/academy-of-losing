@@ -1,15 +1,15 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource'
-import { ProducedContext } from '@/context'
+import { Context } from '@/context'
 
-export class LiteDataSource extends DataSource<ProducedContext> {
-	context: ProducedContext
+export class LiteDataSource extends DataSource<Context> {
+	context: Context
 
 	constructor() {
 		super()
-		this.context = {} as ProducedContext
+		this.context = {} as Context
 	}
 
-	initialize({ context }: DataSourceConfig<ProducedContext>) {
+	initialize({ context }: DataSourceConfig<Context>) {
 		this.context = context
 	}
 
