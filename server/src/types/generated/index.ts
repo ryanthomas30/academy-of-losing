@@ -100,7 +100,7 @@ export type NewGame = {
 
 /**  New Question  */
 export type NewQuestion = {
-  answer: Scalars['String'];
+  answers: Array<Scalars['String']>;
   description: Scalars['String'];
   imageUrl?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];

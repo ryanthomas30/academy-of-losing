@@ -26,6 +26,7 @@ type Image {
 input NewQuestion {
 	title: String!
 	description: String!
-	answer: String!
+	answers: [String!]!
 	imageUrl: String
 }
+

@@ -30,7 +30,7 @@ export class Question extends BaseEntity {
 	imageUrl?: string
 
 	@OneToMany(() => Answer, answer => answer.question)
-	answers?: string
+	answers?: Answer[]
 
 	@OneToMany(() => TeamAnswer, teamAnswer => teamAnswer.question)
 	teamAnswer?: TeamAnswer

@@ -1,6 +1,7 @@
 
 import { LiteDataSource } from '@/dataSource'
 import { Question, Game } from '@/entity'
+import { Answer } from '@/entity/answer.entity'
 
 import { Image, NewQuestion } from '@/types'
 import { DbError } from '@/util'
@@ -23,11 +24,19 @@ export class QuestionService extends LiteDataSource {
 		return game.questions ?? []
 	}
 
-	async createQuestion(newQuestion: NewQuestion) {
+	async createQuestion({ answers, ...newQuestion }: NewQuestion) {
+		/* Create Answers */
+		const answerEntities = answers.map(answer => (
+			Answer.create({
+				value: answer,
+			})
+		))
+
 		/* Create Question */
 		const question = Question.create({
 			...newQuestion,
 			imageUrl: newQuestion.imageUrl ?? undefined,
+			answers: answerEntities,
 		})
 		try {
 			/* Save Question */
