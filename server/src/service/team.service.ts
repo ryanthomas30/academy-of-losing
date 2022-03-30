@@ -92,7 +92,7 @@ export class TeamService extends LiteDataSource {
 		/* Get Question */
 		const question = await Question.getOne(questionId)
 
-		const isCorrect = question.answer === answer
+		const isCorrect = question?.answers?.find(correctAnswer => correctAnswer.value === answer) ? true : false
 
 		/* Create new TeamAnswer with Team, Question, Answer, IsCorrect */
 		const teamAnswer = TeamAnswer.create({
