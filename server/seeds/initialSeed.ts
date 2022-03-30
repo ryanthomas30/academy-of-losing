@@ -24,6 +24,7 @@ export default class InitialDatabaseSeed implements Seeder {
 			team.game = game
 			// add 3 users to team
 			const teamUsers = [users.pop(), users.pop(), users.pop()]
+			//@ts-ignore
 			team.users = teamUsers
 			return team
 		}).createMany(5)

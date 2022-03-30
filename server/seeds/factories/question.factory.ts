@@ -1,8 +1,8 @@
-import { Faker } from '@faker-js/faker'
+import * as Faker from 'faker'
 import { define } from 'typeorm-seeding'
 import { Question } from '../../src/entity'
 
-define(Question, (faker: Faker) => {
+define(Question, (faker: typeof Faker) => {
 	const question = new Question()
 	const firstNumber = faker.datatype.number()
 	const secondNumber = faker.datatype.number()
