@@ -52,7 +52,6 @@ export const context: ContextFunction<ExpressContext, ProducedContext> = async (
 		if (authHeader.startsWith('Bearer ')) {
 			const token = authHeader.split(' ')[1]
 			const decodedToken: DecodedIdToken = await auth().verifyIdToken(token)
-			console.log('decodedToken:', decodedToken)
 
 			return {
 				user: {

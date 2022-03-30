@@ -5,7 +5,7 @@ export const gameResolver: Resolvers = {
 		game: (_, { gameId }, { dataSources }) => dataSources.gameService.getGame(gameId),
 	},
 	Mutation: {
-		createGame: (_, __, { dataSources }) => dataSources.gameService.createGame(),
+		createGame: (_, { newGame }, { dataSources }) => dataSources.gameService.createGame(newGame),
 		addQuestionToGame: (_, { gameId, questionId }, { dataSources }) => dataSources.gameService.addQuestionToGame(gameId, questionId),
 	},
 	Game: {

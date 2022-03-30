@@ -5,7 +5,7 @@ extend type Query {
 
 extend type Mutation {
 	""" Create a new game. """
-	createGame: Game!
+	createGame(newGame: NewGame!): Game!
 	""" Add a question to a game. """
 	addQuestionToGame(gameId: ID!, questionId: ID!): Game
 }
@@ -13,6 +13,12 @@ extend type Mutation {
 """ Game """
 type Game {
 	id: ID!
+	name: String!
 	teams: [Team!]!
 	questions: [Question!]!
+}
+
+""" New Game """
+input NewGame {
+	name: String!
 }

@@ -9,6 +9,7 @@ import {
 	OneToMany,
 	FindOneOptions,
 } from 'typeorm'
+import { Answer } from './answer.entity'
 
 import { Game } from './game.entity'
 import { TeamAnswer } from './teamAnswer.entity'
@@ -28,8 +29,8 @@ export class Question extends BaseEntity {
 	@Column({ nullable: true })
 	imageUrl?: string
 
-	@Column()
-	answer!: string
+	@OneToMany(() => Answer, answer => answer.question)
+	answers?: string
 
 	@OneToMany(() => TeamAnswer, teamAnswer => teamAnswer.question)
 	teamAnswer?: TeamAnswer

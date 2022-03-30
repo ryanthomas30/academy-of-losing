@@ -8,6 +8,7 @@ import {
 	JoinTable,
 	OneToMany,
 	FindOneOptions,
+	Column,
 } from 'typeorm'
 
 import { Question } from './question.entity'
@@ -18,6 +19,9 @@ export class Game extends BaseEntity {
 
 	@PrimaryGeneratedColumn()
 	id!: string
+
+	@Column()
+	name!: string
 
 	@ManyToMany(() => Question, question => question.games, {
 		eager: true,

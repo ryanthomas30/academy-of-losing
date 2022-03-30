@@ -2,6 +2,7 @@ import { ApolloError } from 'apollo-server'
 import { Game, Question, User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { LiteDataSource } from '@/dataSource'
+import { NewGame } from '@/types'
 
 export class GameService extends LiteDataSource {
 
@@ -21,9 +22,11 @@ export class GameService extends LiteDataSource {
 		})
 	}
 
-	async createGame() {
+	async createGame(newGame: NewGame) {
 		/* Create Game */
-		const game = Game.create()
+		const game = Game.create({
+			...newGame,
+		})
 		try {
 			/* Save Game */
 			const gameResponse = await game.save()

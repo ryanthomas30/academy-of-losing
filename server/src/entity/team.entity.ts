@@ -18,7 +18,7 @@ import { TeamAnswer } from './teamAnswer.entity'
 import { User } from './user.entity'
 
 @Entity()
-@Unique(['name', 'game'])
+@Unique(['name', 'gameId'])
 export class Team extends BaseEntity {
 
 	@PrimaryGeneratedColumn()
