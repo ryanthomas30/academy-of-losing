@@ -1,26 +1,27 @@
-import { Button, Page, LoadingBoundary } from '@/components'
-import { useMeQuery, useTestLazyQuery } from '@/apollo'
+import { Page, LoadingBoundary, GameCards, Row, CommentText } from '@/components'
+import { useMeQuery } from '@/apollo'
 
 export const Home: React.FC = () => {
-	const [testQuery] = useTestLazyQuery()
 	const { data, loading } = useMeQuery()
 
-	const handleButtonClick = async () => {
-		await testQuery()
-	}
-
 	return (
-		<Page center>
-			<Button
-				primary
-				onClick={handleButtonClick}
-			>
-				Run Test Query
-			</Button>
+		<Page
+			center
+			paddingTop='large'
+			paddingHorizontal='medium'
+		>
+			<Row paddingBottom='medium'>
+				<CommentText
+					multiline
+					size={24}
+				>
+					Games
+				</CommentText>
+			</Row>
 			<LoadingBoundary
 				loading={loading}
 			>
-				{JSON.stringify(data?.me)}
+				<GameCards games={data?.me.games ?? []} />
 			</LoadingBoundary>
 		</Page>
 	)

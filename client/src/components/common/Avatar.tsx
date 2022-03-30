@@ -3,14 +3,16 @@ import styled from 'styled-components'
 export interface AvatarProps {
 	src: string
 	size?: number
+	className?: string
 }
 
 const DefaultSize = 36
 
-export const Avatar: React.FC<AvatarProps> = ({ src, size = DefaultSize }) => (
+export const Avatar: React.FC<AvatarProps> = ({ src, size = DefaultSize, className }) => (
 	<AvatarImage
 		src={src}
 		size={size}
+		className={className}
 		referrerPolicy='no-referrer'
 	/>
 

@@ -20,6 +20,7 @@ export type Scalars = {
 export type Game = {
   __typename?: 'Game';
   id: Scalars['ID'];
+  name: Scalars['String'];
   questions: Array<Question>;
   teams: Array<Team>;
 };
@@ -66,6 +67,12 @@ export type MutationAddUserToTeamArgs = {
 
 
 /**  Root Mutation  */
+export type MutationCreateGameArgs = {
+  newGame: NewGame;
+};
+
+
+/**  Root Mutation  */
 export type MutationCreateQuestionArgs = {
   newQuestion: NewQuestion;
 };
@@ -81,6 +88,11 @@ export type MutationCreateTeamArgs = {
 /**  Root Mutation  */
 export type MutationCreateUserArgs = {
   newUser: NewUser;
+};
+
+/**  New Game  */
+export type NewGame = {
+  name: Scalars['String'];
 };
 
 /**  New Question  */
@@ -185,7 +197,7 @@ export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __type
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, isAdmin: boolean, email: string, fullName: string, photoUrl?: string | null, games: Array<{ __typename?: 'Game', id: string }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, isAdmin: boolean, email: string, fullName: string, photoUrl?: string | null, games: Array<{ __typename?: 'Game', id: string, name: string }> } };
 
 export type TestQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -246,6 +258,7 @@ export const MeDocument = gql`
     photoUrl
     games {
       id
+      name
     }
   }
 }

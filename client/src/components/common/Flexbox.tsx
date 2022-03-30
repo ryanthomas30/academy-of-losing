@@ -208,8 +208,6 @@ const BaseFlexbox = (props: FlexboxProps): JSX.Element => {
 
 	/* Merges props with style object */
 	const styleObject: CSSProperties = {
-		display: 'flex',
-		boxSizing: 'border-box',
 		justifyContent,
 		alignItems,
 		flexWrap,
@@ -245,6 +243,8 @@ const BaseFlexbox = (props: FlexboxProps): JSX.Element => {
 }
 
 export const Flexbox = styled(BaseFlexbox)`
+	display: flex;
+	box-sizing: border-box;
 	cursor: ${({ onClick }): string | undefined => onClick ? 'pointer' : undefined};
 	flex: ${({ flex }): string | undefined => flex};
 	flex-direction: ${({ direction }): string => direction || 'column'};

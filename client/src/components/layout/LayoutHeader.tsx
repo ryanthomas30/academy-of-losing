@@ -3,6 +3,8 @@ import { useFirebase } from '@/firebase'
 import { routeNames } from '@/routing'
 import { Row, Flexbox, Button, Avatar, Link, StringText } from '../common'
 import { getRandomPhrase } from '@/util'
+import styled from 'styled-components'
+import { theme } from '@/constants'
 
 export interface LayoutHeaderProps {
 	isAdmin?: boolean
@@ -17,47 +19,128 @@ export const LayoutHeader: React.FC<LayoutHeaderProps> = ({ isAdmin, photoUrl })
 	const handleSignOut = () => {
 		firebase.signOut()
 	}
+
+	const randomPhrase = getRandomPhrase()
+
 	return (
-		<Row
-			justify='between'
+		<Flexbox
+			full='horizontal'
+			// align='center'
 			paddingHorizontal='large'
 			paddingTop='medium'
 			paddingBottom='large'
 		>
-			<Flexbox
-				marginBetween='medium'
-				direction='row'
-				align='center'
+			<Row
+				justify='between'
 			>
-				<Link to={routeNames.home}>
-					<h2>
-						Academy of Losing
-					</h2>
-				</Link>
-				<StringText>
-					{getRandomPhrase()}
-				</StringText>
-			</Flexbox>
-			<Flexbox
-				marginBetween='medium'
-				direction='row'
-				align='center'
-			>
-				{showAdminPanelButton && (
-					<Button
-						to={routeNames.adminHome}
-						primary
-					>
-						Admin Panel
-					</Button>
-				)}
-				<Button
-					onClick={handleSignOut}
+				<Flexbox
+					marginBetween='medium'
+					direction='row'
+					align='center'
 				>
-					Logout
-				</Button>
-				{photoUrl && <Avatar src={photoUrl} />}
-			</Flexbox>
-		</Row>
+					<Link to={routeNames.home}>
+						<WordMark>
+							Academy of Losing
+						</WordMark>
+						<WordMarkMobile>
+							AoL
+						</WordMarkMobile>
+					</Link>
+					<Tagline>
+						{randomPhrase}
+					</Tagline>
+				</Flexbox>
+				<ButtonContainer
+					marginBetween='medium'
+					direction='row'
+					align='center'
+				>
+					{showAdminPanelButton && (
+						<Button
+							to={routeNames.adminHome}
+							primary
+						>
+							Admin Panel
+						</Button>
+					)}
+					<Button
+						onClick={handleSignOut}
+					>
+						Logout
+					</Button>
+					{photoUrl && <Avatar src={photoUrl} />}
+				</ButtonContainer>
+				<ButtonContainerMobile
+					marginBetween='medium'
+					direction='row'
+					align='center'
+				>
+					{showAdminPanelButton && (
+						<Button
+							to={routeNames.adminHome}
+							primary
+						>
+							Admin Panel
+						</Button>
+					)}
+					<Button
+						onClick={handleSignOut}
+					>
+						Logout
+					</Button>
+				</ButtonContainerMobile>
+			</Row>
+			<BottomRow
+				justify='between'
+			>
+				<Flexbox
+					marginBetween='medium'
+					direction='row'
+					align='center'
+				>
+					<StringText>
+						{randomPhrase}
+					</StringText>
+				</Flexbox>
+			</BottomRow>
+		</Flexbox>
 	)
 }
+
+const WordMark = styled.h2`
+	${theme.mediaQuery.tablet} {
+		display: none;
+	}
+`
+const WordMarkMobile = styled.h2`
+	display: none;
+	${theme.mediaQuery.tablet} {
+		display: inherit;
+	}
+`
+
+const Tagline = styled(StringText)`
+	${theme.mediaQuery.smallDesktop} {
+		display: none;
+	}
+`
+
+const BottomRow = styled(Row)`
+	display: none !important;
+	${theme.mediaQuery.smallDesktop} {
+		display: inherit !important;
+	}
+`
+
+const ButtonContainer = styled(Flexbox)`
+	${theme.mediaQuery.mobile} {
+		display: none !important;
+	}
+`
+
+const ButtonContainerMobile = styled(Flexbox)`
+	display: none !important;
+	${theme.mediaQuery.mobile} {
+		display: inherit !important;
+	}
+`

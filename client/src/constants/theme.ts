@@ -33,6 +33,25 @@ function transitionFast(property: CssPropertyName = 'all'): string {
 	return transition(property, FastTransitionSpeed)
 }
 
+const DesktopMax = 1200
+const SmallDesktopMax = 1024
+const TabletMax = 768
+const MobileMax = 480
+
+const breakpoints = {
+	desktop: DesktopMax,
+	smallDesktop: SmallDesktopMax,
+	tablet: TabletMax,
+	mobile: MobileMax,
+}
+
+const mediaQuery = {
+	desktop: `@media (min-width: ${SmallDesktopMax + 1}px)`,
+	smallDesktop: `@media (max-width: ${SmallDesktopMax}px)`,
+	tablet: `@media (max-width: ${TabletMax}px)`,
+	mobile: `@media (max-width: ${MobileMax}px)`,
+}
+
 const color = {
 	background: Gray1,
 	foreground: Gray2,
@@ -62,4 +81,6 @@ export const theme = {
 	borderRadius: '2px',
 	transition,
 	transitionFast,
+	breakpoints,
+	mediaQuery,
 }
