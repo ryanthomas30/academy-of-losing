@@ -8,6 +8,5 @@ define(Question, (faker: Faker) => {
 	const secondNumber = faker.datatype.number()
 	question.title = 'ADD THESE NUMBERS'
 	question.description = `${firstNumber} + ${secondNumber}`
-	question.answer = `${firstNumber + secondNumber}`
 	return question
 })

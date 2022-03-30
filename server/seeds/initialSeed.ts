@@ -1,12 +1,21 @@
 import { Factory, Seeder } from 'typeorm-seeding'
 import { Connection } from 'typeorm'
-
-import { User, Game, Team, Question } from '../src/entity'
+import {
+	User,
+	Game,
+	Team,
+	Question,
+	Answer,
+} from '../src/entity'
 
 export default class InitialDatabaseSeed implements Seeder {
 	public async run(factory: Factory, connection: Connection): Promise<void> {
 		const users = await factory(User)().createMany(15)
-		const questions = await factory(Question)().createMany(10)
+		const questions = await factory(Question)().map(async (question) => {
+			const [a, b] = question.description.split(' + ').map(Number)
+			await factory(Answer)().create({ value: `${a + b}`, question })
+			return question
+		}).createMany(10)
 		const game = await factory(Game)().map(async(game) => {
 			game.questions = questions
 			return game
