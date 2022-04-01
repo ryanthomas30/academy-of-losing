@@ -29,11 +29,14 @@ export class Question extends BaseEntity {
 	@Column({ nullable: true })
 	imageUrl?: string
 
-	@OneToMany(() => Answer, answer => answer.question)
+	@OneToMany(() => Answer, answer => answer.question, {
+		cascade: true,
+		eager: true,
+	})
 	answers?: Answer[]
 
 	@OneToMany(() => TeamAnswer, teamAnswer => teamAnswer.question)
-	teamAnswer?: TeamAnswer
+	teamAnswers?: TeamAnswer[]
 
 	@ManyToMany(() => Game, game => game.questions)
 	games?: Game[]
@@ -48,4 +51,19 @@ export class Question extends BaseEntity {
 			throw new ApolloError(`An error occurred when trying to fetch team ${questionId}`)
 		}
 	}
+}
+
+/**
+ * Custom TeamQuestion resolve mapper for codegen
+ */
+export interface TeamQuestion {
+	id: string
+	title: string
+	description: string
+	imageUrl?: string
+	answers?: Answer[]
+	teamAnswers?: TeamAnswer[]
+	games?: Game[]
+	createdAt: Date
+	isCorrect: boolean
 }

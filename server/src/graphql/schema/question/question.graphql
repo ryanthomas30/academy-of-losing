@@ -1,19 +1,28 @@
 extend type Query {
 	""" Get a question by id. """
-	question(questionId: ID!): Question!
+	question(questionId: ID!): GameQuestion!
 }
 
 extend type Mutation {
 	""" Create a new question. """
-	createQuestion(newQuestion: NewQuestion!): Question!
+	createQuestion(newQuestion: NewQuestion!): GameQuestion!
 }
 
-""" Question """
-type Question {
+""" Question for a game """
+type GameQuestion {
 	id: ID!
 	title: String!
 	description: String!
 	image: Image
+}
+
+""" Question for a team """
+type TeamQuestion {
+	id: ID!
+	title: String!
+	description: String!
+	image: Image
+	isCorrect: Boolean!
 }
 
 """ Image Object """

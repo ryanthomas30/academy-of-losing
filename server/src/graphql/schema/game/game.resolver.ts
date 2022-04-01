@@ -10,6 +10,6 @@ export const gameResolver: Resolvers = {
 	},
 	Game: {
 		teams: ({ teams }, _, { dataSources }) => dataSources.utilService.resolveNilToArray(teams),
-		questions: ({ questions }, _, { dataSources }) => dataSources.utilService.resolveNilToArray(questions),
+		questions: ({ id }, _, { dataSources }) => dataSources.questionService.getGameQuestions(id),
 	},
 }

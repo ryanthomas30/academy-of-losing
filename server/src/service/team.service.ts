@@ -1,4 +1,3 @@
-
 import { ApolloError } from 'apollo-server'
 import { LiteDataSource } from '@/dataSource'
 import { Team, Game, User } from '@/entity'
@@ -6,29 +5,23 @@ import { DbError, PgErrorCode } from '@/util'
 import { NewTeam } from '@/types'
 
 export class TeamService extends LiteDataSource {
-
 	getTeam(teamId: string) {
 		return Team.getOne(teamId)
 	}
 
 	async getTeamByUserGame(userId: string, gameId: string) {
 		try {
-			const team = await Team
-				.createQueryBuilder('team')
-				.leftJoinAndSelect(
-					'team.users',
-					'user',
-					'user.id = :userId',
-					{ userId },
-				)
-				.where(
-					'team.gameId = :gameId',
-					{ gameId },
-				)
+			const team = await Team.createQueryBuilder('team')
+				.leftJoinAndSelect('team.users', 'user', 'user.id = :userId', {
+					userId,
+				})
+				.where('team.gameId = :gameId', { gameId })
 				.getOneOrFail()
 			return team
 		} catch (err) {
-			throw new ApolloError(`An error occurred when trying to fetch team for user: "${userId}" and game: "${gameId}".`)
+			throw new ApolloError(
+				`An error occurred when trying to fetch team for user: "${userId}" and game: "${gameId}".`,
+			)
 		}
 	}
 
@@ -79,7 +72,9 @@ export class TeamService extends LiteDataSource {
 				case PgErrorCode.UniqueViolation:
 					throw new ApolloError('This user already exists on this team')
 				default:
-					throw new ApolloError(`An error occurred when adding user: "${userId}" to team: "${teamId}"`)
+					throw new ApolloError(
+						`An error occurred when adding user: "${userId}" to team: "${teamId}"`,
+					)
 			}
 		}
 	}

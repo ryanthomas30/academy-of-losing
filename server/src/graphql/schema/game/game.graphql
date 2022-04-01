@@ -15,7 +15,7 @@ type Game {
 	id: ID!
 	name: String!
 	teams: [Team!]!
-	questions: [Question!]!
+	questions: [GameQuestion!]!
 }
 
 """ New Game """

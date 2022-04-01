@@ -42,7 +42,7 @@ export class Team extends BaseEntity {
 	users?: User[]
 
 	@OneToMany(() => TeamAnswer, teamAnswer => teamAnswer.team)
-	teamAnswer?: TeamAnswer
+	teamAnswers?: TeamAnswer[]
 
 	@CreateDateColumn()
 	createdAt!: Date

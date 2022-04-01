@@ -13,5 +13,6 @@ generates:
         User: ../../entity/user.entity#User
         Team: ../../entity/team.entity#Team
         Game: ../../entity/game.entity#Game
-        Question: ../../entity/question.entity#Question
+        GameQuestion: ../../entity/question.entity#Question
+        TeamQuestion: ../../entity/question.entity#TeamQuestion
       mapperTypeSuffix: Entity
