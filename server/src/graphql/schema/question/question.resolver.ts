@@ -7,7 +7,10 @@ export const questionResolver: Resolvers = {
 	Mutation: {
 		createQuestion: (_, { newQuestion }, { dataSources }) => dataSources.questionService.createQuestion(newQuestion),
 	},
-	Question: {
+	GameQuestion: {
+		image: ({ imageUrl }, _, { dataSources }) => dataSources.questionService.shapeImageResponse(imageUrl),
+	},
+	TeamQuestion: {
 		image: ({ imageUrl }, _, { dataSources }) => dataSources.questionService.shapeImageResponse(imageUrl),
 	},
 }

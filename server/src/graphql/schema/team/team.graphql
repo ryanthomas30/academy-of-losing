@@ -9,7 +9,7 @@ extend type Mutation {
 	""" Add a user to a team. """
 	addUserToTeam(teamId: ID!, userId: ID!): Team!
 	""" Submit a Team's Answer """
-	answerQuestion(teamId: ID!, answer: String!, questionId: ID!): Boolean!
+	answerQuestion(teamId: ID!, answer: String!, questionId: ID!): TeamQuestion!
 }
 
 """ Team """
@@ -17,6 +17,7 @@ type Team {
 	id: ID!
 	name: String!
 	users: [User!]!
+	questions: [TeamQuestion!]!
 }
 
 """ New team object """

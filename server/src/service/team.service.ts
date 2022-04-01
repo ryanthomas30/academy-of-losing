@@ -1,12 +1,6 @@
 import { ApolloError } from 'apollo-server'
 import { LiteDataSource } from '@/dataSource'
-import {
-	Team,
-	Game,
-	User,
-	Question,
-	TeamAnswer,
-} from '@/entity'
+import { Team, Game, User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { NewTeam } from '@/types'
 
@@ -82,34 +76,6 @@ export class TeamService extends LiteDataSource {
 						`An error occurred when adding user: "${userId}" to team: "${teamId}"`,
 					)
 			}
-		}
-	}
-
-	async answerQuestion(teamId: string, answer: string, questionId: string) {
-		/* Get Team */
-		const team = await Team.getOne(teamId)
-
-		/* Get Question */
-		const question = await Question.getOne(questionId)
-
-		const isCorrect = question?.answers?.find(correctAnswer => correctAnswer.value === answer) ? true : false
-
-		/* Create new TeamAnswer with Team, Question, Answer, IsCorrect */
-		const teamAnswer = TeamAnswer.create({
-			team,
-			question,
-			isCorrect,
-			answer,
-		})
-
-		try {
-		/* Save Answer */
-			teamAnswer.save()
-			return isCorrect
-		} catch (e) {
-			throw new ApolloError(
-				'An error occurred when trying to create a new teamAnswer',
-			)
 		}
 	}
 }
