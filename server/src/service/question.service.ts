@@ -55,7 +55,7 @@ export class QuestionService extends LiteDataSource {
 			const error = new DbError(e)
 			switch (error.code) {
 				default:
-					throw new ApolloError('An error occurred when fetching this team\'s questions')
+					throw new ApolloError(`An error occurred when fetching this team\'s questions -- ${e}`)
 			}
 		}
 	}
@@ -96,7 +96,7 @@ export class QuestionService extends LiteDataSource {
 			}
 		} catch (e) {
 			throw new ApolloError(
-				'An error occurred when trying to create a new teamAnswer',
+				`An error occurred when trying to create a new teamAnswer -- ${e}`,
 			)
 		}
 	}
@@ -129,7 +129,7 @@ export class QuestionService extends LiteDataSource {
 			const error = new DbError(e)
 			switch (error.code) {
 				default:
-					throw new ApolloError('An error occurred when creating this question')
+					throw new ApolloError(`An error occurred when creating this question -- ${e}`)
 			}
 		}
 	}

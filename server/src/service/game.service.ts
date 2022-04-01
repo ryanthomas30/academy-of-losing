@@ -35,7 +35,7 @@ export class GameService extends LiteDataSource {
 			const error = new DbError(e)
 			switch (error.code) {
 				default:
-					throw new ApolloError('An error occurred when creating this game')
+					throw new ApolloError(`An error occurred when creating this game -- ${e}`)
 			}
 		}
 	}
@@ -56,9 +56,9 @@ export class GameService extends LiteDataSource {
 			const error = new DbError(e)
 			switch (error.code) {
 				case PgErrorCode.UniqueViolation:
-					throw new ApolloError('This question already exists on this game')
+					throw new ApolloError(`This question already exists on this game -- ${e}`)
 				default:
-					throw new ApolloError(`An error occurred when adding question: "${questionId}" to game: "${gameId}"`)
+					throw new ApolloError(`An error occurred when adding question: "${questionId}" to game: "${gameId}" -- ${e}`)
 			}
 		}
 	}

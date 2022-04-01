@@ -41,8 +41,8 @@ export class User extends BaseEntity {
 	static async getOne(userId: string, options?: FindOneOptions<User>) {
 		try {
 			return User.findOneOrFail(userId, options)
-		} catch (err) {
-			throw new ApolloError(`An error occurred when trying to fetch user ${userId}.`)
+		} catch (e) {
+			throw new ApolloError(`An error occurred when trying to fetch user ${userId} -- ${e}`)
 		}
 	}
 }

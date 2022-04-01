@@ -42,8 +42,8 @@ export class Game extends BaseEntity {
 	static async getOne(gameId: string, options?: FindOneOptions<Game>) {
 		try {
 			return Game.findOneOrFail(gameId, options)
-		} catch (err) {
-			throw new ApolloError(`An error occurred when trying to fetch game ${gameId}.`)
+		} catch (e) {
+			throw new ApolloError(`An error occurred when trying to fetch game ${gameId} -- ${e}`)
 		}
 	}
 }

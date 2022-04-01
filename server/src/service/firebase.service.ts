@@ -20,7 +20,7 @@ export class FirebaseService extends LiteDataSource {
 		try {
 			return auth().getUser(firebaseId)
 		} catch (e) {
-			throw new ApolloError(`Error fetching user with id: ${firebaseId}`)
+			throw new ApolloError(`Error fetching user with id: ${firebaseId} -- ${e}`)
 		}
 	}
 

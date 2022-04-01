@@ -31,9 +31,9 @@ export class UserService extends LiteDataSource {
 			await firebaseService.deleteUser(contextUser.userId)
 			switch (error.code) {
 				case PgErrorCode.UniqueViolation:
-					throw new ApolloError('A user with this email already exists')
+					throw new ApolloError(`A user with this email already exists -- ${e}`)
 				default:
-					throw new ApolloError('An error occurred when creating this user')
+					throw new ApolloError(`An error occurred when creating this user -- ${e}`)
 			}
 		}
 	}

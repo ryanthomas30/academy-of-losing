@@ -30,8 +30,8 @@ export class Answer extends BaseEntity {
 	static async getOne(answerId: string, options?: FindOneOptions<Answer>) {
 		try {
 			return Answer.findOneOrFail(answerId, options)
-		} catch (err) {
-			throw new ApolloError(`An error occurred when trying to fetch answer ${answerId}`)
+		} catch (e) {
+			throw new ApolloError(`An error occurred when trying to fetch answer ${answerId} -- ${e}`)
 		}
 	}
 }

@@ -18,9 +18,9 @@ export class TeamService extends LiteDataSource {
 				.where('team.gameId = :gameId', { gameId })
 				.getOneOrFail()
 			return team
-		} catch (err) {
+		} catch (e) {
 			throw new ApolloError(
-				`An error occurred when trying to fetch team for user: "${userId}" and game: "${gameId}".`,
+				`An error occurred when trying to fetch team for user: "${userId}" and game: "${gameId}" -- ${e}`,
 			)
 		}
 	}
@@ -47,9 +47,9 @@ export class TeamService extends LiteDataSource {
 			const error = new DbError(e)
 			switch (error.code) {
 				case PgErrorCode.UniqueViolation:
-					throw new ApolloError('A team with this name already exists')
+					throw new ApolloError(`A team with this name already exists -- ${e}`)
 				default:
-					throw new ApolloError('An error occurred when creating this team')
+					throw new ApolloError(`An error occurred when creating this team -- ${e}`)
 			}
 		}
 	}
@@ -70,10 +70,10 @@ export class TeamService extends LiteDataSource {
 			const error = new DbError(e)
 			switch (error.code) {
 				case PgErrorCode.UniqueViolation:
-					throw new ApolloError('This user already exists on this team')
+					throw new ApolloError(`This user already exists on this team -- ${e}`)
 				default:
 					throw new ApolloError(
-						`An error occurred when adding user: "${userId}" to team: "${teamId}"`,
+						`An error occurred when adding user: "${userId}" to team: "${teamId}" -- ${e}`,
 					)
 			}
 		}
