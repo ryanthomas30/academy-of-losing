@@ -11,5 +11,6 @@ export const gameResolver: Resolvers = {
 	Game: {
 		teams: ({ teams }, _, { dataSources }) => dataSources.utilService.resolveNilToArray(teams),
 		questions: ({ id }, _, { dataSources }) => dataSources.questionService.getGameQuestions(id),
+		team: ({ id }, _, { dataSources, user }) => dataSources.teamService.getTeamByUserGame(user.userId, id),
 	},
 }

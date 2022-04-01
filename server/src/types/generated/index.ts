@@ -25,6 +25,7 @@ export type Game = {
   id: Scalars['ID'];
   name: Scalars['String'];
   questions: Array<GameQuestion>;
+  team: Team;
   teams: Array<Team>;
 };
 
@@ -325,6 +326,7 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   questions?: Resolver<Array<ResolversTypes['GameQuestion']>, ParentType, ContextType>;
+  team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;

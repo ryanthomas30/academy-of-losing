@@ -15,6 +15,7 @@ type Game {
 	id: ID!
 	name: String!
 	teams: [Team!]!
+	team: Team!
 	questions: [GameQuestion!]!
 }
 
