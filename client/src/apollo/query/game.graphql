@@ -1,0 +1,20 @@
+query Game ($gameId: ID!) {
+  game(gameId: $gameId) {
+    id
+    name
+    team {
+      id
+      name
+      questions {
+        id
+        title
+        description
+        isCorrect
+        image {
+          id
+          url
+        }
+      }
+    }
+  }
+}

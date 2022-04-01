@@ -7,9 +7,11 @@ import { routeNames } from './routeNames'
 /* Pages */
 import { MainLayout } from '@/pages/MainLayout'
 import { Home } from '@/pages/Home'
+import { Game, GameIndex } from '@/pages/Game'
 import { AdminHome } from '@/pages/AdminHome'
 import { Login } from '@/pages/Login'
 import { NotFound } from '@/pages/NotFound'
+import { Questions } from '@/pages/Questions'
 
 export const Routes = () => (
 	<RouteGroup>
@@ -21,6 +23,19 @@ export const Routes = () => (
 				index
 				element={<Home />}
 			/>
+			<Route
+				path={routeNames.game()}
+				element={<Game />}
+			>
+				<Route
+					index
+					element={<GameIndex />}
+				/>
+				<Route
+					path={routeNames.question()}
+					element={<Questions />}
+				/>
+			</Route>
 			<Route
 				path={routeNames.adminHome}
 				element={(

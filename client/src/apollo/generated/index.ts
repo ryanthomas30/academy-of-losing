@@ -21,8 +21,18 @@ export type Game = {
   __typename?: 'Game';
   id: Scalars['ID'];
   name: Scalars['String'];
-  questions: Array<Question>;
+  questions: Array<GameQuestion>;
+  team: Team;
   teams: Array<Team>;
+};
+
+/**  Question for a game  */
+export type GameQuestion = {
+  __typename?: 'GameQuestion';
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  image?: Maybe<Image>;
+  title: Scalars['String'];
 };
 
 /**  Image Object  */
@@ -39,10 +49,12 @@ export type Mutation = {
   addQuestionToGame?: Maybe<Game>;
   /**  Add a user to a team.  */
   addUserToTeam: Team;
+  /**  Submit a Team's Answer  */
+  answerQuestion: TeamQuestion;
   /**  Create a new game.  */
   createGame: Game;
   /**  Create a new question.  */
-  createQuestion: Question;
+  createQuestion: GameQuestion;
   /**  Create a new team.  */
   createTeam: Team;
   /**  Create a new user.  */
@@ -63,6 +75,14 @@ export type MutationAddQuestionToGameArgs = {
 export type MutationAddUserToTeamArgs = {
   teamId: Scalars['ID'];
   userId: Scalars['ID'];
+};
+
+
+/**  Root Mutation  */
+export type MutationAnswerQuestionArgs = {
+  answer: Scalars['String'];
+  questionId: Scalars['ID'];
+  teamId: Scalars['ID'];
 };
 
 
@@ -97,7 +117,7 @@ export type NewGame = {
 
 /**  New Question  */
 export type NewQuestion = {
-  answer: Scalars['String'];
+  answers: Array<Scalars['String']>;
   description: Scalars['String'];
   imageUrl?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
@@ -126,7 +146,7 @@ export type Query = {
   /**  Get logged in user.  */
   me: User;
   /**  Get a question by id.  */
-  question: Question;
+  question: GameQuestion;
   /**  Get a team by id.  */
   team: Team;
   /**  Test query for health checks.  */
@@ -159,21 +179,23 @@ export type QueryUserArgs = {
   userId: Scalars['ID'];
 };
 
-/**  Question  */
-export type Question = {
-  __typename?: 'Question';
-  description: Scalars['String'];
-  id: Scalars['ID'];
-  image?: Maybe<Image>;
-  title: Scalars['String'];
-};
-
 /**  Team  */
 export type Team = {
   __typename?: 'Team';
   id: Scalars['ID'];
   name: Scalars['String'];
+  questions: Array<TeamQuestion>;
   users: Array<User>;
+};
+
+/**  Question for a team  */
+export type TeamQuestion = {
+  __typename?: 'TeamQuestion';
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  image?: Maybe<Image>;
+  isCorrect: Scalars['Boolean'];
+  title: Scalars['String'];
 };
 
 /**  User  */
@@ -193,6 +215,13 @@ export type CreateUserMutationVariables = Exact<{
 
 
 export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean } };
+
+export type GameQueryVariables = Exact<{
+  gameId: Scalars['ID'];
+}>;
+
+
+export type GameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: string, name: string, team: { __typename?: 'Team', id: string, name: string, questions: Array<{ __typename?: 'TeamQuestion', id: string, title: string, description: string, isCorrect: boolean, image?: { __typename?: 'Image', id: string, url: string } | null }> } } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -248,6 +277,56 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const GameDocument = gql`
+    query Game($gameId: ID!) {
+  game(gameId: $gameId) {
+    id
+    name
+    team {
+      id
+      name
+      questions {
+        id
+        title
+        description
+        isCorrect
+        image {
+          id
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGameQuery__
+ *
+ * To run a query within a React component, call `useGameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGameQuery({
+ *   variables: {
+ *      gameId: // value for 'gameId'
+ *   },
+ * });
+ */
+export function useGameQuery(baseOptions: Apollo.QueryHookOptions<GameQuery, GameQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GameQuery, GameQueryVariables>(GameDocument, options);
+      }
+export function useGameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GameQuery, GameQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GameQuery, GameQueryVariables>(GameDocument, options);
+        }
+export type GameQueryHookResult = ReturnType<typeof useGameQuery>;
+export type GameLazyQueryHookResult = ReturnType<typeof useGameLazyQuery>;
+export type GameQueryResult = Apollo.QueryResult<GameQuery, GameQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {
