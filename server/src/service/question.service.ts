@@ -123,13 +123,13 @@ export class QuestionService extends LiteDataSource {
 
 		try {
 			/* Save Question */
-			const questionResponse = await question.save({})
+			const questionResponse = await question.save()
 			return questionResponse
 		} catch (e) {
 			const error = new DbError(e)
 			switch (error.code) {
 				default:
-					throw new ApolloError('An error occurred when creating this user')
+					throw new ApolloError('An error occurred when creating this question')
 			}
 		}
 	}
