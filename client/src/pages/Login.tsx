@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuth, useFirebase } from '@/firebase'
 import { Flexbox, LoginButton, CommentText, StringText } from '@/components'
 import { useCreateUserMutation } from '@/apollo'
 import { useNavigate } from 'react-router-dom'
 import { routeNames, useLocation } from '@/routing'
 import { getRandomZoomiesPhrase } from '@/util'
+import { useApolloClient } from '@apollo/client'
 
 export const Login = () => {
 	const firebase = useFirebase()
@@ -13,9 +14,14 @@ export const Login = () => {
 	const [createUserMutation] = useCreateUserMutation()
 	const navigate = useNavigate()
 	const location = useLocation()
+	const apolloClient = useApolloClient()
 
 	const from = location.state?.from?.pathname || routeNames.home
 	const isLoggedIn = !!useAuth()
+
+	useEffect(() => {
+		apolloClient.clearStore()
+	}, [apolloClient])
 
 	const createUser = (uid: string, email: string, displayName: string) => createUserMutation({
 		variables: {
