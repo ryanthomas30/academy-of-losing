@@ -19,6 +19,15 @@ export class QuestionService extends LiteDataSource {
 		return Question.getOne(questionId)
 	}
 
+	getQuestions() {
+		return Question.find({
+			order: {
+				createdAt: 'DESC',
+			},
+			take: 50,
+		})
+	}
+
 	async getGameQuestions(gameId: string) {
 		/* Get Game */
 		const game = await Game.getOne(gameId, {

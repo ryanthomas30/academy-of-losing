@@ -1,6 +1,8 @@
 extend type Query {
 	""" Get a question by id. """
 	question(questionId: ID!): GameQuestion! @isAdmin
+	""" Get all questions. """
+	questions: [GameQuestion!]! @isAdmin
 }
 
 extend type Mutation {

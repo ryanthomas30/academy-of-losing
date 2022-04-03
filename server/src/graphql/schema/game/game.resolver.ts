@@ -8,6 +8,7 @@ export const gameResolver: Resolvers = {
 	Mutation: {
 		createGame: (_, { newGame }, { dataSources }) => dataSources.gameService.createGame(newGame),
 		addQuestionToGame: (_, { gameId, questionId }, { dataSources }) => dataSources.gameService.addQuestionToGame(gameId, questionId),
+		removeQuestionFromGame: (_, { gameId, questionId }, { dataSources }) => dataSources.gameService.removeQuestionFromGame(gameId, questionId),
 	},
 	Game: {
 		teams: ({ teams }, _, { dataSources }) => dataSources.utilService.resolveNilToArray(teams),

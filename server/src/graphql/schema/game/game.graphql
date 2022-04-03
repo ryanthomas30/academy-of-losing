@@ -1,7 +1,7 @@
 extend type Query {
 	""" Get a game by id. """
 	game(gameId: ID!): Game!
-	""" Get all games """
+	""" Get all games. """
 	games: [Game!]! @isAdmin
 }
 
@@ -9,7 +9,9 @@ extend type Mutation {
 	""" Create a new game. """
 	createGame(newGame: NewGame!): Game! @isAdmin
 	""" Add a question to a game. """
-	addQuestionToGame(gameId: ID!, questionId: ID!): Game @isAdmin
+	addQuestionToGame(gameId: ID!, questionId: ID!): Game! @isAdmin
+	""" Removes a question from a game. """
+	removeQuestionFromGame(gameId: ID!, questionId: ID!): Game! @isAdmin
 }
 
 """ Game """

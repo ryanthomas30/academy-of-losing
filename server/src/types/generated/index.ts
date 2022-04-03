@@ -49,7 +49,7 @@ export type Image = {
 export type Mutation = {
   __typename?: 'Mutation';
   /**  Add a question to a game.  */
-  addQuestionToGame?: Maybe<Game>;
+  addQuestionToGame: Game;
   /**  Add a user to a team.  */
   addUserToTeam: Team;
   /**  Submit a Team's Answer  */
@@ -62,6 +62,8 @@ export type Mutation = {
   createTeam: Team;
   /**  Create a new user.  */
   createUser: User;
+  /**  Removes a question from a game.  */
+  removeQuestionFromGame: Game;
   /**  Test mutation for health checks.  */
   test?: Maybe<Scalars['String']>;
 };
@@ -113,6 +115,13 @@ export type MutationCreateUserArgs = {
   newUser: NewUser;
 };
 
+
+/**  Root Mutation  */
+export type MutationRemoveQuestionFromGameArgs = {
+  gameId: Scalars['ID'];
+  questionId: Scalars['ID'];
+};
+
 /**  New Game  */
 export type NewGame = {
   name: Scalars['String'];
@@ -146,12 +155,14 @@ export type Query = {
   __typename?: 'Query';
   /**  Get a game by id.  */
   game: Game;
-  /**  Get all games  */
+  /**  Get all games.  */
   games: Array<Game>;
   /**  Get logged in user.  */
   me: User;
   /**  Get a question by id.  */
   question: GameQuestion;
+  /**  Get all questions.  */
+  questions: Array<GameQuestion>;
   /**  Get a team by id.  */
   team: Team;
   /**  Test query for health checks.  */
@@ -352,13 +363,14 @@ export type ImageResolvers<ContextType = any, ParentType extends ResolversParent
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  addQuestionToGame?: Resolver<Maybe<ResolversTypes['Game']>, ParentType, ContextType, RequireFields<MutationAddQuestionToGameArgs, 'gameId' | 'questionId'>>;
+  addQuestionToGame?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<MutationAddQuestionToGameArgs, 'gameId' | 'questionId'>>;
   addUserToTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationAddUserToTeamArgs, 'teamId' | 'userId'>>;
   answerQuestion?: Resolver<ResolversTypes['TeamQuestion'], ParentType, ContextType, RequireFields<MutationAnswerQuestionArgs, 'answer' | 'questionId' | 'teamId'>>;
   createGame?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<MutationCreateGameArgs, 'newGame'>>;
   createQuestion?: Resolver<ResolversTypes['GameQuestion'], ParentType, ContextType, RequireFields<MutationCreateQuestionArgs, 'newQuestion'>>;
   createTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationCreateTeamArgs, 'gameId' | 'newTeam'>>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'newUser'>>;
+  removeQuestionFromGame?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<MutationRemoveQuestionFromGameArgs, 'gameId' | 'questionId'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 
@@ -367,6 +379,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   question?: Resolver<ResolversTypes['GameQuestion'], ParentType, ContextType, RequireFields<QueryQuestionArgs, 'questionId'>>;
+  questions?: Resolver<Array<ResolversTypes['GameQuestion']>, ParentType, ContextType>;
   team?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<QueryTeamArgs, 'teamId'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'userId'>>;

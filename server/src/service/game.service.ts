@@ -68,13 +68,31 @@ export class GameService extends LiteDataSource {
 		/* Add Question to Game */
 		game.questions = [...(game.questions ?? []), question]
 		try {
-			/* Save Question */
+			/* Save Game */
 			return game.save()
 		} catch (e) {
 			const error = new DbError(e)
 			switch (error.code) {
 				case PgErrorCode.UniqueViolation:
 					throw new ApolloError(`This question already exists on this game -- ${e}`)
+				default:
+					throw new ApolloError(`An error occurred when adding question: "${questionId}" to game: "${gameId}" -- ${e}`)
+			}
+		}
+	}
+
+	async removeQuestionFromGame(gameId: string, questionId: string) {
+		/* Get Game */
+		const game = await Game.getOne(gameId)
+
+		/* Remove Question from Game */
+		game.questions = game.questions?.filter((question) => `${question.id}` !== questionId) ?? []
+		try {
+			/* Save Game */
+			return game.save()
+		} catch (e) {
+			const error = new DbError(e)
+			switch (error.code) {
 				default:
 					throw new ApolloError(`An error occurred when adding question: "${questionId}" to game: "${gameId}" -- ${e}`)
 			}
