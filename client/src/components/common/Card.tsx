@@ -5,6 +5,7 @@ import { theme } from '@/constants'
 
 export interface CardProps extends FlexboxProps {
 	hover?: boolean
+	highlight?: boolean
 }
 
 export const BaseCard: React.FC<CardProps> = ({ children, ...props }) => (
@@ -15,7 +16,7 @@ export const BaseCard: React.FC<CardProps> = ({ children, ...props }) => (
 
 export const Card = styled(BaseCard)`
 	user-select: none;
-	background-color: ${theme.color.foreground};
+	background-color: ${({ highlight }) => highlight ? theme.color.gray3 : theme.color.foreground};
 	border-radius: ${theme.borderRadius};
 	transition: ${theme.transition('background-color')};
 	&:hover {

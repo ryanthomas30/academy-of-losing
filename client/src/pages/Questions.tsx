@@ -7,11 +7,11 @@ import { routeNames } from '@/routing'
 
 type QuestionsRouteParams = {
 	gameId: string
-	questionIndex: string
+	questionNumber: string
 }
 
 export const Questions: React.FC = () => {
-	const { gameId, questionIndex } = useParams<QuestionsRouteParams>()
+	const { gameId, questionNumber } = useParams<QuestionsRouteParams>()
 	const { data } = useGameQuery({
 		variables: {
 			gameId: gameId!,
@@ -23,7 +23,7 @@ export const Questions: React.FC = () => {
 	const questions = useMemo(() => data?.game.team.questions ?? [], [data])
 	const numberOfQuestions = questions.length
 
-	if (numberOfQuestions === 0 || gameId === undefined || questionIndex === undefined) {
+	if (numberOfQuestions === 0 || gameId === undefined || questionNumber === undefined) {
 		return (
 			<Navigate
 				to={routeNames.home}
@@ -32,7 +32,7 @@ export const Questions: React.FC = () => {
 		)
 	}
 
-	if (isNaN(parseInt(questionIndex)) || parseInt(questionIndex) < 0 || parseInt(questionIndex) > numberOfQuestions - 1) {
+	if (isNaN(parseInt(questionNumber)) || parseInt(questionNumber) < 0 || parseInt(questionNumber) > numberOfQuestions - 1) {
 		return (
 			<Navigate
 				to={routeNames.game(gameId, true)}
@@ -41,7 +41,7 @@ export const Questions: React.FC = () => {
 		)
 	}
 
-	const question = questions[parseInt(questionIndex)]
+	const question = questions[parseInt(questionNumber)]
 
 	return (
 		<Page

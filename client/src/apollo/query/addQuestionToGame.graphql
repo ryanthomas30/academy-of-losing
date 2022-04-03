@@ -1,0 +1,26 @@
+mutation AddQuestionToGame($gameId: ID!, $questionId: ID!) {
+  addQuestionToGame(gameId: $gameId, questionId: $questionId) {
+    id
+    name
+    teams {
+      id
+      name
+      users {
+        id
+        fullName
+        email
+        isAdmin
+        photoUrl
+      }
+    }
+    questions {
+      id
+      title
+      description
+      image {
+        id
+        url
+      }
+    }
+  }
+}

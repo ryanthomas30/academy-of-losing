@@ -46,7 +46,7 @@ export type Image = {
 export type Mutation = {
   __typename?: 'Mutation';
   /**  Add a question to a game.  */
-  addQuestionToGame?: Maybe<Game>;
+  addQuestionToGame: Game;
   /**  Add a user to a team.  */
   addUserToTeam: Team;
   /**  Submit a Team's Answer  */
@@ -59,6 +59,8 @@ export type Mutation = {
   createTeam: Team;
   /**  Create a new user.  */
   createUser: User;
+  /**  Removes a question from a game.  */
+  removeQuestionFromGame: Game;
   /**  Test mutation for health checks.  */
   test?: Maybe<Scalars['String']>;
 };
@@ -110,6 +112,13 @@ export type MutationCreateUserArgs = {
   newUser: NewUser;
 };
 
+
+/**  Root Mutation  */
+export type MutationRemoveQuestionFromGameArgs = {
+  gameId: Scalars['ID'];
+  questionId: Scalars['ID'];
+};
+
 /**  New Game  */
 export type NewGame = {
   name: Scalars['String'];
@@ -143,12 +152,14 @@ export type Query = {
   __typename?: 'Query';
   /**  Get a game by id.  */
   game: Game;
-  /**  Get all games  */
+  /**  Get all games.  */
   games: Array<Game>;
   /**  Get logged in user.  */
   me: User;
   /**  Get a question by id.  */
   question: GameQuestion;
+  /**  Get all questions.  */
+  questions: Array<GameQuestion>;
   /**  Get a team by id.  */
   team: Team;
   /**  Test query for health checks.  */
@@ -211,12 +222,50 @@ export type User = {
   photoUrl?: Maybe<Scalars['String']>;
 };
 
+export type AddQuestionToGameMutationVariables = Exact<{
+  gameId: Scalars['ID'];
+  questionId: Scalars['ID'];
+}>;
+
+
+export type AddQuestionToGameMutation = { __typename?: 'Mutation', addQuestionToGame: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> }>, questions: Array<{ __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null }> } };
+
+export type AddUserToTeamMutationVariables = Exact<{
+  teamId: Scalars['ID'];
+  userId: Scalars['ID'];
+}>;
+
+
+export type AddUserToTeamMutation = { __typename?: 'Mutation', addUserToTeam: { __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> } };
+
+export type AdminGameQueryVariables = Exact<{
+  gameId: Scalars['ID'];
+}>;
+
+
+export type AdminGameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> }>, questions: Array<{ __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null }> } };
+
 export type CreateGameMutationVariables = Exact<{
   newGame: NewGame;
 }>;
 
 
 export type CreateGameMutation = { __typename?: 'Mutation', createGame: { __typename?: 'Game', id: string, name: string } };
+
+export type CreateQuestionMutationVariables = Exact<{
+  newQuestion: NewQuestion;
+}>;
+
+
+export type CreateQuestionMutation = { __typename?: 'Mutation', createQuestion: { __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null } };
+
+export type CreateTeamMutationVariables = Exact<{
+  newTeam: NewTeam;
+  gameId: Scalars['ID'];
+}>;
+
+
+export type CreateTeamMutation = { __typename?: 'Mutation', createTeam: { __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> } };
 
 export type CreateUserMutationVariables = Exact<{
   newUser: NewUser;
@@ -242,6 +291,19 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, isAdmin: boolean, email: string, fullName: string, photoUrl?: string | null, games: Array<{ __typename?: 'Game', id: string, name: string, questions: Array<{ __typename?: 'GameQuestion', id: string, description: string, title: string }> }> } };
 
+export type QuestionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type QuestionsQuery = { __typename?: 'Query', questions: Array<{ __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null }> };
+
+export type RemoveQuestionFromGameMutationVariables = Exact<{
+  gameId: Scalars['ID'];
+  questionId: Scalars['ID'];
+}>;
+
+
+export type RemoveQuestionFromGameMutation = { __typename?: 'Mutation', removeQuestionFromGame: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> }>, questions: Array<{ __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null }> } };
+
 export type TestQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -255,6 +317,159 @@ export type UserQueryVariables = Exact<{
 export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, isAdmin: boolean, email: string, fullName: string, photoUrl?: string | null, games: Array<{ __typename?: 'Game', id: string }> } };
 
 
+export const AddQuestionToGameDocument = gql`
+    mutation AddQuestionToGame($gameId: ID!, $questionId: ID!) {
+  addQuestionToGame(gameId: $gameId, questionId: $questionId) {
+    id
+    name
+    teams {
+      id
+      name
+      users {
+        id
+        fullName
+        email
+        isAdmin
+        photoUrl
+      }
+    }
+    questions {
+      id
+      title
+      description
+      image {
+        id
+        url
+      }
+    }
+  }
+}
+    `;
+export type AddQuestionToGameMutationFn = Apollo.MutationFunction<AddQuestionToGameMutation, AddQuestionToGameMutationVariables>;
+
+/**
+ * __useAddQuestionToGameMutation__
+ *
+ * To run a mutation, you first call `useAddQuestionToGameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddQuestionToGameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addQuestionToGameMutation, { data, loading, error }] = useAddQuestionToGameMutation({
+ *   variables: {
+ *      gameId: // value for 'gameId'
+ *      questionId: // value for 'questionId'
+ *   },
+ * });
+ */
+export function useAddQuestionToGameMutation(baseOptions?: Apollo.MutationHookOptions<AddQuestionToGameMutation, AddQuestionToGameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddQuestionToGameMutation, AddQuestionToGameMutationVariables>(AddQuestionToGameDocument, options);
+      }
+export type AddQuestionToGameMutationHookResult = ReturnType<typeof useAddQuestionToGameMutation>;
+export type AddQuestionToGameMutationResult = Apollo.MutationResult<AddQuestionToGameMutation>;
+export type AddQuestionToGameMutationOptions = Apollo.BaseMutationOptions<AddQuestionToGameMutation, AddQuestionToGameMutationVariables>;
+export const AddUserToTeamDocument = gql`
+    mutation AddUserToTeam($teamId: ID!, $userId: ID!) {
+  addUserToTeam(teamId: $teamId, userId: $userId) {
+    id
+    name
+    users {
+      id
+      fullName
+      email
+      isAdmin
+      photoUrl
+    }
+  }
+}
+    `;
+export type AddUserToTeamMutationFn = Apollo.MutationFunction<AddUserToTeamMutation, AddUserToTeamMutationVariables>;
+
+/**
+ * __useAddUserToTeamMutation__
+ *
+ * To run a mutation, you first call `useAddUserToTeamMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserToTeamMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addUserToTeamMutation, { data, loading, error }] = useAddUserToTeamMutation({
+ *   variables: {
+ *      teamId: // value for 'teamId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useAddUserToTeamMutation(baseOptions?: Apollo.MutationHookOptions<AddUserToTeamMutation, AddUserToTeamMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddUserToTeamMutation, AddUserToTeamMutationVariables>(AddUserToTeamDocument, options);
+      }
+export type AddUserToTeamMutationHookResult = ReturnType<typeof useAddUserToTeamMutation>;
+export type AddUserToTeamMutationResult = Apollo.MutationResult<AddUserToTeamMutation>;
+export type AddUserToTeamMutationOptions = Apollo.BaseMutationOptions<AddUserToTeamMutation, AddUserToTeamMutationVariables>;
+export const AdminGameDocument = gql`
+    query AdminGame($gameId: ID!) {
+  game(gameId: $gameId) {
+    id
+    name
+    teams {
+      id
+      name
+      users {
+        id
+        fullName
+        email
+        isAdmin
+        photoUrl
+      }
+    }
+    questions {
+      id
+      title
+      description
+      image {
+        id
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAdminGameQuery__
+ *
+ * To run a query within a React component, call `useAdminGameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAdminGameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAdminGameQuery({
+ *   variables: {
+ *      gameId: // value for 'gameId'
+ *   },
+ * });
+ */
+export function useAdminGameQuery(baseOptions: Apollo.QueryHookOptions<AdminGameQuery, AdminGameQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AdminGameQuery, AdminGameQueryVariables>(AdminGameDocument, options);
+      }
+export function useAdminGameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdminGameQuery, AdminGameQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AdminGameQuery, AdminGameQueryVariables>(AdminGameDocument, options);
+        }
+export type AdminGameQueryHookResult = ReturnType<typeof useAdminGameQuery>;
+export type AdminGameLazyQueryHookResult = ReturnType<typeof useAdminGameLazyQuery>;
+export type AdminGameQueryResult = Apollo.QueryResult<AdminGameQuery, AdminGameQueryVariables>;
 export const CreateGameDocument = gql`
     mutation CreateGame($newGame: NewGame!) {
   createGame(newGame: $newGame) {
@@ -289,6 +504,87 @@ export function useCreateGameMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateGameMutationHookResult = ReturnType<typeof useCreateGameMutation>;
 export type CreateGameMutationResult = Apollo.MutationResult<CreateGameMutation>;
 export type CreateGameMutationOptions = Apollo.BaseMutationOptions<CreateGameMutation, CreateGameMutationVariables>;
+export const CreateQuestionDocument = gql`
+    mutation CreateQuestion($newQuestion: NewQuestion!) {
+  createQuestion(newQuestion: $newQuestion) {
+    id
+    title
+    description
+    image {
+      id
+      url
+    }
+  }
+}
+    `;
+export type CreateQuestionMutationFn = Apollo.MutationFunction<CreateQuestionMutation, CreateQuestionMutationVariables>;
+
+/**
+ * __useCreateQuestionMutation__
+ *
+ * To run a mutation, you first call `useCreateQuestionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateQuestionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createQuestionMutation, { data, loading, error }] = useCreateQuestionMutation({
+ *   variables: {
+ *      newQuestion: // value for 'newQuestion'
+ *   },
+ * });
+ */
+export function useCreateQuestionMutation(baseOptions?: Apollo.MutationHookOptions<CreateQuestionMutation, CreateQuestionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateQuestionMutation, CreateQuestionMutationVariables>(CreateQuestionDocument, options);
+      }
+export type CreateQuestionMutationHookResult = ReturnType<typeof useCreateQuestionMutation>;
+export type CreateQuestionMutationResult = Apollo.MutationResult<CreateQuestionMutation>;
+export type CreateQuestionMutationOptions = Apollo.BaseMutationOptions<CreateQuestionMutation, CreateQuestionMutationVariables>;
+export const CreateTeamDocument = gql`
+    mutation CreateTeam($newTeam: NewTeam!, $gameId: ID!) {
+  createTeam(newTeam: $newTeam, gameId: $gameId) {
+    id
+    name
+    users {
+      id
+      fullName
+      email
+      isAdmin
+      photoUrl
+    }
+  }
+}
+    `;
+export type CreateTeamMutationFn = Apollo.MutationFunction<CreateTeamMutation, CreateTeamMutationVariables>;
+
+/**
+ * __useCreateTeamMutation__
+ *
+ * To run a mutation, you first call `useCreateTeamMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTeamMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTeamMutation, { data, loading, error }] = useCreateTeamMutation({
+ *   variables: {
+ *      newTeam: // value for 'newTeam'
+ *      gameId: // value for 'gameId'
+ *   },
+ * });
+ */
+export function useCreateTeamMutation(baseOptions?: Apollo.MutationHookOptions<CreateTeamMutation, CreateTeamMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTeamMutation, CreateTeamMutationVariables>(CreateTeamDocument, options);
+      }
+export type CreateTeamMutationHookResult = ReturnType<typeof useCreateTeamMutation>;
+export type CreateTeamMutationResult = Apollo.MutationResult<CreateTeamMutation>;
+export type CreateTeamMutationOptions = Apollo.BaseMutationOptions<CreateTeamMutation, CreateTeamMutationVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($newUser: NewUser!) {
   createUser(newUser: $newUser) {
@@ -467,6 +763,101 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const QuestionsDocument = gql`
+    query Questions {
+  questions {
+    id
+    title
+    description
+    image {
+      id
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useQuestionsQuery__
+ *
+ * To run a query within a React component, call `useQuestionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuestionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<QuestionsQuery, QuestionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QuestionsQuery, QuestionsQueryVariables>(QuestionsDocument, options);
+      }
+export function useQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QuestionsQuery, QuestionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QuestionsQuery, QuestionsQueryVariables>(QuestionsDocument, options);
+        }
+export type QuestionsQueryHookResult = ReturnType<typeof useQuestionsQuery>;
+export type QuestionsLazyQueryHookResult = ReturnType<typeof useQuestionsLazyQuery>;
+export type QuestionsQueryResult = Apollo.QueryResult<QuestionsQuery, QuestionsQueryVariables>;
+export const RemoveQuestionFromGameDocument = gql`
+    mutation RemoveQuestionFromGame($gameId: ID!, $questionId: ID!) {
+  removeQuestionFromGame(gameId: $gameId, questionId: $questionId) {
+    id
+    name
+    teams {
+      id
+      name
+      users {
+        id
+        fullName
+        email
+        isAdmin
+        photoUrl
+      }
+    }
+    questions {
+      id
+      title
+      description
+      image {
+        id
+        url
+      }
+    }
+  }
+}
+    `;
+export type RemoveQuestionFromGameMutationFn = Apollo.MutationFunction<RemoveQuestionFromGameMutation, RemoveQuestionFromGameMutationVariables>;
+
+/**
+ * __useRemoveQuestionFromGameMutation__
+ *
+ * To run a mutation, you first call `useRemoveQuestionFromGameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveQuestionFromGameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeQuestionFromGameMutation, { data, loading, error }] = useRemoveQuestionFromGameMutation({
+ *   variables: {
+ *      gameId: // value for 'gameId'
+ *      questionId: // value for 'questionId'
+ *   },
+ * });
+ */
+export function useRemoveQuestionFromGameMutation(baseOptions?: Apollo.MutationHookOptions<RemoveQuestionFromGameMutation, RemoveQuestionFromGameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveQuestionFromGameMutation, RemoveQuestionFromGameMutationVariables>(RemoveQuestionFromGameDocument, options);
+      }
+export type RemoveQuestionFromGameMutationHookResult = ReturnType<typeof useRemoveQuestionFromGameMutation>;
+export type RemoveQuestionFromGameMutationResult = Apollo.MutationResult<RemoveQuestionFromGameMutation>;
+export type RemoveQuestionFromGameMutationOptions = Apollo.BaseMutationOptions<RemoveQuestionFromGameMutation, RemoveQuestionFromGameMutationVariables>;
 export const TestDocument = gql`
     query Test {
   test

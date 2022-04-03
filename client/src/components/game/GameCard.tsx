@@ -15,6 +15,7 @@ export const GameCard: React.FC<GameCardProps> = ({ game }) => {
 			<Card
 				center
 				height={150}
+				padding='medium'
 				hover
 				marginBetween='xs'
 			>

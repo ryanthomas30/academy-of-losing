@@ -1,38 +1,42 @@
-import { Page, LoadingBoundary, Button, Row, CommentText, GameCards } from '@/components'
+import { Page, LoadingBoundary, Button, Row, CommentText, GameCards, Flexbox } from '@/components'
 import { useGamesQuery } from '@/apollo'
 import { routeNames } from '@/routing'
 
 export const AdminHome: React.FC = () => {
-	const { data, loading } = useGamesQuery()
+	const { data: gamesData, loading: gamesLoading } = useGamesQuery()
+
+	const games = gamesData?.games ?? []
 
 	return (
 		<Page
 			center
-			paddingTop='large'
+			paddingVertical='large'
 			paddingHorizontal='medium'
 		>
-			<Row
-				paddingBottom='medium'
-				justify='between'
-			>
-				<CommentText
-					multiline
-					size={24}
+			<Flexbox full>
+				<Row
+					paddingBottom='medium'
+					justify='between'
 				>
-					Games
-				</CommentText>
-				<Button
-					to={routeNames.newGame()}
-					primary
+					<CommentText
+						multiline
+						size={24}
+					>
+						Games
+					</CommentText>
+					<Button
+						to={routeNames.newGame()}
+						primary
+					>
+						Create Game
+					</Button>
+				</Row>
+				<LoadingBoundary
+					loading={gamesLoading}
 				>
-					Create Game
-				</Button>
-			</Row>
-			<LoadingBoundary
-				loading={loading}
-			>
-				<GameCards games={data?.games ?? []} />
-			</LoadingBoundary>
+					<GameCards games={games} />
+				</LoadingBoundary>
+			</Flexbox>
 		</Page>
 	)
 }

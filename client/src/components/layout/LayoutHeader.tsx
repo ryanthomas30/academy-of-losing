@@ -23,12 +23,11 @@ export const LayoutHeader: React.FC<LayoutHeaderProps> = ({ isAdmin, photoUrl })
 	const randomPhrase = getRandomPhrase()
 
 	return (
-		<Flexbox
+		<HeaderContainer
 			full='horizontal'
-			// align='center'
 			paddingHorizontal='large'
-			paddingTop='medium'
-			paddingBottom='large'
+			paddingVertical='medium'
+			marginBottom='large'
 		>
 			<Row
 				justify='between'
@@ -103,7 +102,7 @@ export const LayoutHeader: React.FC<LayoutHeaderProps> = ({ isAdmin, photoUrl })
 					</StringText>
 				</Flexbox>
 			</BottomRow>
-		</Flexbox>
+		</HeaderContainer>
 	)
 }
 
@@ -143,4 +142,11 @@ const ButtonContainerMobile = styled(Flexbox)`
 	${theme.mediaQuery.mobile} {
 		display: inherit !important;
 	}
+`
+
+const HeaderContainer = styled(Flexbox)`
+	background-color: ${theme.color.foreground};
+	position: sticky;
+	top: 0px;
+	box-shadow: ${theme.boxShadow.small};
 `

@@ -5,7 +5,7 @@ import { theme } from '@/constants'
 
 export const Input = styled(FormikField)`
 	width: -webkit-fill-available;
-	height: 24px;
+	height: 32px;
 	border: none;
 	padding: 4px 12px;
 	border-radius: ${theme.borderRadius};

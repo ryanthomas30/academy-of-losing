@@ -1,7 +1,7 @@
-import styled from 'styled-components'
 import { Game } from '@/apollo'
 
 import { GameCard } from './GameCard'
+import { CardsContainer } from '../common'
 
 export interface GameCardsProps {
 	games: Pick<Game, 'id' | 'name' | 'questions'>[]
@@ -16,16 +16,9 @@ export const GameCards: React.FC<GameCardsProps> = ({ games }) => {
 	))
 
 	return (
-		<GameCardsContainer>
+		<CardsContainer>
 			{gameCards()}
-		</GameCardsContainer>
+		</CardsContainer>
 	)
 }
 
-const GameCardsContainer = styled.div`
-	width: 100%;
-	height: 100%;
-	display: grid;
-	gap: 16px;
-	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-`
