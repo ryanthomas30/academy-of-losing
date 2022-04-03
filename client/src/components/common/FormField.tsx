@@ -16,6 +16,7 @@ export const FormField: React.FC<Props> = ({ children, label, error, ...other })
 		full='horizontal'
 		align='start'
 		justify='center'
+		marginBetween='xs'
 		{...other}
 	>
 		<Row justify='between'>

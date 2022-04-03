@@ -1,26 +1,37 @@
-import { Button, Page, LoadingBoundary } from '@/components'
-import { useMeQuery, useTestLazyQuery } from '@/apollo'
+import { Page, LoadingBoundary, Button, Row, CommentText, GameCards } from '@/components'
+import { useGamesQuery } from '@/apollo'
+import { routeNames } from '@/routing'
 
 export const AdminHome: React.FC = () => {
-	const [testQuery] = useTestLazyQuery()
-	const { loading } = useMeQuery()
-
-	const handleButtonClick = async () => {
-		await testQuery()
-	}
+	const { data, loading } = useGamesQuery()
 
 	return (
-		<Page center>
-			<Button
-				primary
-				onClick={handleButtonClick}
+		<Page
+			center
+			paddingTop='large'
+			paddingHorizontal='medium'
+		>
+			<Row
+				paddingBottom='medium'
+				justify='between'
 			>
-				Fake Admin Button
-			</Button>
+				<CommentText
+					multiline
+					size={24}
+				>
+					Games
+				</CommentText>
+				<Button
+					to={routeNames.newGame()}
+					primary
+				>
+					Create Game
+				</Button>
+			</Row>
 			<LoadingBoundary
 				loading={loading}
 			>
-				Fake Admin Page
+				<GameCards games={data?.games ?? []} />
 			</LoadingBoundary>
 		</Page>
 	)

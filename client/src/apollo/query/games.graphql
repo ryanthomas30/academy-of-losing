@@ -1,0 +1,11 @@
+query Games {
+	games {
+		id
+		name
+		questions {
+			id
+			description
+			title
+		}
+	}
+}

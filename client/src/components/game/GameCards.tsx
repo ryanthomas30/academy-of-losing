@@ -4,7 +4,7 @@ import { Game } from '@/apollo'
 import { GameCard } from './GameCard'
 
 export interface GameCardsProps {
-	games: Pick<Game, 'id' | 'name'>[]
+	games: Pick<Game, 'id' | 'name' | 'questions'>[]
 }
 
 export const GameCards: React.FC<GameCardsProps> = ({ games }) => {

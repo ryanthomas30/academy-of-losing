@@ -12,6 +12,8 @@ import { AdminHome } from '@/pages/AdminHome'
 import { Login } from '@/pages/Login'
 import { NotFound } from '@/pages/NotFound'
 import { Questions } from '@/pages/Questions'
+import { NewGame } from '@/pages/NewGame'
+import { GameEditor } from '@/pages/GameEditor'
 
 export const Routes = () => (
 	<RouteGroup>
@@ -48,6 +50,18 @@ export const Routes = () => (
 					index
 					element={<AdminHome />}
 				/>
+				<Route
+					path={routeNames.gameIndex}
+				>
+					<Route
+						path=':gameId'
+						element={<GameEditor />}
+					/>
+					<Route
+						path={routeNames.newRoute}
+						element={<NewGame />}
+					/>
+				</Route>
 			</Route>
 		</Route>
 		<Route

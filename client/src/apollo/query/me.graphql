@@ -8,6 +8,11 @@ query Me {
 		games {
 			id
 			name
+			questions {
+				id
+				description
+				title
+			}
 		}
 	}
 }

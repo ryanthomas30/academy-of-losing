@@ -1,0 +1,6 @@
+mutation CreateGame($newGame: NewGame!) {
+  createGame(newGame: $newGame) {
+    id
+    name
+  }
+}

@@ -35,8 +35,8 @@ const mediaQuery = {
 	mobile: `@media (max-width: ${MobileMax}px)`,
 }
 
-const Gray1 = '#1E1E1E'
-const Gray2 = '#252526'
+const Gray1 = '#111'
+const Gray2 = '#222'
 const Gray3 = '#333'
 const Gray4 = '#444'
 const Gray5 = '#555'

@@ -5,6 +5,7 @@ import { theme } from '@/constants'
 
 export const Input = styled(FormikField)`
 	width: -webkit-fill-available;
+	height: 24px;
 	border: none;
 	padding: 4px 12px;
 	border-radius: ${theme.borderRadius};
@@ -12,6 +13,7 @@ export const Input = styled(FormikField)`
 	color: ${theme.color.white};
 	transition: all 200ms ease-in-out;
 	font-size: 14px;
+	font-family: 'Source Code Pro';
 	&:focus {
 		outline: none;
 	}
