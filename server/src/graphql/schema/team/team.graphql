@@ -1,13 +1,13 @@
 extend type Query {
 	""" Get a team by id. """
-	team(teamId: ID!): Team!
+	team(teamId: ID!): Team! @isAdmin
 }
 
 extend type Mutation {
 	""" Create a new team. """
-	createTeam(newTeam: NewTeam!, gameId: ID!): Team!
+	createTeam(newTeam: NewTeam!, gameId: ID!): Team! @isAdmin
 	""" Add a user to a team. """
-	addUserToTeam(teamId: ID!, userId: ID!): Team!
+	addUserToTeam(teamId: ID!, userId: ID!): Team! @isAdmin
 	""" Submit a Team's Answer """
 	answerQuestion(teamId: ID!, answer: String!, questionId: ID!): TeamQuestion!
 }

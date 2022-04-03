@@ -1,4 +1,4 @@
-import { ApolloError } from 'apollo-server'
+import { ApolloError, AuthenticationError } from 'apollo-server'
 import { Game, Question, User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { LiteDataSource } from '@/dataSource'
@@ -6,7 +6,11 @@ import { NewGame } from '@/types'
 
 export class GameService extends LiteDataSource {
 
-	getGame(gameId: string) {
+	async getGame(gameId: string) {
+		const { user: contextUser } = this.context
+		if (contextUser.admin) return Game.getOne(gameId)
+		const userHasGame = await this.userHasGame(contextUser.userId, gameId)
+		if (!userHasGame) throw new AuthenticationError('You do not have access to this game')
 		return Game.getOne(gameId)
 	}
 
@@ -20,6 +24,11 @@ export class GameService extends LiteDataSource {
 				createdAt: 'DESC',
 			},
 		})
+	}
+
+	private async userHasGame(userId: string, gameId: string): Promise<Boolean> {
+		const games = await this.getGamesByUserId(userId)
+		return games.some(({ id }) => id === gameId)
 	}
 
 	async createGame(newGame: NewGame) {

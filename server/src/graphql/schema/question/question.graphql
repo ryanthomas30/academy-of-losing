@@ -1,11 +1,11 @@
 extend type Query {
 	""" Get a question by id. """
-	question(questionId: ID!): GameQuestion!
+	question(questionId: ID!): GameQuestion! @isAdmin
 }
 
 extend type Mutation {
 	""" Create a new question. """
-	createQuestion(newQuestion: NewQuestion!): GameQuestion!
+	createQuestion(newQuestion: NewQuestion!): GameQuestion! @isAdmin
 }
 
 """ Question for a game """

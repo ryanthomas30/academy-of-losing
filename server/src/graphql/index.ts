@@ -8,8 +8,9 @@ import {
 	userResolver,
 	teamResolver,
 	questionResolver,
-	hasUserIdTransformer,
 	gameResolver,
+	hasUserIdTransformer,
+	isAdminTransformer,
 } from './schema'
 
 import { applyTransformers } from './util'
@@ -30,6 +31,7 @@ export const resolvers = [
  */
 export const transformers: Array<DirectiveTransformer> = [
 	hasUserIdTransformer,
+	isAdminTransformer,
 ]
 
 export const makeSchema = async () => {

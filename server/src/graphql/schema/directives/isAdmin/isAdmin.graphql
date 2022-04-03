@@ -1,0 +1,4 @@
+"""
+Schema directive that checks if the user is an admin. Derived from a JWT claim.
+"""
+directive @isAdmin on FIELD_DEFINITION

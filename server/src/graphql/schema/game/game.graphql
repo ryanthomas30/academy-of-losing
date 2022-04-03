@@ -5,9 +5,9 @@ extend type Query {
 
 extend type Mutation {
 	""" Create a new game. """
-	createGame(newGame: NewGame!): Game!
+	createGame(newGame: NewGame!): Game! @isAdmin
 	""" Add a question to a game. """
-	addQuestionToGame(gameId: ID!, questionId: ID!): Game
+	addQuestionToGame(gameId: ID!, questionId: ID!): Game @isAdmin
 }
 
 """ Game """
