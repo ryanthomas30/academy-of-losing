@@ -3,6 +3,7 @@ import { Resolvers } from '@/types'
 export const gameResolver: Resolvers = {
 	Query: {
 		game: (_, { gameId }, { dataSources }) => dataSources.gameService.getGame(gameId),
+		games: (_, __, { dataSources }) => dataSources.gameService.getGames(),
 	},
 	Mutation: {
 		createGame: (_, { newGame }, { dataSources }) => dataSources.gameService.createGame(newGame),

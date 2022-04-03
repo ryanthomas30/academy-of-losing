@@ -146,6 +146,8 @@ export type Query = {
   __typename?: 'Query';
   /**  Get a game by id.  */
   game: Game;
+  /**  Get all games  */
+  games: Array<Game>;
   /**  Get logged in user.  */
   me: User;
   /**  Get a question by id.  */
@@ -362,6 +364,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   game?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<QueryGameArgs, 'gameId'>>;
+  games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   question?: Resolver<ResolversTypes['GameQuestion'], ParentType, ContextType, RequireFields<QueryQuestionArgs, 'questionId'>>;
   team?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<QueryTeamArgs, 'teamId'>>;

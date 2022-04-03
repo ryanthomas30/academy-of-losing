@@ -14,6 +14,15 @@ export class GameService extends LiteDataSource {
 		return Game.getOne(gameId)
 	}
 
+	getGames() {
+		return Game.find({
+			order: {
+				createdAt: 'DESC',
+			},
+			take: 20,
+		})
+	}
+
 	async getGamesByUserId(userId: string) {
 		const user = await User.getOne(userId, {
 			relations: ['teams'],
