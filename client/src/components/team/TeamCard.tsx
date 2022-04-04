@@ -1,6 +1,7 @@
 
 import { AdminGameQuery } from '@/apollo'
-import { Text, Card, Avatar, Flexbox } from '../common'
+import { routeNames } from '@/routing'
+import { Text, Card, Avatar, Flexbox, Button } from '../common'
 
 export interface TeamCardProps {
 	team: AdminGameQuery['game']['teams'][number]
@@ -8,7 +9,7 @@ export interface TeamCardProps {
 }
 
 export const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
-	const { name, users } = team
+	const { id, name, users } = team
 
 	const userAvatars = () => users.map((user) => (
 		<Flexbox
@@ -27,10 +28,12 @@ export const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
 
 	return (
 		<Card
-			center
-			height={150}
-			padding='medium'
-			marginBetween='small'
+			align='center'
+			justify='start'
+			minHeight={100}
+			paddingHorizontal='medium'
+			paddingVertical='large'
+			marginBetween='medium'
 		>
 			<Text
 				size={18}
@@ -39,11 +42,23 @@ export const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
 				{name}
 			</Text>
 			<Flexbox
-				direction='row'
-				marginBetween='medium'
+				marginBetween='small'
 				align='center'
 			>
 				{userAvatars()}
+				<Flexbox
+					direction='row'
+					align='center'
+					marginTop='xs'
+				>
+					<Button
+						primary
+						small
+						to={`${routeNames.teamIndex}/${id}`}
+					>
+						Add User
+					</Button>
+				</Flexbox>
 			</Flexbox>
 		</Card>
 	)

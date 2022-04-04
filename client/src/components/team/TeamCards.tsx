@@ -18,7 +18,7 @@ export const TeamCards: React.FC<TeamCardsProps> = ({ teams, gameId }) => {
 	))
 
 	return (
-		<CardsContainer>
+		<CardsContainer minCardWidth={200}>
 			{teamCards()}
 		</CardsContainer>
 	)

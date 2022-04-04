@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 
-export const CardsContainer = styled.div`
+interface CardsContainerProps {
+	minCardWidth?: number
+}
+
+export const CardsContainer = styled.div<CardsContainerProps>`
 	width: 100%;
 	height: 100%;
 	display: grid;
 	gap: 16px;
-	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	grid-template-columns: ${({ minCardWidth = 400 }) => `repeat(auto-fit, minmax(${minCardWidth}px, 1fr))`};
 `

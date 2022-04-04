@@ -17,6 +17,7 @@ export interface ButtonProps {
 	full?: boolean
 	disabled?: boolean
 	type?: 'button' | 'reset' | 'submit'
+	small?: boolean
 	className?: string
 	style?: CSSProperties
 }
@@ -63,8 +64,8 @@ export const Button = styled(BaseButton)`
 	cursor: pointer;
 	padding: 0px 20px;
 	border-radius: ${theme.borderRadius};
-	min-width: 74px;
-	height: 44px;
+	min-width: ${({ small }) => small ? '62px' : '74px'};
+	height: ${({ small }) => small ? '28px' : '44px'};
 	background-color: ${({ primary }) => primary ? theme.color.blue : theme.color.gray3};
 	transition: ${theme.transition('background-color')};
 	opacity: ${({ disabled }) => disabled ? 0.6 : 'inherit'};
@@ -77,7 +78,7 @@ export const Button = styled(BaseButton)`
 
 	/* Button Text */
 	color: ${() => theme.color.white};
-	font-size: 14px;
+	font-size: ${({ small }) => small ? '10px' : '14px'};
 	font-family: 'Source Code Pro';
 	white-space: nowrap;
 `

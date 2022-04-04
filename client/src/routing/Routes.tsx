@@ -16,6 +16,7 @@ import { NewQuestion } from '@/pages/NewQuestion'
 import { NewGame } from '@/pages/NewGame'
 import { GameEditor } from '@/pages/GameEditor'
 import { NewTeam } from '@/pages/NewTeam'
+import { Team } from '@/pages/Team'
 
 /* eslint react/jsx-first-prop-new-line: [2, "never"] */
 /* eslint-disable react/jsx-max-props-per-line */
@@ -34,6 +35,7 @@ export const Routes = () => (
 					<Route path=':gameId' element={<GameEditor />}>
 						<Route path={routeNames.teamIndex}>
 							<Route path={routeNames.newRoute} element={<NewTeam />} />
+							<Route path=':teamId' element={<Team />} />
 						</Route>
 					</Route>
 					<Route path={routeNames.newRoute} element={<NewGame />} />
