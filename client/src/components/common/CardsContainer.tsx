@@ -10,4 +10,5 @@ export const CardsContainer = styled.div<CardsContainerProps>`
 	display: grid;
 	gap: 16px;
 	grid-template-columns: ${({ minCardWidth = 400 }) => `repeat(auto-fit, minmax(${minCardWidth}px, 1fr))`};
+	grid-auto-rows: 1fr;
 `

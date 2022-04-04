@@ -56,7 +56,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
 						small
 						to={`${routeNames.teamIndex}/${id}`}
 					>
-						Add User
+						Manage Users
 					</Button>
 				</Flexbox>
 			</Flexbox>

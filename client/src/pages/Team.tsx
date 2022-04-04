@@ -1,42 +1,47 @@
-import { Avatar, Text, CommentText, Flexbox, LoadingBoundary, Page, Row } from '@/components'
+import { CommentText, Flexbox, LoadingBoundary, Page, Row, UserCard } from '@/components'
 import { useParams } from 'react-router-dom'
-import { useUsersQuery } from '@/apollo'
-import styled from 'styled-components'
-import { theme } from '@/constants'
+import { useAdminGameQuery, useUsersQuery } from '@/apollo'
 
 type TeamRouteParams = {
 	teamId: string
+	gameId: string
 }
 
 export const Team: React.FC = () => {
-	const { teamId } = useParams<TeamRouteParams>()
-	console.log('teamId:', teamId)
+	const { teamId, gameId } = useParams<TeamRouteParams>()
+	const { data: usersData, loading: usersLoading, error: usersError } = useUsersQuery()
+	const { data, error, loading } = useAdminGameQuery({
+		variables: {
+			gameId: gameId!,
+		},
+		skip: !gameId,
+	})
 
-	const { data, loading, error } = useUsersQuery()
+	const queriesLoading = loading || usersLoading
 
-	if (error) {
+	if (usersError || error) {
 		<CommentText multiline>
 			Something went horribly wrong
 		</CommentText>
 	}
 
-	const userAvatars = () => users.map((user) => (
-		<UserCard
-			direction='row'
-			center
-			marginBetween='small'
-			padding='medium'
-			key={user.id}
-		>
-			<Avatar
-				src={user.photoUrl!}
-				size={24}
-			/>
-			<Text size={12}>{user.fullName}</Text>
-		</UserCard>
-	))
+	const teams = data?.game.teams ?? []
+	const thisTeam = teams.find((team) => team.id === teamId)
+	const allUsers = usersData?.users ?? []
 
-	const users = data?.users ?? []
+	const userCards = () => allUsers.map((user) => {
+		const currentTeam = teams.find((team) => team.users.some((teamUser) => teamUser.id === user.id))
+		const isInThisTeam = currentTeam?.id === teamId
+		return (
+			<UserCard
+				isInThisTeam={isInThisTeam}
+				teamId={teamId!}
+				user={user}
+				team={currentTeam}
+				key={user.id}
+			/>
+		)
+	})
 
 	return (
 		<Page
@@ -53,22 +58,17 @@ export const Team: React.FC = () => {
 					multiline
 					size={18}
 				>
-					Users
+					{thisTeam?.name}
 				</CommentText>
 			</Row>
-			<LoadingBoundary loading={loading}>
+			<LoadingBoundary loading={queriesLoading}>
 				<Flexbox
 					direction='row'
 					marginBetween='medium'
 				>
-					{userAvatars()}
+					{userCards()}
 				</Flexbox>
 			</LoadingBoundary>
 		</Page>
 	)
 }
-
-const UserCard = styled(Flexbox)`
-	background-color: ${theme.color.foreground};
-	border-radius: ${theme.borderRadius};
-`

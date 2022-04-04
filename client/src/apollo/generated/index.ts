@@ -61,6 +61,8 @@ export type Mutation = {
   createUser: User;
   /**  Removes a question from a game.  */
   removeQuestionFromGame: Game;
+  /**  Remove a user from a team.  */
+  removeUserFromTeam: Team;
   /**  Test mutation for health checks.  */
   test?: Maybe<Scalars['String']>;
 };
@@ -117,6 +119,13 @@ export type MutationCreateUserArgs = {
 export type MutationRemoveQuestionFromGameArgs = {
   gameId: Scalars['ID'];
   questionId: Scalars['ID'];
+};
+
+
+/**  Root Mutation  */
+export type MutationRemoveUserFromTeamArgs = {
+  teamId: Scalars['ID'];
+  userId: Scalars['ID'];
 };
 
 /**  New Game  */
@@ -305,6 +314,14 @@ export type RemoveQuestionFromGameMutationVariables = Exact<{
 
 
 export type RemoveQuestionFromGameMutation = { __typename?: 'Mutation', removeQuestionFromGame: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> }>, questions: Array<{ __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null }> } };
+
+export type RemoveUserFromTeamMutationVariables = Exact<{
+  teamId: Scalars['ID'];
+  userId: Scalars['ID'];
+}>;
+
+
+export type RemoveUserFromTeamMutation = { __typename?: 'Mutation', removeUserFromTeam: { __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> } };
 
 export type TestQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -865,6 +882,48 @@ export function useRemoveQuestionFromGameMutation(baseOptions?: Apollo.MutationH
 export type RemoveQuestionFromGameMutationHookResult = ReturnType<typeof useRemoveQuestionFromGameMutation>;
 export type RemoveQuestionFromGameMutationResult = Apollo.MutationResult<RemoveQuestionFromGameMutation>;
 export type RemoveQuestionFromGameMutationOptions = Apollo.BaseMutationOptions<RemoveQuestionFromGameMutation, RemoveQuestionFromGameMutationVariables>;
+export const RemoveUserFromTeamDocument = gql`
+    mutation RemoveUserFromTeam($teamId: ID!, $userId: ID!) {
+  removeUserFromTeam(teamId: $teamId, userId: $userId) {
+    id
+    name
+    users {
+      id
+      fullName
+      email
+      isAdmin
+      photoUrl
+    }
+  }
+}
+    `;
+export type RemoveUserFromTeamMutationFn = Apollo.MutationFunction<RemoveUserFromTeamMutation, RemoveUserFromTeamMutationVariables>;
+
+/**
+ * __useRemoveUserFromTeamMutation__
+ *
+ * To run a mutation, you first call `useRemoveUserFromTeamMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUserFromTeamMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeUserFromTeamMutation, { data, loading, error }] = useRemoveUserFromTeamMutation({
+ *   variables: {
+ *      teamId: // value for 'teamId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useRemoveUserFromTeamMutation(baseOptions?: Apollo.MutationHookOptions<RemoveUserFromTeamMutation, RemoveUserFromTeamMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveUserFromTeamMutation, RemoveUserFromTeamMutationVariables>(RemoveUserFromTeamDocument, options);
+      }
+export type RemoveUserFromTeamMutationHookResult = ReturnType<typeof useRemoveUserFromTeamMutation>;
+export type RemoveUserFromTeamMutationResult = Apollo.MutationResult<RemoveUserFromTeamMutation>;
+export type RemoveUserFromTeamMutationOptions = Apollo.BaseMutationOptions<RemoveUserFromTeamMutation, RemoveUserFromTeamMutationVariables>;
 export const TestDocument = gql`
     query Test {
   test
