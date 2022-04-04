@@ -169,6 +169,8 @@ export type Query = {
   test?: Maybe<Scalars['String']>;
   /**  Get a user by id.  */
   user: User;
+  /**  Get all users.  */
+  users: Array<User>;
 };
 
 
@@ -383,6 +385,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   team?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<QueryTeamArgs, 'teamId'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'userId'>>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 }>;
 
 export type TeamResolvers<ContextType = any, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = ResolversObject<{

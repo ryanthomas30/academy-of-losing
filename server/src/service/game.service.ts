@@ -94,7 +94,7 @@ export class GameService extends LiteDataSource {
 			const error = new DbError(e)
 			switch (error.code) {
 				default:
-					throw new ApolloError(`An error occurred when adding question: "${questionId}" to game: "${gameId}" -- ${e}`)
+					throw new ApolloError(`An error occurred when removing question: "${questionId}" from game: "${gameId}" -- ${e}`)
 			}
 		}
 	}

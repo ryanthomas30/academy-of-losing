@@ -11,6 +11,12 @@ export class UserService extends LiteDataSource {
 		return User.getOne(userId)
 	}
 
+	getUsers() {
+		return User.find({
+			take: 50,
+		})
+	}
+
 	async createUser(newUser: NewUser) {
 		const { user: contextUser, dataSources: { firebaseService } } = this.context
 		const isAdmin = adminWhiteList.includes(contextUser.email)

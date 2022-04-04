@@ -3,6 +3,8 @@ extend type Query {
 	me: User!
 	""" Get a user by id. """
 	user(userId: ID!): User! @hasUserId
+	""" Get all users. """
+	users: [User!]! @hasUserId
 }
 
 extend type Mutation {
