@@ -23,6 +23,8 @@ interface ExpressContext {
  */
 export interface ProducedContext {
 	user: ContextUser
+	req: Request
+	res: Response
 }
 
 export interface ContextUser {
@@ -45,7 +47,7 @@ export interface Context extends ProducedContext {
  * Do not include datasources explicitly in the context to avoid circular dependencies.
  * Apollo Server will automatically include datasources in the context at runtime.
  */
-export const context: ContextFunction<ExpressContext, ProducedContext> = async ({ req, connection }) => {
+export const context: ContextFunction<ExpressContext, ProducedContext> = async ({ req, res, connection }) => {
 	if (connection) return connection.context
 	const authHeader = `${req.headers.authorization}` || ''
 	try {
@@ -59,6 +61,8 @@ export const context: ContextFunction<ExpressContext, ProducedContext> = async (
 					email: decodedToken.email ?? '',
 					admin: !!decodedToken.admin,
 				},
+				req,
+				res,
 			}
 		}
 		/* Allows introspection in development */
