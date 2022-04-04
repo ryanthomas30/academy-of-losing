@@ -4,7 +4,6 @@ import { DbError, PgErrorCode } from '@/util'
 import { NewUser } from '@/types'
 import { LiteDataSource } from '@/dataSource'
 import { adminWhiteList } from '@/constants'
-import { auth } from 'firebase-admin'
 
 export class UserService extends LiteDataSource {
 
@@ -19,7 +18,7 @@ export class UserService extends LiteDataSource {
 	}
 
 	async createUser(newUser: NewUser) {
-		const { user: contextUser, dataSources: { firebaseService }, res } = this.context
+		const { user: contextUser, dataSources: { firebaseService } } = this.context
 		const isAdmin = adminWhiteList.includes(contextUser.email)
 		/* Create User */
 		const user = User.create({

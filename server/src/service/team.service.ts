@@ -24,7 +24,7 @@ export class TeamService extends LiteDataSource {
 	async getMaybeTeamByUserGame(userId: string, gameId: string): Promise<Team | undefined> {
 		try {
 			const team = await Team.createQueryBuilder('team')
-				.leftJoinAndSelect('team.users', 'user', 'user.id = :userId', {
+				.innerJoinAndSelect('team.users', 'user', 'user.id = :userId', {
 					userId,
 				})
 				.where('team.gameId = :gameId', { gameId })
@@ -78,7 +78,6 @@ export class TeamService extends LiteDataSource {
 
 		/* Get Existing Team */
 		const existingTeam = await this.getMaybeTeamByUserGame(userId, gameId)
-		console.log('existingTeam:', existingTeam)
 
 		/* If Existing Team === New Team, do nothing */
 		if (existingTeam?.id === team.id) return team
