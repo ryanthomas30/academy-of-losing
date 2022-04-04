@@ -64,6 +64,8 @@ export type Mutation = {
   createUser: User;
   /**  Removes a question from a game.  */
   removeQuestionFromGame: Game;
+  /**  Remove a user from a team.  */
+  removeUserFromTeam: Team;
   /**  Test mutation for health checks.  */
   test?: Maybe<Scalars['String']>;
 };
@@ -120,6 +122,13 @@ export type MutationCreateUserArgs = {
 export type MutationRemoveQuestionFromGameArgs = {
   gameId: Scalars['ID'];
   questionId: Scalars['ID'];
+};
+
+
+/**  Root Mutation  */
+export type MutationRemoveUserFromTeamArgs = {
+  teamId: Scalars['ID'];
+  userId: Scalars['ID'];
 };
 
 /**  New Game  */
@@ -373,6 +382,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationCreateTeamArgs, 'gameId' | 'newTeam'>>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'newUser'>>;
   removeQuestionFromGame?: Resolver<ResolversTypes['Game'], ParentType, ContextType, RequireFields<MutationRemoveQuestionFromGameArgs, 'gameId' | 'questionId'>>;
+  removeUserFromTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationRemoveUserFromTeamArgs, 'teamId' | 'userId'>>;
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 }>;
 

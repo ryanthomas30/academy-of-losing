@@ -7,6 +7,7 @@ export const teamResolver: Resolvers = {
 	Mutation: {
 		createTeam: (_, { newTeam, gameId }, { dataSources }) => dataSources.teamService.createTeam(newTeam, gameId),
 		addUserToTeam: (_, { teamId, userId }, { dataSources }) => dataSources.teamService.addUserToTeam(teamId, userId),
+		removeUserFromTeam: (_, { teamId, userId }, { dataSources }) => dataSources.teamService.removeUserFromTeam(teamId, userId),
 		answerQuestion: (_, { teamId, answer, questionId }, { dataSources }) =>
 			dataSources.questionService.answerQuestion(teamId, answer, questionId),
 	},

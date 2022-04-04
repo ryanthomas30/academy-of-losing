@@ -8,6 +8,8 @@ extend type Mutation {
 	createTeam(newTeam: NewTeam!, gameId: ID!): Team! @isAdmin
 	""" Add a user to a team. """
 	addUserToTeam(teamId: ID!, userId: ID!): Team! @isAdmin
+	""" Remove a user from a team. """
+	removeUserFromTeam(teamId: ID!, userId: ID!): Team! @isAdmin
 	""" Submit a Team's Answer """
 	answerQuestion(teamId: ID!, answer: String!, questionId: ID!): TeamQuestion!
 }
