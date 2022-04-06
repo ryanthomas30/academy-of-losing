@@ -11,7 +11,7 @@ import { Answer } from '@/entity/answer.entity'
 
 import { Image, NewQuestion } from '@/types'
 import { DbError } from '@/util'
-import { ApolloError } from 'apollo-server'
+import { ApolloError, AuthenticationError } from 'apollo-server'
 
 export class QuestionService extends LiteDataSource {
 
@@ -70,8 +70,20 @@ export class QuestionService extends LiteDataSource {
 	}
 
 	async answerQuestion(teamId: string, answer: string, questionId: string) {
+		const { user: contextUser, dataSources } = this.context
 		/* Get Team */
-		const team = await Team.getOne(teamId)
+		const team = await Team.getOne(teamId, {
+			relations: ['game'],
+		})
+
+		const game = team.game
+		if (!game) throw Error('This team does not have a game')
+
+		/* Check if user belongs to this team */
+		const userTeamId = await dataSources.teamService.getTeamIdByUserGame(contextUser.userId, game.id)
+		console.log('teamId:', teamId)
+		console.log('userTeamId:', userTeamId)
+		if (`${userTeamId}` !== teamId) throw new AuthenticationError('You do not have access to update these records')
 
 		/* Get Question */
 		const question = await Question.getOne(questionId)
@@ -84,6 +96,7 @@ export class QuestionService extends LiteDataSource {
 				isCorrect: true,
 			},
 		})
+
 		if (teamAnswers.length > 0) throw new ApolloError(`Question: ${questionId} was already answered correctly by team: ${teamId}`)
 
 		const isCorrect = !!question?.answers?.some(correctAnswer => correctAnswer.value.toLowerCase() === answer.toLowerCase())
