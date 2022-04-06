@@ -32,9 +32,6 @@ export class QuestionService extends LiteDataSource {
 		/* Get Game */
 		const game = await Game.getOne(gameId, {
 			relations: ['questions'],
-			order: {
-				createdAt: 'ASC',
-			},
 		})
 		return game.questions?.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime()) ?? []
 	}
@@ -58,7 +55,7 @@ export class QuestionService extends LiteDataSource {
 				isCorrect: this.getTeamHasCorrectAnswer(teamId, question.teamAnswers ?? []),
 			}))
 
-			return teamQuestions
+			return teamQuestions.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
 
 		} catch (e) {
 			const error = new DbError(e)
