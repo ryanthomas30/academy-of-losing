@@ -53,6 +53,8 @@ const Teal = '#4EC9B0'
 const Yellow = '#DCDCAA'
 const Red = '#E06767'
 
+export const CodeColors = [White, LightBlue, PaleBlue, DarkBlue, DarkOrange, DarkGreen, Teal, Yellow]
+
 const color = {
 	background: Gray1,
 	foreground: Gray2,

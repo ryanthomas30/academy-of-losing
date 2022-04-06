@@ -256,6 +256,15 @@ export type AdminGameQueryVariables = Exact<{
 
 export type AdminGameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> }>, questions: Array<{ __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null }> } };
 
+export type AnswerQuestionMutationVariables = Exact<{
+  teamId: Scalars['ID'];
+  answer: Scalars['String'];
+  questionId: Scalars['ID'];
+}>;
+
+
+export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: { __typename?: 'TeamQuestion', isCorrect: boolean, id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null } };
+
 export type CreateGameMutationVariables = Exact<{
   newGame: NewGame;
 }>;
@@ -494,6 +503,48 @@ export function useAdminGameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type AdminGameQueryHookResult = ReturnType<typeof useAdminGameQuery>;
 export type AdminGameLazyQueryHookResult = ReturnType<typeof useAdminGameLazyQuery>;
 export type AdminGameQueryResult = Apollo.QueryResult<AdminGameQuery, AdminGameQueryVariables>;
+export const AnswerQuestionDocument = gql`
+    mutation AnswerQuestion($teamId: ID!, $answer: String!, $questionId: ID!) {
+  answerQuestion(teamId: $teamId, answer: $answer, questionId: $questionId) {
+    isCorrect
+    id
+    title
+    description
+    image {
+      id
+      url
+    }
+  }
+}
+    `;
+export type AnswerQuestionMutationFn = Apollo.MutationFunction<AnswerQuestionMutation, AnswerQuestionMutationVariables>;
+
+/**
+ * __useAnswerQuestionMutation__
+ *
+ * To run a mutation, you first call `useAnswerQuestionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAnswerQuestionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [answerQuestionMutation, { data, loading, error }] = useAnswerQuestionMutation({
+ *   variables: {
+ *      teamId: // value for 'teamId'
+ *      answer: // value for 'answer'
+ *      questionId: // value for 'questionId'
+ *   },
+ * });
+ */
+export function useAnswerQuestionMutation(baseOptions?: Apollo.MutationHookOptions<AnswerQuestionMutation, AnswerQuestionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AnswerQuestionMutation, AnswerQuestionMutationVariables>(AnswerQuestionDocument, options);
+      }
+export type AnswerQuestionMutationHookResult = ReturnType<typeof useAnswerQuestionMutation>;
+export type AnswerQuestionMutationResult = Apollo.MutationResult<AnswerQuestionMutation>;
+export type AnswerQuestionMutationOptions = Apollo.BaseMutationOptions<AnswerQuestionMutation, AnswerQuestionMutationVariables>;
 export const CreateGameDocument = gql`
     mutation CreateGame($newGame: NewGame!) {
   createGame(newGame: $newGame) {

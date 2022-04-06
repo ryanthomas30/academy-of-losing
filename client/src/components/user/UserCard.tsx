@@ -11,29 +11,30 @@ interface UserCardProps {
 }
 
 export const UserCard: React.FC<UserCardProps> = ({ teamId, user, isInThisTeam, team }) => {
-	const [addUserToTeam, { loading: addUserLoading }] = useAddUserToTeamMutation()
-	const [removeUserFromTeam, { loading: removeUserLoading }] = useRemoveUserFromTeamMutation()
+	const [addUserToTeam, { loading: addUserLoading }] = useAddUserToTeamMutation({
+		variables: {
+			teamId: teamId!,
+			userId: user.id,
+		},
+		refetchQueries: [AdminGameDocument],
+	})
+
+	const [removeUserFromTeam, { loading: removeUserLoading }] = useRemoveUserFromTeamMutation({
+		variables: {
+			teamId: teamId!,
+			userId: user.id,
+		},
+		refetchQueries: [AdminGameDocument],
+	})
 
 	const mutationsLoading = addUserLoading || removeUserLoading
 
 	const handleCardClick = async () => {
 		if (mutationsLoading) return
 		if (isInThisTeam) {
-			await removeUserFromTeam({
-				variables: {
-					teamId: teamId!,
-					userId: user.id,
-				},
-				refetchQueries: [AdminGameDocument],
-			})
+			await removeUserFromTeam()
 		} else {
-			await addUserToTeam({
-				variables: {
-					teamId: teamId!,
-					userId: user.id,
-				},
-				refetchQueries: [AdminGameDocument],
-			})
+			await addUserToTeam()
 		}
 	}
 	const teamTextColor = (): string => {

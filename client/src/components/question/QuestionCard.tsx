@@ -1,36 +1,34 @@
 import { useAddQuestionToGameMutation, useRemoveQuestionFromGameMutation } from '@/apollo'
+import { theme } from '@/constants'
+import styled from 'styled-components'
 
 import { Text, Card } from '../common'
 import { CardQuestion } from './QuestionCards'
 
 export interface QuestionCardProps {
 	question: CardQuestion
-	gameId: string
+	gameId?: string
 }
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({ question, gameId }) => {
 	const { id: questionId, description, title, isInGame, image } = question
-	const [addQuestionToGame, { loading: addQuestionLoading }] = useAddQuestionToGameMutation({
-		variables: {
-			gameId,
-			questionId,
-		},
-	})
-	const [removeQuestionFromGame, { loading: removeQuestionLoading }] = useRemoveQuestionFromGameMutation({
-		variables: {
-			gameId,
-			questionId,
-		},
-	})
+	const [addQuestionToGame, { loading: addQuestionLoading }] = useAddQuestionToGameMutation()
+	const [removeQuestionFromGame, { loading: removeQuestionLoading }] = useRemoveQuestionFromGameMutation()
 
 	const loading = addQuestionLoading || removeQuestionLoading
 
 	const handleCardClick = async () => {
-		if (loading) return
+		if (loading || !gameId) return
+		const mutationOptions = {
+			variables: {
+				gameId,
+				questionId,
+			},
+		}
 		if (isInGame) {
-			await removeQuestionFromGame()
+			await removeQuestionFromGame(mutationOptions)
 		} else {
-			await addQuestionToGame()
+			await addQuestionToGame(mutationOptions)
 		}
 	}
 	return (
@@ -40,7 +38,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ question, gameId }) 
 			padding='medium'
 			marginBetween='small'
 			highlight={isInGame}
-			onClick={handleCardClick}
+			onClick={gameId ? handleCardClick : undefined}
 		>
 			<Text
 				size={14}
@@ -52,10 +50,23 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ question, gameId }) 
 				{description}
 			</Text>
 			{image && (
-				<Text size={10}>
-					{image.url}
-				</Text>
+				<ImageLink
+					href={image.url}
+					target='_blank'
+					rel='noreferrer'
+				>
+					<Text
+						size={10}
+						color={theme.color.darkBlue}
+					>
+						{image.url}
+					</Text>
+				</ImageLink>
 			)}
 		</Card>
 	)
 }
+
+const ImageLink = styled.a`
+	text-decoration: none;
+`

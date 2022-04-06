@@ -24,7 +24,7 @@ export const Game: React.FC = () => {
 	return (
 		<Page
 			center
-			paddingTop='large'
+			paddingBottom='medium'
 			paddingHorizontal='medium'
 		>
 			<LoadingBoundary loading={loading}>

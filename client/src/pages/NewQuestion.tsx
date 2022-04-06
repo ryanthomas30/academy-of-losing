@@ -1,5 +1,5 @@
 import { Page, Form, Flexbox, TextInput, Text, FormButton, Row } from '@/components'
-import { useCreateQuestionMutation } from '@/apollo'
+import { AdminGameDocument, useCreateQuestionMutation } from '@/apollo'
 import { theme } from '@/constants'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
@@ -43,6 +43,7 @@ export const NewQuestion: React.FC = () => {
 						imageUrl: imageUrl?.trim() || null,
 					},
 				},
+				refetchQueries: [AdminGameDocument],
 			})
 			navigate(`/${routeNames.adminHome}`)
 		} catch (e) {

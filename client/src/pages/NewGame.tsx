@@ -1,5 +1,5 @@
 import { Page, Form, Flexbox, TextInput, Text, FormButton, Row } from '@/components'
-import { useCreateGameMutation } from '@/apollo'
+import { AdminGameDocument, useCreateGameMutation } from '@/apollo'
 import { theme } from '@/constants'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
@@ -30,6 +30,7 @@ export const NewGame: React.FC = () => {
 						name: name.trim(),
 					},
 				},
+				refetchQueries: [AdminGameDocument],
 			})
 			navigate(`/${routeNames.adminHome}${routeNames.game(data?.createGame.id, true)}`)
 		} catch (e) {

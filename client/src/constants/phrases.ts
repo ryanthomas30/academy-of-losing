@@ -25,6 +25,20 @@ export const otherPhrases = [
 	'cumink',
 	'innateOne',
 	'*sad ivan noises*',
+	'specific specific specific specific',
+]
+
+export const wrongAnswerPhrases = [
+	'TRASH',
+	'tRaSh',
+	'basuralol',
+	'jajajaja',
+	'OmG i cAn\'T aIm',
+	'i CaN\'t Sh0oT mY gUn',
+	'sick ult',
+	'kids are trash',
+	'nice hook',
+	'*tip*',
 ]
 
 export const allPhrases = [

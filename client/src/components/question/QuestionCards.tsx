@@ -9,7 +9,7 @@ export interface CardQuestion extends GameQuestion {
 
 export interface QuestionCardsProps {
 	questions: CardQuestion[]
-	gameId: string
+	gameId?: string
 }
 
 export const QuestionCards: React.FC<QuestionCardsProps> = ({ questions, gameId }) => {

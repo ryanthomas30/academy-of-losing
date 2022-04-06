@@ -1,0 +1,12 @@
+mutation AnswerQuestion($teamId: ID!, $answer: String!, $questionId: ID!) {
+  answerQuestion(teamId: $teamId, answer: $answer, questionId: $questionId) {
+    isCorrect
+    id
+    title
+    description
+    image {
+      id
+      url
+    }
+  }
+}
