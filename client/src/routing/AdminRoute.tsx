@@ -17,6 +17,7 @@ export const RequireAdmin: React.FC<Props> = ({ element }) => {
 	const isLoggedIn = !!useAuth()
 	const { data, loading } = useMeQuery({
 		skip: !isLoggedIn,
+		fetchPolicy: 'cache-only',
 	})
 
 	const isAdmin = !!data?.me.isAdmin

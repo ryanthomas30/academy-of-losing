@@ -1,18 +1,27 @@
 query Me {
-	me {
-		id
-		isAdmin
-		email
-		fullName
-		photoUrl
-		games {
-			id
-			name
-			questions {
-				id
-				description
-				title
-			}
-		}
-	}
+  me {
+    id
+    email
+    fullName
+    isAdmin
+    photoUrl
+    games {
+      id
+      name
+      team {
+        id
+        name
+        questions {
+          id
+          title
+          description
+          image {
+            id
+            url
+          }
+          isCorrect
+        }
+      }
+    }
+  }
 }

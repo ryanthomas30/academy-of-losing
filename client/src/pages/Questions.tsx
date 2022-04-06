@@ -105,6 +105,29 @@ export const Questions: React.FC = () => {
 			full
 			marginBetween='large'
 		>
+			<NavigationButtonContainer
+				justify={onFirstQuestion ? 'end' : 'between'}
+				marginBetween='small'
+				maxWidth={750}
+			>
+				{!onFirstQuestion && (
+					<Button
+						small
+						onClick={previousQuestion}
+					>
+						Previous Question
+					</Button>
+				)}
+				{!onLastQuestion && (
+					<Button
+						small
+						primary
+						onClick={nextQuestion}
+					>
+						Next Question
+					</Button>
+				)}
+			</NavigationButtonContainer>
 			<QuestionHeader
 				center
 			>
@@ -191,29 +214,6 @@ export const Questions: React.FC = () => {
 					</WrongAnswerBanner>
 				)}
 			</FormContainer>
-			<NavigationButtonContainer
-				justify={onFirstQuestion ? 'end' : 'between'}
-				marginBetween='small'
-				maxWidth={750}
-			>
-				{!onFirstQuestion && (
-					<Button
-						small
-						onClick={previousQuestion}
-					>
-						Previous Question
-					</Button>
-				)}
-				{!onLastQuestion && (
-					<Button
-						small
-						primary
-						onClick={nextQuestion}
-					>
-						Next Question
-					</Button>
-				)}
-			</NavigationButtonContainer>
 		</Flexbox>
 	)
 }

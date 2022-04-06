@@ -309,7 +309,7 @@ export type GamesQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Ga
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, isAdmin: boolean, email: string, fullName: string, photoUrl?: string | null, games: Array<{ __typename?: 'Game', id: string, name: string, questions: Array<{ __typename?: 'GameQuestion', id: string, description: string, title: string }> }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, email: string, fullName: string, isAdmin: boolean, photoUrl?: string | null, games: Array<{ __typename?: 'Game', id: string, name: string, team: { __typename?: 'Team', id: string, name: string, questions: Array<{ __typename?: 'TeamQuestion', id: string, title: string, description: string, isCorrect: boolean, image?: { __typename?: 'Image', id: string, url: string } | null }> } }> } };
 
 export type QuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -795,17 +795,26 @@ export const MeDocument = gql`
     query Me {
   me {
     id
-    isAdmin
     email
     fullName
+    isAdmin
     photoUrl
     games {
       id
       name
-      questions {
+      team {
         id
-        description
-        title
+        name
+        questions {
+          id
+          title
+          description
+          image {
+            id
+            url
+          }
+          isCorrect
+        }
       }
     }
   }
