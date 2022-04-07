@@ -1,7 +1,7 @@
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { Button, Flexbox, Form, FormButton, Row, StringText, Text, TextInput } from '@/components'
+import { Button, Flexbox, Form, FormButton, Row, StringText, Text, TextInput, ProgressTracker, QuestionStatus } from '@/components'
 import { useGameQuery, useAnswerQuestionMutation } from '@/apollo'
 import { routeNames } from '@/routing'
 import styled from 'styled-components'
@@ -43,6 +43,11 @@ export const Questions: React.FC = () => {
 	const team = data?.game.team
 	const numberOfQuestions = questions.length
 
+	useEffect(() => {
+		setWrongAnswerMessage('')
+
+	}, [questionNumber])
+
 	if (numberOfQuestions === 0 || gameId === undefined || questionNumber === undefined) {
 		return (
 			<Navigate
@@ -65,7 +70,6 @@ export const Questions: React.FC = () => {
 	const onFirstQuestion = questionIdx === 0
 
 	const goToQuestion = (questionNumber: number) => {
-		setWrongAnswerMessage('')
 		navigate(routeNames.gameQuestion(gameId, `${questionNumber}`))
 	}
 
@@ -76,6 +80,12 @@ export const Questions: React.FC = () => {
 	const previousQuestion = () => {
 		if (!onFirstQuestion) goToQuestion(questionIdx - 1)
 	}
+
+	const questionStatuses = (): QuestionStatus[] => questions.map((q, i) => ({
+		isCompleted: q.isCorrect,
+		questionId: q.id,
+		questionNumber: i,
+	}))
 
 	const question = questions[questionIdx]
 
@@ -214,6 +224,13 @@ export const Questions: React.FC = () => {
 					</WrongAnswerBanner>
 				)}
 			</FormContainer>
+			<Row center>
+				<ProgressTracker
+					questionStatuses={questionStatuses()}
+					currentQuestionNumber={questionIdx}
+					gameId={gameId}
+				/>
+			</Row>
 		</Flexbox>
 	)
 }
