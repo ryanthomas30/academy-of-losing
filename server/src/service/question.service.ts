@@ -78,8 +78,6 @@ export class QuestionService extends LiteDataSource {
 
 		/* Check if user belongs to this team */
 		const userTeamId = await dataSources.teamService.getTeamIdByUserGame(contextUser.userId, game.id)
-		console.log('teamId:', teamId)
-		console.log('userTeamId:', userTeamId)
 		if (`${userTeamId}` !== teamId) throw new AuthenticationError('You do not have access to update these records')
 
 		/* Get Question */
