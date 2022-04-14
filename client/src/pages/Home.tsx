@@ -1,5 +1,6 @@
-import { Page, LoadingBoundary, GameCards, Row, CommentText } from '@/components'
+import { Page, LoadingBoundary, GameCards, Row, CommentText, Text } from '@/components'
 import { useMeQuery } from '@/apollo'
+import { theme } from '@/constants'
 
 export const Home: React.FC = () => {
 	const { data, loading } = useMeQuery({
@@ -29,6 +30,7 @@ export const Home: React.FC = () => {
 				loading={loading}
 			>
 				<GameCards games={games} />
+				{games.length === 0 && <Text color={theme.color.gray5}>No one wants to play games with you</Text>}
 			</LoadingBoundary>
 		</Page>
 	)

@@ -1,6 +1,7 @@
-import { Page, LoadingBoundary, Button, Row, CommentText, GameCards, Flexbox, QuestionCards } from '@/components'
+import { Page, LoadingBoundary, Button, Row, CommentText, GameCards, Flexbox, QuestionCards, Text } from '@/components'
 import { useGamesQuery, useQuestionsQuery } from '@/apollo'
 import { routeNames } from '@/routing'
+import { theme } from '@/constants'
 
 export const AdminHome: React.FC = () => {
 	const { data: gamesData, loading: gamesLoading } = useGamesQuery()
@@ -16,7 +17,10 @@ export const AdminHome: React.FC = () => {
 			paddingHorizontal='medium'
 			marginBetween='large'
 		>
-			<Flexbox full>
+			<Flexbox
+				full
+				center
+			>
 				<Row
 					paddingBottom='medium'
 					justify='between'
@@ -38,16 +42,20 @@ export const AdminHome: React.FC = () => {
 					loading={gamesLoading}
 				>
 					<GameCards games={games} />
+					{games.length === 0 && <Text color={theme.color.gray5}>No games yet...</Text>}
 				</LoadingBoundary>
 			</Flexbox>
-			<Flexbox full>
+			<Flexbox
+				full
+				center
+			>
 				<Row
 					paddingBottom='medium'
 					justify='between'
 				>
 					<CommentText
 						multiline
-						size={18}
+						size={24}
 					>
 						Questions
 					</CommentText>
@@ -62,6 +70,7 @@ export const AdminHome: React.FC = () => {
 					<QuestionCards
 						questions={questions}
 					/>
+					{questions.length === 0 && <Text color={theme.color.gray5}>No questions yet...</Text>}
 				</LoadingBoundary>
 			</Flexbox>
 		</Page>
