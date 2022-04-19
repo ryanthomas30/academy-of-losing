@@ -16,18 +16,18 @@ import { Question } from './question.entity'
 export class Answer extends BaseEntity {
 
 	@PrimaryGeneratedColumn()
-	id!: string
+	id!: number
 
 	@Column()
 	value!: string
 
 	@Column()
-	questionId!: string
+	questionId!: number
 
 	@ManyToOne(() => Question, question => question.answers)
 	question?: Question
 
-	static async getOne(answerId: string, options?: FindOneOptions<Answer>) {
+	static async getOne(answerId: string | number, options?: FindOneOptions<Answer>) {
 		try {
 			return Answer.findOneOrFail(answerId, options)
 		} catch (e) {

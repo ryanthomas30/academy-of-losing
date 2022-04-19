@@ -77,13 +77,13 @@ export class TeamService extends LiteDataSource {
 		if (!gameId) throw Error('No game found for this team')
 
 		/* Get Existing Team */
-		const existingTeam = await this.getMaybeTeamByUserGame(userId, gameId)
+		const existingTeam = await this.getMaybeTeamByUserGame(userId, `${gameId}`)
 
 		/* If Existing Team === New Team, do nothing */
 		if (existingTeam?.id === team.id) return team
 
 		/* Remove User from existing Team */
-		if (existingTeam) await this.removeUserFromTeam(existingTeam.id, userId)
+		if (existingTeam) await this.removeUserFromTeam(`${existingTeam.id}`, userId)
 
 		/* Get User */
 		const user = await User.getOne(userId)

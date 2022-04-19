@@ -13,6 +13,6 @@ export const teamResolver: Resolvers = {
 	},
 	Team: {
 		users: ({ users }, _, { dataSources }) => dataSources.utilService.resolveNilToArray(users),
-		questions: ({ id }, _, { dataSources }) => dataSources.questionService.getTeamQuestions(id),
+		questions: ({ id }, _, { dataSources }) => dataSources.questionService.getTeamQuestions(`${id}`),
 	},
 }

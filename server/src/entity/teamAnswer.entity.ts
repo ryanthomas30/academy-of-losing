@@ -14,7 +14,7 @@ import { Team } from './team.entity'
 export class TeamAnswer extends BaseEntity {
 
 	@PrimaryGeneratedColumn()
-	id!: string
+	id!: number
 
 	@Column({ default: false })
 	isCorrect!: boolean
@@ -23,10 +23,10 @@ export class TeamAnswer extends BaseEntity {
 	answer!: string
 
 	@Column()
-	questionId!: string
+	questionId!: number
 
 	@Column()
-	teamId!: string
+	teamId!: number
 
 	@ManyToOne(() => Question, question => question.teamAnswers)
 	question?: Question

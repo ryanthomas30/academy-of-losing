@@ -37,7 +37,7 @@ export class GameService extends LiteDataSource {
 
 	private async userHasGame(userId: string, gameId: string): Promise<Boolean> {
 		const games = await this.getGamesByUserId(userId)
-		return games.some(({ id }) => id === gameId)
+		return games.some(({ id }) => `${id}` === gameId)
 	}
 
 	async createGame(newGame: NewGame) {

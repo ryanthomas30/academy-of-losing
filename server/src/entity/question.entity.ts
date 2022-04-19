@@ -18,7 +18,7 @@ import { TeamAnswer } from './teamAnswer.entity'
 export class Question extends BaseEntity {
 
 	@PrimaryGeneratedColumn()
-	id!: string
+	id!: number
 
 	@Column()
 	title!: string
@@ -44,7 +44,7 @@ export class Question extends BaseEntity {
 	@CreateDateColumn()
 	createdAt!: Date
 
-	static async getOne(questionId: string, options?: FindOneOptions<Question>) {
+	static async getOne(questionId: string | number, options?: FindOneOptions<Question>) {
 		try {
 			return Question.findOneOrFail(questionId, options)
 		} catch (e) {
@@ -57,7 +57,7 @@ export class Question extends BaseEntity {
  * Custom TeamQuestion resolve mapper for codegen
  */
 export interface TeamQuestion {
-	id: string
+	id: number
 	title: string
 	description: string
 	imageUrl?: string

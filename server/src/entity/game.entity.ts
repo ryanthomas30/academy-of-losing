@@ -18,7 +18,7 @@ import { Team } from './team.entity'
 export class Game extends BaseEntity {
 
 	@PrimaryGeneratedColumn()
-	id!: string
+	id!: number
 
 	@Column()
 	name!: string
@@ -39,7 +39,7 @@ export class Game extends BaseEntity {
 	@CreateDateColumn()
 	createdAt!: Date
 
-	static async getOne(gameId: string, options?: FindOneOptions<Game>) {
+	static async getOne(gameId: string | number, options?: FindOneOptions<Game>) {
 		try {
 			return Game.findOneOrFail(gameId, options)
 		} catch (e) {

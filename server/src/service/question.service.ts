@@ -44,7 +44,7 @@ export class QuestionService extends LiteDataSource {
 		const gameId = team.game?.id
 		try {
 			if (!gameId) throw Error
-			const gameQuestions = await this.getGameQuestions(gameId)
+			const gameQuestions = await this.getGameQuestions(`${gameId}`)
 
 			const questions = await Question.findByIds(gameQuestions.map((gq) => gq.id), {
 				relations: ['teamAnswers'],
@@ -77,7 +77,7 @@ export class QuestionService extends LiteDataSource {
 		if (!game) throw Error('This team does not have a game')
 
 		/* Check if user belongs to this team */
-		const userTeamId = await dataSources.teamService.getTeamIdByUserGame(contextUser.userId, game.id)
+		const userTeamId = await dataSources.teamService.getTeamIdByUserGame(contextUser.userId, `${game.id}`)
 		if (`${userTeamId}` !== teamId) throw new AuthenticationError('You do not have access to update these records')
 
 		/* Get Question */
@@ -119,7 +119,7 @@ export class QuestionService extends LiteDataSource {
 	}
 
 	private getTeamHasCorrectAnswer(teamId: string, teamAnswers: TeamAnswer[]) {
-		return teamAnswers.filter((teamAnswer) => teamAnswer.teamId === teamId)
+		return teamAnswers.filter((teamAnswer) => `${teamAnswer.teamId}` === teamId)
 			.some((teamAnswer) => teamAnswer.isCorrect) ?? false
 	}
 

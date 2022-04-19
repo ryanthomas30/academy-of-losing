@@ -22,13 +22,13 @@ import { User } from './user.entity'
 export class Team extends BaseEntity {
 
 	@PrimaryGeneratedColumn()
-	id!: string
+	id!: number
 
 	@Column()
 	name!: string
 
 	@Column()
-	gameId!: string
+	gameId!: number
 
 	@ManyToOne(() => Game, game => game.teams)
 	game?: Game
@@ -47,7 +47,7 @@ export class Team extends BaseEntity {
 	@CreateDateColumn()
 	createdAt!: Date
 
-	static async getOne(teamId: string, options?: FindOneOptions<Team>) {
+	static async getOne(teamId: string | number, options?: FindOneOptions<Team>) {
 		try {
 			return Team.findOneOrFail(teamId, options)
 		} catch (e) {
