@@ -55,7 +55,6 @@ interface ProgressContainerProps {
 }
 
 export const ProgressContainer = styled.div<ProgressContainerProps>`
-	/* width: 100%; */
 	display: grid;
 	grid-template-columns: ${({ count }) => `repeat(${count}, 1fr)`};
 `

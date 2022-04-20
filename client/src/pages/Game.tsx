@@ -13,7 +13,7 @@ export const Game: React.FC = () => {
 		variables: {
 			gameId: gameId!,
 		},
-		// pollInterval: 1000 * 10,
+		pollInterval: 1000 * 10,
 		skip: !gameId,
 	})
 	if (error) {

@@ -1,13 +1,13 @@
 mutation AddUserToTeam($teamId: ID!, $userId: ID!) {
-  addUserToTeam(teamId: $teamId, userId: $userId) {
-    id
-    name
-    users {
-      id
-      fullName
-      email
-      isAdmin
-      photoUrl
-    }
-  }
+	addUserToTeam(teamId: $teamId, userId: $userId) {
+		id
+		name
+		users {
+			id
+			fullName
+			email
+			isAdmin
+			photoUrl
+		}
+	}
 }

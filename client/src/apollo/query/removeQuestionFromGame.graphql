@@ -1,26 +1,26 @@
 mutation RemoveQuestionFromGame($gameId: ID!, $questionId: ID!) {
-  removeQuestionFromGame(gameId: $gameId, questionId: $questionId) {
-    id
-    name
-    teams {
-      id
-      name
-      users {
-        id
-        fullName
-        email
-        isAdmin
-        photoUrl
-      }
-    }
-    questions {
-      id
-      title
-      description
-      image {
-        id
-        url
-      }
-    }
-  }
+	removeQuestionFromGame(gameId: $gameId, questionId: $questionId) {
+		id
+		name
+		teams {
+			id
+			name
+			users {
+				id
+				fullName
+				email
+				isAdmin
+				photoUrl
+			}
+		}
+		questions {
+			id
+			title
+			description
+			image {
+				id
+				url
+			}
+		}
+	}
 }

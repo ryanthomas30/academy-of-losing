@@ -1,9 +1,9 @@
 query Users {
-  users {
-    id
-    fullName
-    email
-    isAdmin
-    photoUrl
-  }
+	users {
+		id
+		fullName
+		email
+		isAdmin
+		photoUrl
+	}
 }

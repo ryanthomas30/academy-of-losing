@@ -41,6 +41,7 @@ export const Questions: React.FC = () => {
 
 	const questions = useMemo(() => data?.game.team.questions ?? [], [data])
 	const team = data?.game.team
+	const otherTeams = data?.game.teams.filter((t) => t.id !== team?.id) ?? []
 	const numberOfQuestions = questions.length
 
 	useEffect(() => {
@@ -87,6 +88,15 @@ export const Questions: React.FC = () => {
 		questionNumber: i,
 	}))
 
+	const otherTeamsWithStatus = () => otherTeams.map((team) => ({
+		...team,
+		questionStatuses: team.questions.map((q, i) => ({
+			isCompleted: q.isCorrect,
+			questionId: q.id,
+			questionNumber: i,
+		})),
+	}))
+
 	const question = questions[questionIdx]
 
 	const onFormSubmit = async ({ answer }: FormValues) => {
@@ -95,7 +105,7 @@ export const Questions: React.FC = () => {
 			const { data } = await answerQuestion({
 				variables: {
 					answer: answer.trim(),
-					questionId: question.id,
+					questionId: question.questionId,
 					teamId: team.id,
 				},
 			})
@@ -224,13 +234,36 @@ export const Questions: React.FC = () => {
 					</WrongAnswerBanner>
 				)}
 			</FormContainer>
-			<Row center>
+			<Flexbox
+				marginBetween='small'
+				center
+			>
+				<Text size={12}>{'Your team\'s progress'}</Text>
 				<ProgressTracker
 					questionStatuses={questionStatuses()}
 					currentQuestionNumber={questionIdx}
 					gameId={gameId}
 				/>
-			</Row>
+
+			</Flexbox>
+			<Flexbox
+				center
+				full='horizontal'
+				marginBetween='medium'
+			>
+				{otherTeamsWithStatus().map((team) => (
+					<Flexbox
+						key={team.id}
+						marginBetween='small'
+						center
+					>
+						<Text size={12}>{team.name}</Text>
+						<ProgressTracker
+							questionStatuses={team.questionStatuses}
+						/>
+					</Flexbox>
+				))}
+			</Flexbox>
 		</Flexbox>
 	)
 }

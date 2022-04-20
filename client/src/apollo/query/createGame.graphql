@@ -1,6 +1,6 @@
 mutation CreateGame($newGame: NewGame!) {
-  createGame(newGame: $newGame) {
-    id
-    name
-  }
+	createGame(newGame: $newGame) {
+		id
+		name
+	}
 }

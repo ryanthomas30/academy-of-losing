@@ -3,9 +3,7 @@ import { useMeQuery } from '@/apollo'
 import { theme } from '@/constants'
 
 export const Home: React.FC = () => {
-	const { data, loading } = useMeQuery({
-		fetchPolicy: 'no-cache',
-	})
+	const { data, loading } = useMeQuery()
 
 	const games = data?.me.games.map(game => ({
 		...game,

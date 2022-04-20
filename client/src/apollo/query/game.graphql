@@ -2,11 +2,21 @@ query Game ($gameId: ID!) {
 	game(gameId: $gameId) {
 		id
 		name
+		teams {
+			id
+			name
+			questions {
+				id
+				questionId
+				isCorrect
+			}
+		}
 		team {
 			id
 			name
 			questions {
 				id
+				questionId
 				title
 				description
 				isCorrect

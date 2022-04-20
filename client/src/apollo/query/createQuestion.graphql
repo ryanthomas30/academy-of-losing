@@ -1,11 +1,11 @@
 mutation CreateQuestion($newQuestion: NewQuestion!) {
-  createQuestion(newQuestion: $newQuestion) {
-    id
-    title
-    description
-    image {
-      id
-      url
-    }
-  }
+	createQuestion(newQuestion: $newQuestion) {
+		id
+		title
+		description
+		image {
+			id
+			url
+		}
+	}
 }

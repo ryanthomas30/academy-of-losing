@@ -1,26 +1,26 @@
 query AdminGame($gameId: ID!) {
-  game(gameId: $gameId) {
-    id
-    name
-    teams {
-      id
-      name
-      users {
-        id
-        fullName
-        email
-        isAdmin
-        photoUrl
-      }
-    }
-    questions {
-      id
-      title
-      description
-      image {
-        id
-        url
-      }
-    }
-  }
+	game(gameId: $gameId) {
+		id
+		name
+		teams {
+			id
+			name
+			users {
+				id
+				fullName
+				email
+				isAdmin
+				photoUrl
+			}
+		}
+		questions {
+			id
+			title
+			description
+			image {
+				id
+				url
+			}
+		}
+	}
 }

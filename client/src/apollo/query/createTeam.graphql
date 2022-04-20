@@ -1,13 +1,13 @@
 mutation CreateTeam($newTeam: NewTeam!, $gameId: ID!) {
-  createTeam(newTeam: $newTeam, gameId: $gameId) {
-    id
-    name
-    users {
-      id
-      fullName
-      email
-      isAdmin
-      photoUrl
-    }
-  }
+	createTeam(newTeam: $newTeam, gameId: $gameId) {
+		id
+		name
+		users {
+			id
+			fullName
+			email
+			isAdmin
+			photoUrl
+		}
+	}
 }
