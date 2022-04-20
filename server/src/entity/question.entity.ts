@@ -57,7 +57,8 @@ export class Question extends BaseEntity {
  * Custom TeamQuestion resolve mapper for codegen
  */
 export interface TeamQuestion {
-	id: number
+	id: string | number
+	questionId: number
 	title: string
 	description: string
 	imageUrl?: string

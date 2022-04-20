@@ -1,7 +1,7 @@
 import { ProducedContext } from '@/context'
 import { DirectiveTransformer } from '@/types'
 import { getDirective, MapperKind, mapSchema } from '@graphql-tools/utils'
-import { AuthenticationError } from 'apollo-server'
+import { AuthenticationError, ForbiddenError } from 'apollo-server'
 import { defaultFieldResolver, GraphQLFieldConfig } from 'graphql'
 
 const DirectiveName = 'isAdmin'
@@ -40,7 +40,7 @@ export const isAdminTransformer: DirectiveTransformer = (schema) => mapSchema(sc
 				const [, , { user: contextUser }] = args
 				if (contextUser) {
 					if (contextUser.admin) return resolve(...args)
-					throw new AuthenticationError('You are not authorized to view this resource.')
+					throw new ForbiddenError('You are not authorized to view this resource.')
 				} else {
 					throw new AuthenticationError('You must be signed in to view this resource.')
 				}

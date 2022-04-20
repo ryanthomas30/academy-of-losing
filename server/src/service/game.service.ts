@@ -1,4 +1,4 @@
-import { ApolloError, AuthenticationError } from 'apollo-server'
+import { ApolloError, ForbiddenError } from 'apollo-server'
 import { Game, Question, User } from '@/entity'
 import { DbError, PgErrorCode } from '@/util'
 import { LiteDataSource } from '@/dataSource'
@@ -10,7 +10,7 @@ export class GameService extends LiteDataSource {
 		const { user: contextUser } = this.context
 		if (contextUser.admin) return Game.getOne(gameId)
 		const userHasGame = await this.userHasGame(contextUser.userId, gameId)
-		if (!userHasGame) throw new AuthenticationError('You do not have access to this game')
+		if (!userHasGame) throw new ForbiddenError('You do not have access to this game')
 		return Game.getOne(gameId)
 	}
 

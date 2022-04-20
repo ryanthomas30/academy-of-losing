@@ -222,6 +222,7 @@ export type TeamQuestion = {
   id: Scalars['ID'];
   image?: Maybe<Image>;
   isCorrect: Scalars['Boolean'];
+  questionId: Scalars['String'];
   title: Scalars['String'];
 };
 
@@ -411,6 +412,7 @@ export type TeamQuestionResolvers<ContextType = any, ParentType extends Resolver
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
   isCorrect?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  questionId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;

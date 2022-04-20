@@ -75,7 +75,7 @@ export const context: ContextFunction<ExpressContext, ProducedContext> = async (
 			},
 		}
 	} catch (err) {
-		throw new AuthenticationError('You do not have access to these records')
+		throw new AuthenticationError(`You are not authenticated -- ${err}`)
 	}
 
 }

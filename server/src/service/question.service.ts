@@ -11,7 +11,7 @@ import { Answer } from '@/entity/answer.entity'
 
 import { Image, NewQuestion } from '@/types'
 import { DbError } from '@/util'
-import { ApolloError, AuthenticationError } from 'apollo-server'
+import { ApolloError, ForbiddenError } from 'apollo-server'
 
 export class QuestionService extends LiteDataSource {
 
@@ -52,6 +52,8 @@ export class QuestionService extends LiteDataSource {
 
 			const teamQuestions: TeamQuestion[] = questions.map(question => ({
 				...question,
+				id: `${question.id}-${teamId}`,
+				questionId: question.id,
 				isCorrect: this.getTeamHasCorrectAnswer(teamId, question.teamAnswers ?? []),
 			}))
 
@@ -78,7 +80,7 @@ export class QuestionService extends LiteDataSource {
 
 		/* Check if user belongs to this team */
 		const userTeamId = await dataSources.teamService.getTeamIdByUserGame(contextUser.userId, `${game.id}`)
-		if (`${userTeamId}` !== teamId) throw new AuthenticationError('You do not have access to update these records')
+		if (`${userTeamId}` !== teamId) throw new ForbiddenError('You do not have access to update these records')
 
 		/* Get Question */
 		const question = await Question.getOne(questionId)
@@ -109,6 +111,8 @@ export class QuestionService extends LiteDataSource {
 			newTeamAnswer.save()
 			return {
 				...question,
+				id: `${question.id}-${teamId}`,
+				questionId: question.id,
 				isCorrect,
 			}
 		} catch (e) {

@@ -21,6 +21,7 @@ type GameQuestion {
 """ Question for a team """
 type TeamQuestion {
 	id: ID!
+	questionId: String!
 	title: String!
 	description: String!
 	image: Image
