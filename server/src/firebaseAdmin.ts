@@ -8,7 +8,7 @@ export const initializeFirebaseAdmin = () => {
 		})
 	} else if (isProduction()) {
 		initializeApp({
-			serviceAccountId: 'firebase-adminsdk-ydf5f@overwatchmen-8e34c.iam.gserviceaccount.com',
+			serviceAccountId: 'firebase-adminsdk-auy1f@academy-of-losing.iam.gserviceaccount.com',
 		})
 	}
 }
