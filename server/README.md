@@ -8,7 +8,6 @@ yarn install
 #### Set Local Environment Variables
 Create a new file in the root directory called `.env.development.local` and populate it with these keys and the values for your local `postgres` instance.
 ```sh
-TYPEORM_CONNECTION=postgres
 TYPEORM_HOST=<database_hostname> # e.g. localhost
 TYPEORM_USERNAME=<database_username> 
 TYPEORM_PASSWORD=<database_password>

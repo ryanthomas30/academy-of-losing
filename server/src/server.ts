@@ -13,7 +13,6 @@ export const run = async () => {
 		schema,
 		context,
 		dataSources: () => dataSources,
-		introspection: true,
 	})
 
 	const { url } = await server.listen()

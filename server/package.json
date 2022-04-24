@@ -20,7 +20,7 @@
 		"generate:watch": "graphql-codegen --watch",
 		"seed:config": "echo ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
 		"seed:run": "echo ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
-		"push-container": "echo gcloud builds submit --tag us.gcr.io/overwatchmen-8e34c/overwatchmen-server"
+		"push-container": "gcloud builds submit --tag us-central1-docker.pkg.dev/academy-of-losing/academy-of-losing-docker-repo/academy-of-losing-server"
 	},
 	"dependencies": {
 		"@graphql-tools/load": "^7.5.1",
