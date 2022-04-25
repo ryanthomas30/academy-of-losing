@@ -11,7 +11,7 @@ export const Login = () => {
 	const firebase = useFirebase()
 	const [loading, setLoading] = React.useState<boolean>(false)
 	const [loginError, setLoginError] = React.useState<string>('')
-	const [createUserMutation] = useCreateUserMutation()
+	const [createUserMutation, { loading: createUserLoading }] = useCreateUserMutation()
 	const navigate = useNavigate()
 	const location = useLocation()
 	const apolloClient = useApolloClient()
@@ -84,6 +84,11 @@ export const Login = () => {
 				<LoginButton
 					onClick={onLogin}
 				/>
+				{createUserLoading && (
+					<Flexbox>
+						<CommentText multiline>Logging you in</CommentText>
+					</Flexbox>
+				)}
 				{loginError && (
 					<Flexbox>
 						<CommentText multiline>{loginError}</CommentText>
