@@ -218,6 +218,7 @@ export type Team = {
 /**  Question for a team  */
 export type TeamQuestion = {
   __typename?: 'TeamQuestion';
+  completionTime?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   id: Scalars['ID'];
   image?: Maybe<Image>;
@@ -408,6 +409,7 @@ export type TeamResolvers<ContextType = any, ParentType extends ResolversParentT
 }>;
 
 export type TeamQuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['TeamQuestion'] = ResolversParentTypes['TeamQuestion']> = ResolversObject<{
+  completionTime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;

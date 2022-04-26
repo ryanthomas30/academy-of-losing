@@ -67,4 +67,5 @@ export interface TeamQuestion {
 	games?: Game[]
 	createdAt: Date
 	isCorrect: boolean
+	completionTime?: Date | null
 }

@@ -124,6 +124,10 @@ export class TeamService extends LiteDataSource {
 					)
 			}
 		}
+	}
 
+	async getIsComplete(teamId: string): Promise<boolean> {
+		const teamQuestions = await this.context.dataSources.questionService.getTeamQuestions(teamId)
+		return teamQuestions.every(tq => tq.isCorrect)
 	}
 }

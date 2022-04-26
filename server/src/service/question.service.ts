@@ -50,12 +50,16 @@ export class QuestionService extends LiteDataSource {
 				relations: ['teamAnswers'],
 			})
 
-			const teamQuestions: TeamQuestion[] = questions.map(question => ({
-				...question,
-				id: `${question.id}-${teamId}`,
-				questionId: question.id,
-				isCorrect: this.getTeamHasCorrectAnswer(teamId, question.teamAnswers ?? []),
-			}))
+			const teamQuestions: TeamQuestion[] = questions.map(question => {
+				const teamAnswers = this.getTeamAnswersByTeam(teamId, question.teamAnswers ?? [])
+				return ({
+					...question,
+					id: `${question.id}-${teamId}`,
+					questionId: question.id,
+					isCorrect: this.getTeamHasCorrectAnswer(teamAnswers),
+					completionTime: this.getTeamAnswerCompletionTime(teamAnswers),
+				})
+			})
 
 			return teamQuestions.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
 
@@ -68,7 +72,19 @@ export class QuestionService extends LiteDataSource {
 		}
 	}
 
-	async answerQuestion(teamId: string, answer: string, questionId: string) {
+	private getTeamAnswersByTeam(teamId: string, allTeamAnswers: TeamAnswer[]): TeamAnswer[] {
+		return allTeamAnswers.filter((teamAnswer) => `${teamAnswer.teamId}` === teamId)
+	}
+
+	private getTeamAnswerCompletionTime(teamAnswers: TeamAnswer[]): Date | null {
+		return teamAnswers.find((teamAnswer) => teamAnswer.isCorrect)?.createdAt ?? null
+	}
+
+	private getTeamHasCorrectAnswer(teamAnswers: TeamAnswer[]): boolean {
+		return teamAnswers.some((teamAnswer) => teamAnswer.isCorrect) ?? false
+	}
+
+	async answerQuestion(teamId: string, answer: string, questionId: string): Promise<TeamQuestion> {
 		const { user: contextUser, dataSources } = this.context
 		/* Get Team */
 		const team = await Team.getOne(teamId, {
@@ -108,23 +124,19 @@ export class QuestionService extends LiteDataSource {
 
 		try {
 			/* Save Answer */
-			newTeamAnswer.save()
+			const savedTeamAnswer = await newTeamAnswer.save()
 			return {
 				...question,
 				id: `${question.id}-${teamId}`,
 				questionId: question.id,
 				isCorrect,
+				completionTime: savedTeamAnswer.createdAt,
 			}
 		} catch (e) {
 			throw new ApolloError(
 				`An error occurred when trying to create a new teamAnswer -- ${e}`,
 			)
 		}
-	}
-
-	private getTeamHasCorrectAnswer(teamId: string, teamAnswers: TeamAnswer[]) {
-		return teamAnswers.filter((teamAnswer) => `${teamAnswer.teamId}` === teamId)
-			.some((teamAnswer) => teamAnswer.isCorrect) ?? false
 	}
 
 	async createQuestion({ answers, ...newQuestion }: NewQuestion) {

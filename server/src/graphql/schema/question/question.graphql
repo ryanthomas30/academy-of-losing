@@ -26,6 +26,7 @@ type TeamQuestion {
 	description: String!
 	image: Image
 	isCorrect: Boolean!
+	completionTime: String
 }
 
 """ Image Object """
