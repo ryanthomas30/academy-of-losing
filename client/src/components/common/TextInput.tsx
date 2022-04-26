@@ -9,9 +9,10 @@ export interface TextInputProps {
 	name: string
 	label?: string
 	placeholder?: string
+	autoFocus?: boolean
 }
 
-export const TextInput: React.FC<TextInputProps> = ({ name, placeholder, label }) => {
+export const TextInput: React.FC<TextInputProps> = ({ name, placeholder, label, autoFocus }) => {
 	const [field, { touched, error }] = useField(name)
 	return (
 		<FormField
@@ -21,6 +22,7 @@ export const TextInput: React.FC<TextInputProps> = ({ name, placeholder, label }
 			<Input
 				type='text'
 				placeholder={placeholder}
+				autoFocus={autoFocus}
 				{...field}
 			/>
 		</FormField>

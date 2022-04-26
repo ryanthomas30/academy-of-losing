@@ -134,7 +134,7 @@ export const Questions: React.FC = () => {
 				marginBetween='small'
 				center
 			>
-				<Text size={12}>{'Your team\'s progress'}</Text>
+				<Text size={12}>{`Your team's progress (${team?.name})`}</Text>
 				<ProgressTracker
 					questionStatuses={questionStatuses()}
 					currentQuestionNumber={questionIdx}

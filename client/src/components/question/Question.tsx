@@ -32,7 +32,6 @@ export const Question: React.FC<QuestionProps> = ({ questionNumber, question, te
 
 	useEffect(() => {
 		setWrongAnswerMessage('')
-
 	}, [questionNumber])
 
 	const onFormSubmit = async ({ answer }: FormValues) => {
@@ -111,8 +110,9 @@ export const Question: React.FC<QuestionProps> = ({ questionNumber, question, te
 					<Form
 						initialValues={InitialFormValues}
 						validationSchema={formSchema}
-						validateOnBlur
 						onSubmit={onFormSubmit}
+						validateOnBlur={false}
+						validateOnChange={false}
 					>
 						<Flexbox
 							marginBetween='medium'
@@ -122,6 +122,8 @@ export const Question: React.FC<QuestionProps> = ({ questionNumber, question, te
 								label='Answer'
 								name='answer'
 								placeholder='Submit your answer'
+								autoFocus
+								key={questionNumber}
 							/>
 						</Flexbox>
 						<FormButton
