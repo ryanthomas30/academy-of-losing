@@ -49,7 +49,16 @@ export const NewGame: React.FC = () => {
 			</Row>
 			<Flexbox
 				width={400}
+				marginBetween='large'
 			>
+				<Row>
+					<Text
+						size={28}
+						color={theme.color.yellow}
+					>
+						New Game
+					</Text>
+				</Row>
 				<Form
 					initialValues={InitialFormValues}
 					validationSchema={formSchema}

@@ -215,6 +215,7 @@ export type Team = {
 /**  Question for a team  */
 export type TeamQuestion = {
   __typename?: 'TeamQuestion';
+  completionTime?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   id: Scalars['ID'];
   image?: Maybe<Image>;
@@ -255,7 +256,7 @@ export type AdminGameQueryVariables = Exact<{
 }>;
 
 
-export type AdminGameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }> }>, questions: Array<{ __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null }> } };
+export type AdminGameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, users: Array<{ __typename?: 'User', id: string, fullName: string, email: string, isAdmin: boolean, photoUrl?: string | null }>, questions: Array<{ __typename?: 'TeamQuestion', id: string, questionId: string, isCorrect: boolean, completionTime?: string | null }> }>, questions: Array<{ __typename?: 'GameQuestion', id: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null }> } };
 
 export type AnswerQuestionMutationVariables = Exact<{
   teamId: Scalars['ID'];
@@ -264,7 +265,7 @@ export type AnswerQuestionMutationVariables = Exact<{
 }>;
 
 
-export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: { __typename?: 'TeamQuestion', isCorrect: boolean, id: string, questionId: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null } };
+export type AnswerQuestionMutation = { __typename?: 'Mutation', answerQuestion: { __typename?: 'TeamQuestion', isCorrect: boolean, completionTime?: string | null, id: string, questionId: string, title: string, description: string, image?: { __typename?: 'Image', id: string, url: string } | null } };
 
 export type CreateGameMutationVariables = Exact<{
   newGame: NewGame;
@@ -300,7 +301,7 @@ export type GameQueryVariables = Exact<{
 }>;
 
 
-export type GameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, questions: Array<{ __typename?: 'TeamQuestion', id: string, questionId: string, isCorrect: boolean }> }>, team: { __typename?: 'Team', id: string, name: string, questions: Array<{ __typename?: 'TeamQuestion', id: string, questionId: string, title: string, description: string, isCorrect: boolean, image?: { __typename?: 'Image', id: string, url: string } | null }> }, questions: Array<{ __typename?: 'GameQuestion', id: string, description: string, title: string }> } };
+export type GameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: string, name: string, teams: Array<{ __typename?: 'Team', id: string, name: string, questions: Array<{ __typename?: 'TeamQuestion', id: string, questionId: string, isCorrect: boolean, completionTime?: string | null }> }>, team: { __typename?: 'Team', id: string, name: string, questions: Array<{ __typename?: 'TeamQuestion', id: string, questionId: string, title: string, description: string, isCorrect: boolean, completionTime?: string | null, image?: { __typename?: 'Image', id: string, url: string } | null }> }, questions: Array<{ __typename?: 'GameQuestion', id: string, description: string, title: string }> } };
 
 export type GamesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -310,7 +311,7 @@ export type GamesQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Ga
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, email: string, fullName: string, isAdmin: boolean, photoUrl?: string | null, games: Array<{ __typename?: 'Game', id: string, name: string, team: { __typename?: 'Team', id: string, name: string, questions: Array<{ __typename?: 'TeamQuestion', id: string, questionId: string, title: string, description: string, isCorrect: boolean, image?: { __typename?: 'Image', id: string, url: string } | null }> } }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, email: string, fullName: string, isAdmin: boolean, photoUrl?: string | null, games: Array<{ __typename?: 'Game', id: string, name: string, team: { __typename?: 'Team', id: string, name: string, questions: Array<{ __typename?: 'TeamQuestion', id: string, questionId: string, title: string, description: string, isCorrect: boolean, completionTime?: string | null, image?: { __typename?: 'Image', id: string, url: string } | null }> } }> } };
 
 export type QuestionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -463,6 +464,12 @@ export const AdminGameDocument = gql`
         isAdmin
         photoUrl
       }
+      questions {
+        id
+        questionId
+        isCorrect
+        completionTime
+      }
     }
     questions {
       id
@@ -508,6 +515,7 @@ export const AnswerQuestionDocument = gql`
     mutation AnswerQuestion($teamId: ID!, $answer: String!, $questionId: ID!) {
   answerQuestion(teamId: $teamId, answer: $answer, questionId: $questionId) {
     isCorrect
+    completionTime
     id
     questionId
     title
@@ -710,6 +718,7 @@ export const GameDocument = gql`
         id
         questionId
         isCorrect
+        completionTime
       }
     }
     team {
@@ -721,6 +730,7 @@ export const GameDocument = gql`
         title
         description
         isCorrect
+        completionTime
         image {
           id
           url
@@ -827,6 +837,7 @@ export const MeDocument = gql`
             url
           }
           isCorrect
+          completionTime
         }
       }
     }

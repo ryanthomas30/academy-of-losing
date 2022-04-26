@@ -5,7 +5,9 @@ import { theme } from '@/constants'
 
 export const AdminHome: React.FC = () => {
 	const { data: gamesData, loading: gamesLoading } = useGamesQuery()
-	const { data: questionsData, loading: questionsLoading } = useQuestionsQuery()
+	const { data: questionsData, loading: questionsLoading } = useQuestionsQuery({
+		fetchPolicy: 'network-only',
+	})
 
 	const games = gamesData?.games ?? []
 	const questions = questionsData?.questions ?? []
@@ -17,6 +19,14 @@ export const AdminHome: React.FC = () => {
 			paddingHorizontal='medium'
 			marginBetween='large'
 		>
+			<Row>
+				<Text
+					size={28}
+					color={theme.color.yellow}
+				>
+					Admin Panel
+				</Text>
+			</Row>
 			<Flexbox
 				full
 				center

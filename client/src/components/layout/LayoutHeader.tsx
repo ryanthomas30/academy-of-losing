@@ -149,4 +149,5 @@ const HeaderContainer = styled(Flexbox)`
 	position: sticky;
 	top: 0px;
 	box-shadow: ${theme.boxShadow.small};
+	z-index: 100;
 `

@@ -1,6 +1,8 @@
-import { CommentText, Flexbox, LoadingBoundary, Page, Row, UserCard } from '@/components'
+import { CommentText, Flexbox, LoadingBoundary, Page, Row, UserCard, Text, Button } from '@/components'
 import { useParams } from 'react-router-dom'
 import { useAdminGameQuery, useUsersQuery } from '@/apollo'
+import { theme } from '@/constants'
+import { routeNames } from '@/routing'
 
 type TeamRouteParams = {
 	teamId: string
@@ -50,17 +52,39 @@ export const Team: React.FC = () => {
 			paddingHorizontal='medium'
 			marginBetween='large'
 		>
-			<Row
-				paddingBottom='medium'
-				justify='between'
+			<Flexbox
+				full='horizontal'
+				center
+				marginBetween='small'
 			>
-				<CommentText
-					multiline
-					size={18}
+				<Row
+					justify='between'
 				>
-					{thisTeam?.name}
-				</CommentText>
-			</Row>
+					<Text
+						size={28}
+						color={theme.color.yellow}
+					>
+						Add Users to Team
+					</Text>
+					<Button
+						to={`/${routeNames.adminHome}/${routeNames.game(gameId)}`}
+						small
+					>
+						Go Back
+					</Button>
+				</Row>
+				<Row
+					paddingBottom='medium'
+					justify='between'
+				>
+					<CommentText
+						multiline
+						size={18}
+					>
+						{thisTeam?.name}
+					</CommentText>
+				</Row>
+			</Flexbox>
 			<LoadingBoundary loading={queriesLoading}>
 				<Flexbox
 					direction='row'

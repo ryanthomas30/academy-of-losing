@@ -12,6 +12,12 @@ query AdminGame($gameId: ID!) {
 				isAdmin
 				photoUrl
 			}
+			questions {
+				id
+				questionId
+				isCorrect
+				completionTime
+			}
 		}
 		questions {
 			id

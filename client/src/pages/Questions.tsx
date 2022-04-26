@@ -1,5 +1,4 @@
 
-import { useMemo } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -31,10 +30,19 @@ export const Questions: React.FC = () => {
 		skip: !gameId,
 	})
 
-	const questions = useMemo(() => data?.game.team.questions ?? [], [data])
+	const questions = data?.game.team.questions ?? []
+	const isGameCompleted = questions.every(q => q.isCorrect)
 	const team = data?.game.team
 	const otherTeams = data?.game.teams.filter((t) => t.id !== team?.id) ?? []
 	const numberOfQuestions = questions.length
+
+	if (isGameCompleted) {
+		return (
+			<Navigate
+				to={routeNames.game(gameId, true)}
+			/>
+		)
+	}
 
 	if (numberOfQuestions === 0 || gameId === undefined || questionNumber === undefined) {
 		return (

@@ -4,3 +4,4 @@
 
 export * from './GameCard'
 export * from './GameCards'
+export * from './GameStatus'

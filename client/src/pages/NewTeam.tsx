@@ -54,7 +54,16 @@ export const NewTeam: React.FC = () => {
 			</Row>
 			<Flexbox
 				width={400}
+				marginBetween='large'
 			>
+				<Row>
+					<Text
+						size={28}
+						color={theme.color.yellow}
+					>
+						New Team
+					</Text>
+				</Row>
 				<Form
 					initialValues={InitialFormValues}
 					validationSchema={formSchema}

@@ -57,12 +57,22 @@ export const NewQuestion: React.FC = () => {
 			paddingTop='large'
 			paddingHorizontal='medium'
 		>
+
 			<Row center>
 				{error && <Text color={theme.color.red}>Something went horribly wrong</Text>}
 			</Row>
 			<Flexbox
 				width={400}
+				marginBetween='large'
 			>
+				<Row>
+					<Text
+						size={28}
+						color={theme.color.yellow}
+					>
+						New Question
+					</Text>
+				</Row>
 				<Form
 					initialValues={InitialFormValues}
 					validationSchema={formSchema}

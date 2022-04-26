@@ -1,6 +1,7 @@
 mutation AnswerQuestion($teamId: ID!, $answer: String!, $questionId: ID!) {
 	answerQuestion(teamId: $teamId, answer: $answer, questionId: $questionId) {
 		isCorrect
+		completionTime
 		id
 		questionId
 		title

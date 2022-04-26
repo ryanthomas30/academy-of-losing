@@ -1,5 +1,5 @@
 import { useParams, Outlet, Navigate } from 'react-router-dom'
-import { Page, CommentText, LoadingBoundary } from '@/components'
+import { Page, CommentText, LoadingBoundary, GameStatus } from '@/components'
 import { useGameQuery } from '@/apollo'
 import { routeNames } from '@/routing'
 
@@ -13,7 +13,7 @@ export const Game: React.FC = () => {
 		variables: {
 			gameId: gameId!,
 		},
-		pollInterval: 1000 * 10,
+		pollInterval: 1000 * 5,
 		skip: !gameId,
 	})
 	if (error) {
@@ -34,9 +34,34 @@ export const Game: React.FC = () => {
 	)
 }
 
-export const GameIndex: React.FC = () => (
-	<Navigate
-		to={routeNames.question('0')}
-		replace
-	/>
-)
+export const GameIndex: React.FC = () => {
+	const { gameId } = useParams<GameRouteParams>()
+	const { data } = useGameQuery({
+		variables: {
+			gameId: gameId!,
+		},
+		fetchPolicy: 'cache-only',
+		skip: !gameId,
+	})
+
+	const questions = data?.game.team.questions ?? []
+	const isGameCompleted = questions.every(q => q.isCorrect)
+	const currentTeam = data?.game.team
+	const teams = data?.game.teams ?? []
+
+	if (!isGameCompleted) {
+		return (
+			<Navigate
+				to={routeNames.question('0')}
+				replace
+			/>
+		)
+	}
+
+	return (
+		<GameStatus
+			teams={teams}
+			currentTeam={currentTeam}
+		/>
+	)
+}

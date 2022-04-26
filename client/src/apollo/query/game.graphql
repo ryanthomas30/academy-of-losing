@@ -9,6 +9,7 @@ query Game ($gameId: ID!) {
 				id
 				questionId
 				isCorrect
+				completionTime
 			}
 		}
 		team {
@@ -20,6 +21,7 @@ query Game ($gameId: ID!) {
 				title
 				description
 				isCorrect
+				completionTime
 				image {
 					id
 					url
