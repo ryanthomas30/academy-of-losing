@@ -1,3 +1,5 @@
+export * from './getNamespacedUuid'
+export * from './getQuestionUuid'
 export * from './getRandomColor'
 export * from './getRandomFromArray'
 export * from './getRandomPhrase'

@@ -13,6 +13,7 @@ import {
 } from '@/components'
 import { useGameQuery } from '@/apollo'
 import { routeNames } from '@/routing'
+// import { getQuestionUuid } from '@/util'
 
 type QuestionsRouteParams = {
 	gameId: string
@@ -96,6 +97,11 @@ export const Questions: React.FC = () => {
 
 	const question = questions[questionIdx]
 
+	// const questionHashes = questions.reduce((acc, { title, description }) => ({
+	// 	...acc,
+	// 	[title]: [getQuestionUuid(title, description)],
+	// }), {})
+
 	return (
 		<Flexbox
 			center
@@ -129,6 +135,7 @@ export const Questions: React.FC = () => {
 				question={question}
 				questionNumber={questionIdx}
 				teamId={team?.id}
+				goToNextQuestion={nextQuestion}
 			/>
 			<Flexbox
 				marginBetween='small'
@@ -140,7 +147,6 @@ export const Questions: React.FC = () => {
 					currentQuestionNumber={questionIdx}
 					gameId={gameId}
 				/>
-
 			</Flexbox>
 			<Flexbox
 				center

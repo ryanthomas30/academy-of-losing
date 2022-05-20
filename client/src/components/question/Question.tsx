@@ -12,6 +12,7 @@ interface QuestionProps {
 	questionNumber: number
 	question: GameQuery['game']['team']['questions'][number]
 	teamId?: string
+	goToNextQuestion: () => void
 }
 
 interface FormValues {
@@ -26,7 +27,7 @@ const formSchema = Yup.object().shape({
 	answer: Yup.string().required('Required'),
 })
 
-export const Question: React.FC<QuestionProps> = ({ questionNumber, question, teamId }) => {
+export const Question: React.FC<QuestionProps> = ({ questionNumber, question, teamId, goToNextQuestion }) => {
 	const [wrongAnswerMessage, setWrongAnswerMessage] = useState<string>('')
 	const [answerQuestion, { loading: answerQuestionLoading }] = useAnswerQuestionMutation()
 
@@ -77,7 +78,6 @@ export const Question: React.FC<QuestionProps> = ({ questionNumber, question, te
 					>
 						{questionNumber + 1}
 					</Text>
-
 				</Row>
 			</QuestionHeader>
 			<ContentContainer
@@ -136,9 +136,13 @@ export const Question: React.FC<QuestionProps> = ({ questionNumber, question, te
 				)}
 				{question.isCorrect && (
 					<CorrectAnswerBanner
+						onClick={goToNextQuestion}
 						center
 					>
-						Correct!
+						<Text size={14}>
+							Correct
+						</Text>
+						<Text size={10}>Click to continue</Text>
 					</CorrectAnswerBanner>
 				)}
 				{wrongAnswerMessage && (
@@ -166,6 +170,7 @@ const QuestionHeader = styled(Row)`
 `
 
 const ContentContainer = styled(Flexbox)`
+	position: relative;
 `
 
 const FormContainer = styled(Flexbox)`
@@ -182,3 +187,4 @@ const CorrectAnswerBanner = styled(Flexbox)`
 const WrongAnswerBanner = styled(CorrectAnswerBanner)`
 	background-color: ${theme.color.red};
 `
+
